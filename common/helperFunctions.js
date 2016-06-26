@@ -1,0 +1,55 @@
+var debug = require('debug')('tonksDEV:money:ui:server:helpers'),
+    debugT = require('debug')('tonksDEV:money:ui:term:handlers');
+
+function helpers(moneyUI) {
+    'use strict';
+
+    var self = moneyUI;
+    moneyUI.variables = {};
+
+    //Set up server IP address and port # using env variables/defaults.
+    var setupVariables = function() {
+        moneyUI.variables.ipaddress = process.env.IP || '0.0.0.0';
+        moneyUI.variables.port      = process.env.PORT || 8080;
+        moneyUI.variables.mongourl = (process.env.MONEYDB_PORT_27017_TCP_ADDR)
+                                       ? process.env.MONEYDB_PORT_27017_TCP_ADDR+':'+process.env.MONEYDB_PORT_27017_TCP_PORT + '/'
+                                       : 'mongodb://172.17.0.2:27017/';
+        moneyUI.variables.mongourl  += 'money?authSource=admin';
+    };
+
+    // terminator === the termination handler
+    // Terminate server on receipt of the specified signal.
+    // @param {string} sig  Signal to terminate on.
+    var terminator = function(sig){
+        if (typeof sig === 'string') {
+           debugT('%s: Received %s - terminating tonksDEV Money app ...',
+                       Date(Date.now()), sig);
+           process.exit(1);
+        }
+        debugT('%s: Node server stopped.', Date(Date.now()) );
+    };
+
+    // Setup termination handlers (for exit and a list of signals).
+    var setupTerminationHandlers = function(){
+
+        //  Process on exit and signals.
+        process.on('exit', function() { self.helperFunctions.terminator(); });
+
+        // Removed 'SIGPIPE' from the list - bugz 852598.
+        ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
+         'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
+        ].forEach(function(element, index, array) {
+            process.on(element, function() { self.helperFunctions.terminator(element); });
+        });
+    };
+
+    //return a single object exposing all of the above functions
+    return {
+        setupVariables: setupVariables,
+        terminator: terminator,
+        setupTerminationHandlers: setupTerminationHandlers
+    };
+}
+
+//expose the helpers function as the default entrypoint for this file.
+module.exports = helpers;
