@@ -8,8 +8,8 @@ module.exports = function() {
     passport.use(new FacebookStrategy({
         clientID: '501287463415320',
         clientSecret: 'f4a3b618cc0a06f0a427343448881716',
-        // callbackURL: 'https://money-tonks.rhcloud.com/auth/facebook/callback',
-        callbackURL: 'http://localhost:8080/auth/facebook/callback',
+        callbackURL: 'https://ec2-52-31-244-51.eu-west-1.compute.amazonaws.com/auth/facebook/callback',
+        //callbackURL: 'http://localhost/auth/facebook/callback',
         passReqToCallback: true
     },
     function(req, accessToken, refreshToken, profile, done) {
