@@ -10,7 +10,7 @@ module.exports = function(tonksDEVapp) {
     var authCallBack = '';
     switch (tonksDEVapp.get('env').toLowerCase()) {
         case 'production':
-            authCallBack = 'https://ec2-52-31-244-51.eu-west-1.compute.amazonaws.com/auth/google/callback';
+            authCallBack = 'http://ec2-52-31-244-51.eu-west-1.compute.amazonaws.com/auth/google/callback';
             break;
         case 'c9':
             authCallBack = 'https://money-unnecessaryroughness.c9users.io/auth/google/callback';
