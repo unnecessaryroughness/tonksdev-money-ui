@@ -15,7 +15,9 @@ gulp.task('default', function() {
         script: 'server.js',
         ext: 'js html',
         env: {
-            DEBUG:['tonksDEV:*']
+            DEBUG:['tonksDEV:*'],
+            MONEYSESSION_PORT_27017_TCP_ADDR:['172.17.0.3'],
+            MONEYSESSION_PORT_27017_TCP_PORT:['27017']
         },
         ignore: ['./node_modules/**']
     })
@@ -25,7 +27,7 @@ gulp.task('default', function() {
         console.log('******************************************');
     });
 });
- 
+
 // gulp.task('mocha', function() {
 //     return gulp.src(['test/*.js'], {read: false})
 //             .pipe(mocha({reporter: 'list'}))

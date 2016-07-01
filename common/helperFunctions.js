@@ -11,10 +11,10 @@ function helpers(moneyUI) {
     var setupVariables = function() {
         moneyUI.variables.ipaddress = process.env.IP || '0.0.0.0';
         moneyUI.variables.port      = process.env.PORT || 8080;
-        moneyUI.variables.mongourl = (process.env.MONEYDB_PORT_27017_TCP_ADDR)
-                                       ? process.env.MONEYDB_PORT_27017_TCP_ADDR+':'+process.env.MONEYDB_PORT_27017_TCP_PORT + '/'
-                                       : 'mongodb://172.17.0.2:27017/';
-        moneyUI.variables.mongourl  += 'money?authSource=admin';
+        moneyUI.variables.mongourl = (process.env.MONEYSESSION_PORT_27017_TCP_ADDR)
+                                       ? process.env.MONEYSESSION_PORT_27017_TCP_ADDR+':'+process.env.MONEYSESSION_PORT_27017_TCP_PORT + '/'
+                                       : 'mongodb://172.17.0.3:27017/';
+        moneyUI.variables.mongourl  += 'session?authSource=admin';
     };
 
     // terminator === the termination handler

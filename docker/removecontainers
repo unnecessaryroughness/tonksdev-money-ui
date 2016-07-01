@@ -1,0 +1,5 @@
+docker rm moneyui
+docker rm moneyapi
+docker rm moneysession
+docker rm moneydb
+docker ps -a
