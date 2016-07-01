@@ -8,15 +8,18 @@ module.exports = function(tonksDEVapp) {
 
     //set callback based on environment
     var authCallBack = '';
-    switch (tonksDEVapp.get('env')) {
+    switch (tonksDEVapp.get('env').toLowerCase()) {
         case 'production':
             authCallBack = 'https://ec2-52-31-244-51.eu-west-1.compute.amazonaws.com/auth/google/callback';
             break;
         case 'c9':
             authCallBack = 'https://money-unnecessaryroughness.c9users.io/auth/google/callback';
             break;
-        default:
+        case 'dev8080':
             authCallBack = 'http://localhost:8080/auth/google/callback';
+            break;
+        default:
+            authCallBack = 'http://localhost/auth/google/callback';
             break;
     }
 
