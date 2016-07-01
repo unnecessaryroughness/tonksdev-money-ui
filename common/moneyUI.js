@@ -32,7 +32,7 @@ var moneyUI = function() {
                             resave: false,
                             saveUninitialized: false,
                             cookie: { httpOnly: true,
-                                      secure: (self.variables.environment === 'development') ? false : true }
+                                      secure: (self.variables.environment === 'development') ? false : false }
                         }));
 
             require('../config/passport')(self.app);
