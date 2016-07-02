@@ -73,6 +73,9 @@ var routes = function(moneyUIVars) {
     rootRouter.route('/ayt')
         .get(aytController.ayt);
 
+    rootRouter.route('/aytAPI')
+        .get(aytController.aytAPI);
+
     return rootRouter;
 };
 

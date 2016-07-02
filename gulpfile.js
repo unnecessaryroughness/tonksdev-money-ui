@@ -17,7 +17,9 @@ gulp.task('default', function() {
         env: {
             DEBUG:['tonksDEV:*'],
             MONEYSESSION_PORT_27017_TCP_ADDR:['172.17.0.3'],
-            MONEYSESSION_PORT_27017_TCP_PORT:['27017']
+            MONEYSESSION_PORT_27017_TCP_PORT:['27017'],
+            MONEYAPI_PORT_8081_TCP_ADDR:['0.0.0.0'],
+            MONEYAPI_PORT_8081_TCP_PORT:['8081']
         },
         ignore: ['./node_modules/**']
     })

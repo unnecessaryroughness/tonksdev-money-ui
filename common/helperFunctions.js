@@ -9,12 +9,10 @@ function helpers(moneyUI) {
 
     //Set up server IP address and port # using env variables/defaults.
     var setupVariables = function() {
-        moneyUI.variables.ipaddress = process.env.IP || '0.0.0.0';
-        moneyUI.variables.port      = process.env.PORT || 8080;
-        moneyUI.variables.mongourl = (process.env.MONEYSESSION_PORT_27017_TCP_ADDR)
-                                       ? process.env.MONEYSESSION_PORT_27017_TCP_ADDR+':'+process.env.MONEYSESSION_PORT_27017_TCP_PORT + '/'
-                                       : 'mongodb://172.17.0.3:27017/';
-        moneyUI.variables.mongourl  += 'session?authSource=admin';
+        moneyUI.variables.ipaddress  = process.env.IP || '0.0.0.0';
+        moneyUI.variables.port       = process.env.PORT || 8080;
+        moneyUI.variables.apiaddress = process.env.MONEYAPI_PORT_8081_TCP_ADDR + ':' + process.env.MONEYAPI_PORT_8081_TCP_PORT;
+        moneyUI.variables.mongourl   = process.env.MONEYSESSION_PORT_27017_TCP_ADDR+':'+process.env.MONEYSESSION_PORT_27017_TCP_PORT + '/session?authSource=admin';
     };
 
     // terminator === the termination handler
