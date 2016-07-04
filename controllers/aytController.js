@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     debug = require('debug')('tonksDEV:money:api:aytController'),
     request = require('request');
 
-var controller = function(moneyApiVars) {
+var controller = function(moneyUIVars) {
   'use strict';
 
   var readyStateMap = {
@@ -16,9 +16,9 @@ var controller = function(moneyApiVars) {
       var rtnVal = {
           'application': 'UI',
           'database': readyStateMap[mongoose.connection.readyState].toUpperCase(),
-          'db-connection': moneyApiVars.mongourl,
-          'environment': moneyApiVars.environment.toUpperCase(),
-          'ip-port': moneyApiVars.ipaddress + ':' + moneyApiVars.port
+          'db-connection': moneyUIVars.mongourl,
+          'environment': moneyUIVars.environment.toUpperCase(),
+          'ip-port': moneyUIVars.ipaddress + ':' + moneyUIVars.port
       }
 
       res.setHeader('Content-Type', 'application/json');
@@ -26,7 +26,7 @@ var controller = function(moneyApiVars) {
   }
 
   var aytAPI = function(req, res) {
-      request('http://' + moneyApiVars.apiaddress + '/ayt', function(error, response, body) {
+      request('http://' + moneyUIVars.apiaddress + '/ayt', function(error, response, body) {
           if (!error && response.statusCode == 200) {
               console.log(body);
               return res.status(200).json(JSON.parse(body));

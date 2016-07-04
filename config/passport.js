@@ -1,11 +1,11 @@
 var passport = require('passport'),
     User = require('../models/tonksdevUserModel');
 
-module.exports = function(app) {
+module.exports = function(moneyUI) {
     'use strict';
 
-    app.use(passport.initialize());
-    app.use(passport.session());
+    moneyUI.app.use(passport.initialize());
+    moneyUI.app.use(passport.session());
 
     //code to only store the user ID in the session, not the whole user object.
     passport.serializeUser(function(user, done) {
@@ -19,6 +19,6 @@ module.exports = function(app) {
         });
     });
 
-    require('./strategies/google.strategy')(app);
-    require('./strategies/facebook.strategy')(app);
+    require('./strategies/google.strategy')(moneyUI);
+    // require('./strategies/facebook.strategy')(moneyUI.app);
 };

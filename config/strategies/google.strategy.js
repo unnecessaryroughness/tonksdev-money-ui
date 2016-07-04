@@ -3,25 +3,12 @@ var passport = require('passport'),
     tonksDEVUser = require('../../models/tonksdevUserModel'),
     debug = require('debug')('tonksDEV:google-auth');
 
-module.exports = function(tonksDEVapp) {
+module.exports = function(moneyUI) {
     'use strict';
 
     //set callback based on environment
-    var authCallBack = '';
-    switch (tonksDEVapp.get('env').toLowerCase()) {
-        case 'production':
-            authCallBack = 'http://ec2-52-31-244-51.eu-west-1.compute.amazonaws.com/auth/google/callback';
-            break;
-        case 'c9':
-            authCallBack = 'https://money-unnecessaryroughness.c9users.io/auth/google/callback';
-            break;
-        case 'dev8080':
-            authCallBack = 'http://localhost:8080/auth/google/callback';
-            break;
-        default:
-            authCallBack = 'http://localhost/auth/google/callback';
-            break;
-    }
+    var authCallBack = moneyUI.variables.g_callback;
+
 
     passport.use(new GoogleStrategy({
             clientID: '430969087731-a47i215viu0akr6g7vmvnuqkq0kqjpj8.apps.googleusercontent.com',

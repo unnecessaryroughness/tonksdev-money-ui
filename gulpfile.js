@@ -16,10 +16,14 @@ gulp.task('default', function() {
         ext: 'js html',
         env: {
             DEBUG:['tonksDEV:*'],
+            IP:['0.0.0.0'],
+            PORT:['8080'],
             MONEYSESSION_PORT_27017_TCP_ADDR:['172.17.0.3'],
             MONEYSESSION_PORT_27017_TCP_PORT:['27017'],
             MONEYAPI_PORT_8081_TCP_ADDR:['0.0.0.0'],
-            MONEYAPI_PORT_8081_TCP_PORT:['8081']
+            MONEYAPI_PORT_8081_TCP_PORT:['8081'],
+            SESSION_SECRET:['#Mj0vCwDae%l'],
+            GOOGLE_CALLBACK:['http://localhost:8080/auth/google/callback']
         },
         ignore: ['./node_modules/**']
     })

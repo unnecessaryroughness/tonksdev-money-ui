@@ -19,7 +19,6 @@ var moneyUI = function() {
 
         //setup the web server app
             self.app = express();
-            self.app.secret = '#Mj0vCwDae%l';
             self.app.use(bodyParser.urlencoded({extended:true}));
             self.app.use(bodyParser.json());
             self.app.use(cookieParser());
@@ -27,7 +26,7 @@ var moneyUI = function() {
             self.app.set('trust proxy', 1);
             self.variables.environment = self.app.get('env');
             self.app.use(session({
-                            secret: self.app.secret,
+                            secret: self.variables.secret,
                             store: new mongoStore({mongooseConnection: mongoose.connection}),
                             resave: false,
                             saveUninitialized: false,
@@ -35,7 +34,7 @@ var moneyUI = function() {
                                       secure: (self.variables.environment === 'development') ? false : false }
                         }));
 
-            require('../config/passport')(self.app);
+            require('../config/passport')(self);
 
         //set up connection to mongodb
             self.mongoose = mongoose;
@@ -97,8 +96,10 @@ var moneyUI = function() {
     self.initialize = function() {
         debug('setting up variables...');
         self.helperFunctions.setupVariables();
+
         debug('setting up termination handlers...');
         self.helperFunctions.setupTerminationHandlers();
+
         debug('initializing server...');
         self.initializeServer();
     };
