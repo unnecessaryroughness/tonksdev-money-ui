@@ -1,6 +1,6 @@
 NODE_ENV=local-testing
 DEBUG='tonksDEV:*'
-IP:'0.0.0.0'
-PORT:'8080'
-SESSION_SECRET:'#Mj0vCwDae%l'
-GOOGLE_CALLBACK:'http://localhost/auth/google/callback'
+IP=0.0.0.0
+PORT=8080
+SESSION_SECRET='#Mj0vCwDae%l'
+GOOGLE_CALLBACK=http://localhost/auth/google/callback

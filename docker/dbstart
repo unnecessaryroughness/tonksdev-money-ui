@@ -1,2 +1,3 @@
 docker start moneydb
+docker start moneysession
 docker ps

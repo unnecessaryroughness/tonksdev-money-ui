@@ -9,9 +9,11 @@ function helpers(moneyUI) {
 
     //Set up server IP address and port # using env variables/defaults.
     var setupVariables = function() {
-        moneyUI.variables.ipaddress  = process.env.IP || "0.0.0.0";
-        moneyUI.variables.port       = process.env.PORT || "8080";
+        moneyUI.variables.ipaddress  = process.env.IP;
+        moneyUI.variables.port       = process.env.PORT;
         moneyUI.variables.apiaddress = process.env.MONEYAPI_PORT_8081_TCP_ADDR + ':' + process.env.MONEYAPI_PORT_8081_TCP_PORT;
+        moneyUI.variables.apiip      = process.env.MONEYAPI_PORT_8081_TCP_ADDR;
+        moneyUI.variables.apiport    = process.env.MONEYAPI_PORT_8081_TCP_PORT;
         moneyUI.variables.mongourl   = process.env.MONEYSESSION_PORT_27017_TCP_ADDR+':'+process.env.MONEYSESSION_PORT_27017_TCP_PORT + '/session?authSource=admin';
         moneyUI.variables.secret     = process.env.SESSION_SECRET;
         moneyUI.variables.g_callback = process.env.GOOGLE_CALLBACK;

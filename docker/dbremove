@@ -1,2 +1,3 @@
 docker rm moneydb
+docker rm moneysession
 docker ps -a

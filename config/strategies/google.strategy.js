@@ -6,25 +6,17 @@ var passport = require('passport'),
 module.exports = function(moneyUI) {
     'use strict';
 
-    //set callback based on environment
     var authCallBack = moneyUI.variables.g_callback;
 
-
     passport.use(new GoogleStrategy({
-            clientID: '430969087731-a47i215viu0akr6g7vmvnuqkq0kqjpj8.apps.googleusercontent.com',
-                        //identifies this application
-            clientSecret: 'zj9ucehT1939AEwwiT2zk7LA',
-                        //identifies this application
-            callbackURL: authCallBack
-                        //where will Google send us back to after authenticating?
+            clientID: '430969087731-a47i215viu0akr6g7vmvnuqkq0kqjpj8.apps.googleusercontent.com', //identifies this application
+            clientSecret: 'zj9ucehT1939AEwwiT2zk7LA', //identifies this application
+            callbackURL: authCallBack //where will Google send us back to after authenticating?
             },
-            function(req, accessToken, refreshToken, profile, done) {
-                        //function to call after control comes back
-
+            function(req, accessToken, refreshToken, profile, done) { //function to call after control comes back
                 debug('control returned from Google');
 
                 //create our own custom user object to hold all social details
-
                 tonksDEVUser.findOne({'google.id': profile.id}, function(error, user) {
                     if (user) {
                         debug('found user in database - this is a returning user');

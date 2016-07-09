@@ -1,2 +1,3 @@
 docker stop moneydb
+docker stop moneysession
 docker ps

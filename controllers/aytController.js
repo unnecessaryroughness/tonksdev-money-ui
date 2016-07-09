@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
     debug = require('debug')('tonksDEV:money:api:aytController'),
-    request = require('request');
+    request = require('request'),
+    http = require('http');
 
 var controller = function(moneyUIVars) {
   'use strict';
@@ -12,30 +13,42 @@ var controller = function(moneyUIVars) {
     '3': 'disconnecting'
   }
 
-  var ayt = function(req, res) {
-      var rtnVal = {
-          'application': 'UI',
-          'database': readyStateMap[mongoose.connection.readyState].toUpperCase(),
-          'db-connection': moneyUIVars.mongourl,
-          'environment': moneyUIVars.environment.toUpperCase(),
-          'ip-port': moneyUIVars.ipaddress + ':' + moneyUIVars.port
-      }
-
-      res.setHeader('Content-Type', 'application/json');
-      return res.status(200).json(rtnVal);
+  var aytData = function(done) {
+      request('http://' + moneyUIVars.apiaddress + '/ayt', function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var rtnVal = {
+              'application': 'UI',
+              'database': readyStateMap[mongoose.connection.readyState].toUpperCase(),
+              'dbconnection': moneyUIVars.mongourl,
+              'environment': moneyUIVars.environment.toUpperCase(),
+              'ipport': moneyUIVars.ipaddress + ':' + moneyUIVars.port,
+              'apiayt': JSON.parse(body)
+            }
+            done(null, rtnVal);
+        } else {
+          var rtnVal = {
+            'error': error
+          }
+          done(rtnVal, null);
+        }
+    });
   }
 
-  var aytAPI = function(req, res) {
+  var aytAPI = function(done) {
       request('http://' + moneyUIVars.apiaddress + '/ayt', function(error, response, body) {
           if (!error && response.statusCode == 200) {
-              console.log(body);
-              return res.status(200).json(JSON.parse(body));
+              done(null, JSON.parse(body));
+          } else {
+            var rtnVal = {
+              'error': error
+            }
+            done(rtnVal, null);
           }
       });
   }
 
   return {
-    ayt: ayt,
+    aytData: aytData,
     aytAPI: aytAPI
   }
 }
