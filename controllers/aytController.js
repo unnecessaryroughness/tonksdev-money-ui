@@ -18,6 +18,7 @@ var controller = function(moneyUIVars) {
         if (!error && response.statusCode == 200) {
             var rtnVal = {
               'application': 'UI',
+              'application-version': moneyUIVars.uiversion,
               'database': readyStateMap[mongoose.connection.readyState].toUpperCase(),
               'dbconnection': moneyUIVars.mongourl,
               'environment': moneyUIVars.environment.toUpperCase(),

@@ -9,6 +9,7 @@ function helpers(moneyUI) {
 
     //Set up server IP address and port # using env variables/defaults.
     var setupVariables = function() {
+        moneyUI.variables.uiversion = '0.2.0';
         moneyUI.variables.ipaddress  = process.env.IP;
         moneyUI.variables.port       = process.env.PORT;
         moneyUI.variables.apiaddress = process.env.MONEYAPI_PORT_8081_TCP_ADDR + ':' + process.env.MONEYAPI_PORT_8081_TCP_PORT;
