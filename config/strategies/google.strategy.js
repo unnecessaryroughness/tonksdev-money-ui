@@ -7,6 +7,7 @@ module.exports = function(moneyUI) {
     'use strict';
 
     var authCallBack = moneyUI.variables.g_callback;
+    debug ('using callback: ' + authCallBack);
 
     passport.use(new GoogleStrategy({
             clientID: '430969087731-a47i215viu0akr6g7vmvnuqkq0kqjpj8.apps.googleusercontent.com', //identifies this application

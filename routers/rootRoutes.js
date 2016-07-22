@@ -2,7 +2,8 @@ var debug = require('debug')('tonksDEV:routing'),
     debugM = require('debug')('tonksDEV:mongodb'),
     path = require('path'),
     express = require('express'),
-    tonksDEVUser = require('../models/tonksdevUserModel.js');
+    tonksDEVUser = require('../models/tonksdevUserModel.js'),
+    callAPI = require('../common/callAPI');
 
 var routes = function(moneyUIVars) {
     'use strict';
@@ -33,26 +34,30 @@ var routes = function(moneyUIVars) {
                 loggedInUser = req.user;
             }
 
-            //NOT IN USE -- RETREIVE RECORDS FROM MONGO & SHOW ON-SCREEN
-            //var query = transactions.find();
-            // query.exec(function(err, results) {
-            //     if (results) {
-            //         debugM('found ' + results.length + ' record(s): ' + results);
-            //     } else {
-            //         debugM('errored whilst trying to retrieve record');
-            //     }
-            // });
+            //get all registered users
+            callAPI(moneyUIVars.apiaddress + '/user/allusers', 'GET', null, null, function(err, response, data) {
 
-            //render the index page
-            res.render('index', { title: 'tonksDEV Money Home Page',
-                                  pgViews: sess.pgviews,
-                                  mongourl: moneyUIVars.mongourl,
-                                  environment: moneyUIVars.environment,
-                                  //data: results,
-                                  //error: err,
-                                  loggedIn: loggedIn,
-                                  loggedInUser: loggedInUser
-                                });
+                let allUsers = {
+                    userList: [{'displayName': 'Could not retrieve users from database'}]
+                };
+
+                //check response
+                if (!err && response.statusCode === 200) {
+                    allUsers = JSON.parse(data);
+                }
+
+                //render the index page
+                res.render('index', {
+                    title: 'tonksDEV Money Home Page',
+                    pgViews: sess.pgviews,
+                    mongourl: moneyUIVars.mongourl,
+                    environment: moneyUIVars.environment,
+                    loggedIn: loggedIn,
+                    loggedInUser: loggedInUser,
+                    allUsers: allUsers
+                });
+            })
+
     });
 
     //handle request to log out
@@ -75,10 +80,8 @@ var routes = function(moneyUIVars) {
             aytController.aytData(function(err, data) {
               res.setHeader('Content-Type', 'application/json');
               if (!err) {
-                debug("AYT data is: " + JSON.stringify(data));
                 return res.status(200).json(data);
               } else {
-                debug('AYT call failed');
                 return res.status(400).json({'error': err});
               }
             });

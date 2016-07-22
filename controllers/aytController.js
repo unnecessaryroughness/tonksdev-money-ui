@@ -1,22 +1,23 @@
-var mongoose = require('mongoose'),
-    debug = require('debug')('tonksDEV:money:api:aytController'),
-    request = require('request'),
-    http = require('http');
+const mongoose = require('mongoose'),
+      debug = require('debug')('tonksDEV:money:api:aytController'),
+      request = require('request'),
+      http = require('http'),
+      callAPI = require('../common/callAPI');
 
-var controller = function(moneyUIVars) {
+const controller = function(moneyUIVars) {
   'use strict';
 
-  var readyStateMap = {
+  const readyStateMap = {
     '0': 'disconnected',
     '1': 'connected',
     '2': 'connecting',
     '3': 'disconnecting'
   }
 
-  var aytData = function(done) {
-      request('http://' + moneyUIVars.apiaddress + '/ayt', function(error, response, body) {
+  const aytData = function(done) {
+      callAPI(moneyUIVars.apiaddress + '/ayt', 'GET', null, null, function(error, response, body) {
         if (!error && response.statusCode == 200) {
-            var rtnVal = {
+            const rtnVal = {
               'application': 'UI',
               'application-version': moneyUIVars.uiversion,
               'database': readyStateMap[mongoose.connection.readyState].toUpperCase(),
@@ -27,7 +28,7 @@ var controller = function(moneyUIVars) {
             }
             done(null, rtnVal);
         } else {
-          var rtnVal = {
+          const rtnVal = {
             'error': error
           }
           done(rtnVal, null);
@@ -35,12 +36,12 @@ var controller = function(moneyUIVars) {
     });
   }
 
-  var aytAPI = function(done) {
+  const aytAPI = function(done) {
       request('http://' + moneyUIVars.apiaddress + '/ayt', function(error, response, body) {
           if (!error && response.statusCode == 200) {
               done(null, JSON.parse(body));
           } else {
-            var rtnVal = {
+            const rtnVal = {
               'error': error
             }
             done(rtnVal, null);

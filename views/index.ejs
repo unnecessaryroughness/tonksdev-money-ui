@@ -28,5 +28,12 @@
       <li><a href="./ayt">ayt</a></li>
       <li><a href="./aytAPI">aytAPI</a></li>
     </ul>
+
+    <h3>Registered Users</h3>
+    <ul>
+      <% allUsers.userList.forEach(function(val, idx, arr) { %>
+        <li><%=val.displayName %></li>
+      <% }) %>
+    </ul>
 </body>
 </html>
