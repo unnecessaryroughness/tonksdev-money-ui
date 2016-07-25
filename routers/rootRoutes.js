@@ -30,8 +30,11 @@ var routes = function(moneyUIVars) {
                 loggedInUser = {displayName: 'not logged in'};
 
             if (req.user) {
+              debug('req.user exists');
                 loggedIn = true;
                 loggedInUser = req.user;
+            } else {
+                debug('req.user does not exist');
             }
 
             //get all registered users

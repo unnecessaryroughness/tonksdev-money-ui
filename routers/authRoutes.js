@@ -24,19 +24,19 @@ var routes = function(moneyUIVars) {
         );
 
     //handle request to sign-in with facebook
-    authRouter.route('/facebook')
-        .get(passport.authenticate('facebook', {
-            scope: ['email', 'user_friends']
-          })
-        );
-
+    // authRouter.route('/facebook')
+    //     .get(passport.authenticate('facebook', {
+    //         scope: ['email', 'user_friends']
+    //       })
+    //     );
+    //
     //handle callback following authentication by facebook
-    authRouter.route('/facebook/callback')
-        .get(passport.authenticate('facebook', {
-            successRedirect: '/',
-            failure: '/error/'
-          })
-        );
+    // authRouter.route('/facebook/callback')
+    //     .get(passport.authenticate('facebook', {
+    //         successRedirect: '/',
+    //         failure: '/error/'
+    //       })
+    //     );
 
     return authRouter;
 };

@@ -1,5 +1,6 @@
 var passport = require('passport'),
-    User = require('../models/tonksdevUserModel');
+    User = require('../models/tonksdevUserModel'),
+    callAPI = require('../common/callAPI');
 
 module.exports = function(moneyUI) {
     'use strict';
@@ -14,8 +15,8 @@ module.exports = function(moneyUI) {
 
     //code to return the full user object when supplied with the ID
     passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
-            done(err, user);
+        callAPI(moneyUI.variables.apiaddress + '/user/' + id, 'GET', null, null, function(err, response, user) {
+            done(err, JSON.parse(user).user);
         });
     });
 

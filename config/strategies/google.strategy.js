@@ -1,7 +1,8 @@
 var passport = require('passport'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     tonksDEVUser = require('../../models/tonksdevUserModel'),
-    debug = require('debug')('tonksDEV:google-auth');
+    debug = require('debug')('tonksDEV:google-auth'),
+    callAPI = require('../../common/callAPI');
 
 module.exports = function(moneyUI) {
     'use strict';
@@ -15,25 +16,29 @@ module.exports = function(moneyUI) {
             callbackURL: authCallBack //where will Google send us back to after authenticating?
             },
             function(req, accessToken, refreshToken, profile, done) { //function to call after control comes back
-                debug('control returned from Google');
 
-                //create our own custom user object to hold all social details
-                tonksDEVUser.findOne({'google.id': profile.id}, function(error, user) {
-                    if (user) {
+                //query the API for a user record matching the Google user primary email address
+                callAPI(moneyUI.variables.apiaddress + '/user/email/' + profile.emails[0].value, 'GET', null, null, function(err, response, data) {
+
+                    let foundUser = (data && JSON.parse(data) && JSON.parse(data).user) ? JSON.parse(data).user : {};
+
+                    if (foundUser && foundUser.email && foundUser.email === profile.emails[0].value) {
                         debug('found user in database - this is a returning user');
-                        done(null, user);
+                        done(null, foundUser);
                     } else {
-                        debug('did not find user in database - this is a new user');
-                        var g_user = {};
-                        g_user = new tonksDEVUser();
-                        g_user.email = profile.emails[0].value;
-                        g_user.image = profile._json.image.url;
-                        g_user.displayName = profile.displayName;
-                        g_user.google = {};
-                        g_user.google.id = profile.id;
-                        g_user.google.token = accessToken;
-                        g_user.save();
-                        done(null, g_user);
+                        debug('did not find user in database - this is a new user - adding to database via API');
+                        var g_user = {user: {}};
+                        g_user.user.email = profile.emails[0].value;
+                        g_user.user.image = profile._json.image.url;
+                        g_user.user.displayName = profile.displayName;
+                        g_user.user.google = {};
+                        g_user.user.google.id = profile.id;
+                        g_user.user.google.token = accessToken;
+
+                        //call API to create user in back end
+                        callAPI(moneyUI.variables.apiaddress + '/user', 'POST', g_user, null, function(err, response, data) {
+                          done(null, data.user);
+                        });
                     }
                 });
             }
