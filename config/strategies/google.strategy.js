@@ -2,13 +2,14 @@ var passport = require('passport'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     tonksDEVUser = require('../../models/tonksdevUserModel'),
     debug = require('debug')('tonksDEV:google-auth'),
+    debugL = require('debug')('tonksDEV:google-auth:login-debugger'),
     callAPI = require('../../common/callAPI');
 
 module.exports = function(moneyUI) {
     'use strict';
 
     var authCallBack = moneyUI.variables.g_callback;
-    debug ('using callback: ' + authCallBack);
+    debugL ('using callback: ' + authCallBack);
 
     passport.use(new GoogleStrategy({
             clientID: '430969087731-a47i215viu0akr6g7vmvnuqkq0kqjpj8.apps.googleusercontent.com', //identifies this application
@@ -17,8 +18,12 @@ module.exports = function(moneyUI) {
             },
             function(req, accessToken, refreshToken, profile, done) { //function to call after control comes back
 
+debugL('in the return function - about to call the API to look for a user matching the email returned');
+
                 //query the API for a user record matching the Google user primary email address
                 callAPI(moneyUI.variables.apiaddress + '/user/email/' + profile.emails[0].value, 'GET', null, null, function(err, response, data) {
+
+debugL('found a user from the API');
 
                     let foundUser = (data && JSON.parse(data) && JSON.parse(data).user) ? JSON.parse(data).user : {};
 
