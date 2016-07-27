@@ -61,8 +61,9 @@ var moneyUI = function() {
             self.app.use('/auth', authRouter);
             self.app.use('/', rootRouter);
 
-        //default error handler - throw 404
+        //default route error handler - did not find a matching route - throw 404
             self.app.use(function(req, res, next) {
+                debug('UI-ERROR: failed to match a route... this is the default route error handler');
                 var err = new Error('Not Found');
                 err.status = 404;
                 next(err);
@@ -73,6 +74,7 @@ var moneyUI = function() {
         //development error handler - show stack trace
             if (self.variables.environment === 'development') {
                 self.app.use(function(err, req, res, next) {
+                    debug('UI-ERROR: ' + err.error + ': ' + err.message);
                     res.status(err.status || 500);
                     res.render('error', {
                         message: err.message,
@@ -83,6 +85,7 @@ var moneyUI = function() {
 
         //production error handler - hide stack trace
             self.app.use(function(err, req, res, next) {
+                debug('UI-ERROR: ' + err.error + ': ' + err.message);
                 res.status(err.status || 500);
                 res.render('error', {
                     message: err.message,

@@ -23,7 +23,8 @@ gulp.task('default', function() {
             MONEYAPI_PORT_8081_TCP_ADDR:['0.0.0.0'],
             MONEYAPI_PORT_8081_TCP_PORT:['8081'],
             SESSION_SECRET:['#Mj0vCwDae%l'],
-            GOOGLE_CALLBACK:['http://localhost:8080/auth/google/callback']
+            GOOGLE_CALLBACK:['http://localhost:8080/auth/google/callback'],
+            API_KEY:['aab37744-bfd8-4d21-9052-6ec73853ee39']
         },
         ignore: ['./node_modules/**']
     })

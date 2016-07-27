@@ -6,11 +6,14 @@ function callAPI(reqPath, reqMethod, reqJSON, reqOptions, doneCallback) {
     'use strict';
 
     reqOptions = reqOptions || {};
+    // reqJSON = reqJSON || {};
     reqOptions.url = (reqPath.substr(0, 7) === 'http://') ? reqPath : 'http://' + reqPath;
     reqOptions.json = true;
-    reqOptions.headers = {'content-type': 'application/json'}
+    reqOptions.headers = {'content-type': 'application/json',
+                          'apikey': process.env.API_KEY}
     reqOptions.method = (reqMethod) ? reqMethod.toUpperCase() : 'GET';
     reqOptions.json = reqJSON;
+    // reqOptions.json.apikey = process.env.API_KEY;
 
     debug('calling API: ' + reqPath + '(' + reqMethod + ') ');
 

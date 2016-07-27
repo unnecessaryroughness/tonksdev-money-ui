@@ -18,12 +18,12 @@ module.exports = function(moneyUI) {
             },
             function(req, accessToken, refreshToken, profile, done) { //function to call after control comes back
 
-debugL('in the return function - about to call the API to look for a user matching the email returned');
+                debugL('in the return function - about to call the API to look for a user matching the email returned');
 
                 //query the API for a user record matching the Google user primary email address
                 callAPI(moneyUI.variables.apiaddress + '/user/email/' + profile.emails[0].value, 'GET', null, null, function(err, response, data) {
 
-debugL('found a user from the API');
+                    debugL('found a user from the API');
 
                     let foundUser = (data && JSON.parse(data) && JSON.parse(data).user) ? JSON.parse(data).user : {};
 

@@ -18,6 +18,7 @@ function helpers(moneyUI) {
         moneyUI.variables.mongourl   = process.env.MONEYSESSION_PORT_27017_TCP_ADDR+':'+process.env.MONEYSESSION_PORT_27017_TCP_PORT + '/session?authSource=admin';
         moneyUI.variables.secret     = process.env.SESSION_SECRET;
         moneyUI.variables.g_callback = process.env.GOOGLE_CALLBACK;
+        moneyUI.variables.apikey     = process.env.API_KEY;
     };
 
     // terminator === the termination handler

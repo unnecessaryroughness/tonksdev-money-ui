@@ -40,17 +40,18 @@ var routes = function(moneyUIVars) {
             //get all registered users
             callAPI(moneyUIVars.apiaddress + '/user/allusers', 'GET', null, null, function(err, response, data) {
 
-                let allUsers = {
+                if (!err) {
+                  let allUsers = {
                     userList: [{'displayName': 'Could not retrieve users from database'}]
-                };
+                  };
 
-                //check response
-                if (!err && response.statusCode === 200) {
+                  //check response
+                  if (!err && response.statusCode === 200) {
                     allUsers = JSON.parse(data);
-                }
+                  }
 
-                //render the index page
-                res.render('index', {
+                  //render the index page
+                  res.render('index', {
                     title: 'tonksDEV Money Home Page',
                     pgViews: sess.pgviews,
                     mongourl: moneyUIVars.mongourl,
@@ -58,7 +59,8 @@ var routes = function(moneyUIVars) {
                     loggedIn: loggedIn,
                     loggedInUser: loggedInUser,
                     allUsers: allUsers
-                });
+                  });
+                }
             })
 
     });
