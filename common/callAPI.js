@@ -6,16 +6,15 @@ function callAPI(reqPath, reqMethod, reqJSON, reqOptions, doneCallback) {
     'use strict';
 
     reqOptions = reqOptions || {};
-    // reqJSON = reqJSON || {};
     reqOptions.url = (reqPath.substr(0, 7) === 'http://') ? reqPath : 'http://' + reqPath;
     reqOptions.json = true;
     reqOptions.headers = {'content-type': 'application/json',
-                          'apikey': process.env.API_KEY}
+                          'apikey': process.env.API_KEY,
+                          'userid': reqOptions.userid || ''}
     reqOptions.method = (reqMethod) ? reqMethod.toUpperCase() : 'GET';
     reqOptions.json = reqJSON;
-    // reqOptions.json.apikey = process.env.API_KEY;
 
-    debug('calling API: ' + reqPath + '(' + reqMethod + ') ');
+    debug('calling API: ' + reqPath + '(' + reqMethod + ') ' + JSON.stringify(reqOptions.headers));
 
     //doneCallback must implement signature --> function(error, response, body) {}
     request(reqOptions, function(error, response, body) {

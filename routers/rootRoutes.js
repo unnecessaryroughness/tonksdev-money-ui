@@ -9,61 +9,26 @@ var routes = function(moneyUIVars) {
     'use strict';
 
     var rootRouter = express.Router(),
-        aytController = require('../controllers/aytController')(moneyUIVars);
+        aytController = require('../controllers/aytController')(moneyUIVars),
+        homepageController = require('../controllers/homepageController')(moneyUIVars);
 
     var rootDir = path.join(__dirname, '..', 'public');
 
     rootRouter.route('/')
-        .get(function(req, res, next) {
+      .get(function(req, res, next) {
+          homepageController.getHomePageData(moneyUIVars, req.session, req.user, req.params, req.body, function(err, homepageData) {
+            res.render('index', homepageData);
+          });
+      })
 
-            var sess = req.session;
 
-            //increment pageview counter
-            if (sess.pgviews) {
-                sess.pgviews++;
-            } else {
-                sess.pgviews = 1;
-            }
+    rootRouter.route('/balances')
+      .get(function(req, res, next) {
+          homepageController.getBalancesData(moneyUIVars, req.session, req.user, req.params, req.body, function(err, homepageData) {
+            res.render('balances', homepageData);
+          });
+      })
 
-            //default the logged in user, but replace this if there is a user attached to the req object
-            var loggedIn = false,
-                loggedInUser = {displayName: 'not logged in'};
-
-            if (req.user) {
-              debug('req.user exists');
-                loggedIn = true;
-                loggedInUser = req.user;
-            } else {
-                debug('req.user does not exist');
-            }
-
-            //get all registered users
-            callAPI(moneyUIVars.apiaddress + '/user/allusers', 'GET', null, null, function(err, response, data) {
-
-                if (!err) {
-                  let allUsers = {
-                    userList: [{'displayName': 'Could not retrieve users from database'}]
-                  };
-
-                  //check response
-                  if (!err && response.statusCode === 200) {
-                    allUsers = JSON.parse(data);
-                  }
-
-                  //render the index page
-                  res.render('index', {
-                    title: 'tonksDEV Money Home Page',
-                    pgViews: sess.pgviews,
-                    mongourl: moneyUIVars.mongourl,
-                    environment: moneyUIVars.environment,
-                    loggedIn: loggedIn,
-                    loggedInUser: loggedInUser,
-                    allUsers: allUsers
-                  });
-                }
-            })
-
-    });
 
     //handle request to log out
     rootRouter.route('/logout')
@@ -82,7 +47,7 @@ var routes = function(moneyUIVars) {
     //handle request to "are you there?"
     rootRouter.route('/ayt')
         .get(function(req, res, next) {
-            aytController.aytData(function(err, data) {
+            aytController.aytData(req.session.passport.user, function(err, data) {
               res.setHeader('Content-Type', 'application/json');
               if (!err) {
                 return res.status(200).json(data);
@@ -94,7 +59,7 @@ var routes = function(moneyUIVars) {
 
     rootRouter.route('/aytAPI')
         .get(function(req, res, next) {
-            aytController.aytAPI(function(err, data) {
+            aytController.aytAPI(req.session.passport.user, function(err, data) {
                 res.setHeader('Content-Type', 'application/json');
                 if (!err) {
                   debug("API AYT data is: " + JSON.stringify(data));

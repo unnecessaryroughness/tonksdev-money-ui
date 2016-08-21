@@ -8,8 +8,6 @@
 <body>
     <h1><%=title%> (<%=environment%>)</h1>
 
-    <p><%=pgViews%> Page Views</p>
-
     <p>
         Logged in User: <%=loggedInUser.displayName%>
     </p>
@@ -22,14 +20,18 @@
     <% } else { %>
       <li>Sign in with <a href='auth/google'>GOOGLE</a></li>
     <% } %>
-
+    
     </ul>
 
-    <ul>
-      <li><a href="./ayt">ayt</a></li>
-      <li><a href="./aytAPI">aytAPI</a></li>
-      <li><a href="./balances">Show Balances</a></li>
-    </ul>
-
+    <h3>My Accounts</h3>
+    <table>
+      <% allAccounts.accountList.forEach(function(val, idx, arr) { %>
+        <tr>
+          <td><%=val.accountCode%></td>
+          <td><%=val.accountName%></td>
+          <td>£<%=val.balance%></td>
+        </tr>
+      <% }) %>
+    </table>
 </body>
 </html>

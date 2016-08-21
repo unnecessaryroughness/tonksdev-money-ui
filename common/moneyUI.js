@@ -74,7 +74,7 @@ var moneyUI = function() {
         //development error handler - show stack trace
             if (self.variables.environment === 'development') {
                 self.app.use(function(err, req, res, next) {
-                    debug('UI-ERROR: ' + err.error + ': ' + err.message);
+                    debug('UI-ERROR (DEV): ' + err.error + ': ' + err.message);
                     res.status(err.status || 500);
                     res.render('error', {
                         message: err.message,

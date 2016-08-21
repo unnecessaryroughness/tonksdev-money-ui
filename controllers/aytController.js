@@ -14,8 +14,8 @@ const controller = function(moneyUIVars) {
     '3': 'disconnecting'
   }
 
-  const aytData = function(done) {
-      callAPI(moneyUIVars.apiaddress + '/ayt', 'GET', null, null, function(error, response, body) {
+  const aytData = function(userid, done) {
+      callAPI(moneyUIVars.apiaddress + '/ayt', 'GET', null, {userid: userid}, function(error, response, body) {
         if (!error && response.statusCode == 200) {
             const rtnVal = {
               'application': 'UI',
@@ -36,8 +36,8 @@ const controller = function(moneyUIVars) {
     });
   }
 
-  const aytAPI = function(done) {
-      request('http://' + moneyUIVars.apiaddress + '/ayt', function(error, response, body) {
+  const aytAPI = function(userid, done) {
+      callAPI(moneyUIVars.apiaddress + '/ayt', 'GET', null, {userid: userid}, function(error, response, body) {
           if (!error && response.statusCode == 200) {
               done(null, JSON.parse(body));
           } else {
