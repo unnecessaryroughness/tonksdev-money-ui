@@ -47,7 +47,8 @@ var routes = function(moneyUIVars) {
     //handle request to "are you there?"
     rootRouter.route('/ayt')
         .get(function(req, res, next) {
-            aytController.aytData(req.session.passport.user || 'no-user', function(err, data) {
+            let userid = (typeof req.session.passport !== 'undefined') ? req.session.passport.user : 'no-user';
+            aytController.aytData(userid, function(err, data) {
               res.setHeader('Content-Type', 'application/json');
               if (!err) {
                 return res.status(200).json(data);
@@ -59,7 +60,8 @@ var routes = function(moneyUIVars) {
 
     rootRouter.route('/aytAPI')
         .get(function(req, res, next) {
-            aytController.aytAPI(req.session.passport.user || 'no-user', function(err, data) {
+            let userid = (typeof req.session.passport !== 'undefined') ? req.session.passport.user : 'no-user';
+            aytController.aytAPI(userid, function(err, data) {
                 res.setHeader('Content-Type', 'application/json');
                 if (!err) {
                   debug("API AYT data is: " + JSON.stringify(data));
