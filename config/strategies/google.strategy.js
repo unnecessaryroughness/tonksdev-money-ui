@@ -21,7 +21,7 @@ module.exports = function(moneyUI) {
                 debugL('in the return function - about to call the API to look for a user matching the email returned');
 
                 //query the API for a user record matching the Google user primary email address
-                callAPI(moneyUI.variables.apiaddress + '/user/email/' + profile.emails[0].value, 'GET', null, null, function(err, response, data) {
+                callAPI(moneyUI.variables.apiaddress + '/user/email/' + profile.emails[0].value, 'GET', null, {userid: moneyUI.variables.systemacc}, function(err, response, data) {
 
                     debugL('found a user from the API');
 
@@ -41,7 +41,7 @@ module.exports = function(moneyUI) {
                         g_user.user.google.token = accessToken;
 
                         //call API to create user in back end
-                        callAPI(moneyUI.variables.apiaddress + '/user', 'POST', g_user, null, function(err, response, data) {
+                        callAPI(moneyUI.variables.apiaddress + '/user', 'POST', g_user, {userid: moneyUI.variables.systemacc}, function(err, response, data) {
                           done(null, data.user);
                         });
                     }

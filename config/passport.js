@@ -19,7 +19,7 @@ module.exports = function(moneyUI) {
 
     //code to return the full user object when supplied with the ID
     passport.deserializeUser(function(id, done) {
-        callAPI(moneyUI.variables.apiaddress + '/user/' + id, 'GET', null, null, function(err, response, user) {
+        callAPI(moneyUI.variables.apiaddress + '/user/' + id, 'GET', null, {userid: moneyUI.variables.systemacc}, function(err, response, user) {
             if (response.statusCode !== 200) {
               done({error: response.statusCode, message: 'error retrieving user'}, {displayName: 'unknown'});
             } else {

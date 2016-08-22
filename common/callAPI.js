@@ -10,7 +10,7 @@ function callAPI(reqPath, reqMethod, reqJSON, reqOptions, doneCallback) {
     reqOptions.json = true;
     reqOptions.headers = {'content-type': 'application/json',
                           'apikey': process.env.API_KEY,
-                          'userid': reqOptions.userid || ''}
+                          'userid': reqOptions.userid || 'no-user'}
     reqOptions.method = (reqMethod) ? reqMethod.toUpperCase() : 'GET';
     reqOptions.json = reqJSON;
 

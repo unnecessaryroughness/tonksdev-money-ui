@@ -19,6 +19,7 @@ function helpers(moneyUI) {
         moneyUI.variables.secret     = process.env.SESSION_SECRET;
         moneyUI.variables.g_callback = process.env.GOOGLE_CALLBACK;
         moneyUI.variables.apikey     = process.env.API_KEY;
+        moneyUI.variables.systemacc  = process.env.SYSTEMACC;
     };
 
     // terminator === the termination handler

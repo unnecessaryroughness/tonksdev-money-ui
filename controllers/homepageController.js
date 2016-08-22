@@ -19,6 +19,7 @@ const controller = function(moneyUIVars) {
 
   const getBalancesData = function(envVars, envSession, envUser, envQSParams, envBody, done) {
     let userid = (typeof envSession.passport !== 'undefined') ? envSession.passport.user : 'no-user';
+    
     callAPI(envVars.apiaddress + '/account/allaccounts', 'GET', null, {userid: userid}, function(err, response, data) {
       let allAccounts = {};
       if (err || response.statusCode !== 200) {
