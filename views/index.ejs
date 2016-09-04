@@ -1,35 +1,30 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
     <title><%=title%></title>
+    <%- include('includes/bootstrapSetup.ejs') %>
 </head>
 
 <body>
-    <h1><%=title%> (<%=environment%>)</h1>
+  <%- include('includes/navbar.ejs') %>
 
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <div class="container">
+      <h1><em>the</em>Money</h1>
+      <p>This is a placeholder front page for the tonksDEV Money application. The layout &amp; style is based on Bootstrap. This version is vanilla, but will be enhanced in the future.</p>
+      <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+    </div>
+  </div>
+
+  <div class="main-content-frame">
     <p><%=pgViews%> Page Views</p>
-
-    <p>
-        Logged in User: <%=loggedInUser.displayName%>
-    </p>
-
-    <ul>
-      <li><a href="/">Home</a></li>
-
-    <% if (loggedIn) { %>
-      <li><a href="/logout">Log out</a></li>
-    <% } else { %>
-      <li>Sign in with <a href='auth/google'>GOOGLE</a></li>
-    <% } %>
-
-    </ul>
-
     <ul>
       <li><a href="./ayt">ayt</a></li>
       <li><a href="./aytAPI">aytAPI</a></li>
       <li><a href="./balances">Show Balances</a></li>
     </ul>
-
+  </div>
 </body>
 </html>

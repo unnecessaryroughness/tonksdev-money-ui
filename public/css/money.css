@@ -1,0 +1,40 @@
+* {
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin-top: 50px;
+}
+
+
+h1 {
+}
+
+h2 {
+
+}
+
+h3 {
+
+}
+
+
+thead {
+  font-weight: bold;
+  background: #444;
+  color: #fff;
+}
+
+.main-content-frame {
+  margin: 70px 10px 10px 10px;
+}
+
+.logged-in-username {
+  color: #fff;
+  margin-right: 1em;
+}
+.environment-name {
+  color: #fa6;
+  margin-right: 1em;
+}
