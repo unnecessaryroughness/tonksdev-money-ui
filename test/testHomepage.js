@@ -47,12 +47,11 @@ describe('"Are You There??" functional testing', function() {
         tstCtrl.getHomePageData(envVars, {pgviews: 2}, {userid: 'MOCHA-TEST-USER'}, {}, {}, function(err, data) {
           // console.log(err, data);
           expect(tstCtrl).to.not.be.undefined;
-          expect(data.title).to.equal('tonksDEV Money: Welcome');
-          expect(data.pgViews).to.equal(3);
-          expect(data.mongourl).to.equal('172.17.0.3:27017/session?authSource=admin');
-          expect(data.environment).to.equal('MOCHA-TESTING');
-          expect(data.loggedIn).to.equal(true);
-          expect(data.loggedInUser.userid).to.equal('MOCHA-TEST-USER');
+          expect(data.pageTitle).to.equal('tonksDEV Money: Welcome');
+          expect(data.pageData.pageViews).to.equal(3);
+          expect(data.header.environment).to.equal('MOCHA-TESTING');
+          expect(data.header.loggedIn).to.equal(true);
+          expect(data.header.loggedInUser.userid).to.equal('MOCHA-TEST-USER');
           done();
         });
     });
@@ -61,12 +60,12 @@ describe('"Are You There??" functional testing', function() {
         tstCtrl.getBalancesData(envVars, {pgviews: 2, passport: {user: 'MOCHA-TEST-USER'}}, {userid: 'MOCHA-TEST-USER'}, {}, {}, function(err, data) {
           // console.log(err, data);
           expect(tstCtrl).to.not.be.undefined;
-          expect(data.title).to.equal('tonksDEV Money: Balances');
-          expect(data.environment).to.equal('MOCHA-TESTING');
-          expect(data.loggedIn).to.equal(true);
-          expect(data.loggedInUser.userid).to.equal('MOCHA-TEST-USER');
-          expect(data.allAccounts.accountsList.length).to.equal(1);
-          expect(data.allAccounts.accountsList[0].accountCode).to.equal('TSTACC');
+          expect(data.pageTitle).to.equal('tonksDEV Money: Balances');
+          expect(data.header.environment).to.equal('MOCHA-TESTING');
+          expect(data.header.loggedIn).to.equal(true);
+          expect(data.header.loggedInUser.userid).to.equal('MOCHA-TEST-USER');
+          expect(data.pageData.accountsList.length).to.equal(1);
+          expect(data.pageData.accountsList[0].accountCode).to.equal('TSTACC');
           done();
         });
     });
