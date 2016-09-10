@@ -2,7 +2,7 @@
 
 <html lang="en">
 <head>
-    <title><%=title%></title>
+    <title><%=pageTitle%></title>
     <%- include('includes/bootstrapSetup.ejs') %>
 </head>
 
@@ -12,14 +12,14 @@
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
     <div class="container">
-      <h1><em>the</em>Money</h1>
+      <div class='money-logo'><em>the</em>Money</div>
       <p>This is a placeholder front page for the tonksDEV Money application. The layout &amp; style is based on Bootstrap. This version is vanilla, but will be enhanced in the future.</p>
       <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
     </div>
   </div>
 
   <div class="main-content-frame">
-    <p><%=pgViews%> Page Views</p>
+    <p><%=pageData.pageViews%> Page Views</p>
     <ul>
       <li><a href="./ayt">ayt</a></li>
       <li><a href="./aytAPI">aytAPI</a></li>

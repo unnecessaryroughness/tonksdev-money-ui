@@ -26,6 +26,28 @@ thead {
   color: #fff;
 }
 
+.navbar-inverse .money-logo {
+  font-family: serif;
+  font-size: 2em;
+  color: #fff;
+}
+
+.navbar-inverse .money-logo em {
+  font-family: serif;
+  color: #fff;
+}
+
+.jumbotron .money-logo {
+  font-family: serif;
+  font-size: 6em;
+  color: #000;
+}
+
+.jumbotron .money-logo em {
+  font-family: serif;
+}
+
+
 .main-content-frame {
   margin: 70px 10px 10px 10px;
 }
@@ -34,7 +56,16 @@ thead {
   color: #fff;
   margin-right: 1em;
 }
+
 .environment-name {
   color: #fa6;
   margin-right: 1em;
+}
+
+.grid-col-border {
+  border: 1px solid #ccc;
+}
+
+.grid-col-border-red {
+  border: 1px solid #f00;
 }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title><%=pageTitle%></title>
+    <%- include('../includes/bootstrapSetup.ejs') %>
+    <script src="/js/setup/accgroups.js"></script>
+</head>
+
+<body>
+    <%- include('../includes/navbar.ejs') %>
+
+    <div class="main-content-frame">
+      <h3>Account Group Setup</h3>
+
+      <table class="table table-striped">
+        <thead class="thead-inverse">
+          <tr>
+            <td>Account Group</td>
+            <td>Group Description</td>
+            <td>Action</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% pageData.accountGroupList.forEach(function(val, idx, arr) { %>
+            <tr>
+              <td><%=val.groupCode%></td>
+              <td><%=val.description%></td>
+              <td><button class="btn btn-warning">Leave Group</button> <button class="btn btn-danger">Delete Group</button></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <button class="btn btn-success" data-toggle="modal" data-target="#createModal">Create a new Group</button>
+      <button class="btn">Join an existing Group</button>
+
+      <!-- Create New Group Modal -->
+      <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Create a New Account Group</h4>
+            </div>
+            <div class="modal-body">
+              <form id="frmCreate" action="" method="POST">
+                <div class="form-group">
+                  <label for="inputGroupCode">Group Code</label>
+                  <input type="text" class="form-control" id="inputGroupCode" name="inputGroupCode" placeholder="NEWGROUP">
+                </div>
+                <div class="form-group">
+                  <label for="inputDescription">Group Description</label>
+                  <input type="text" class="form-control" id="inputDescription" name="inputDescription" placeholder="new group description">
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword">Group Password</label>
+                  <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="password">
+                </div>
+                <div class="form-group">
+                  <label for="confirmPassword">Confirm Password</label>
+                  <input type="password" class="form-control" id="confirmPassword" placeholder="confirm password">
+                </div>
+                <input type="hidden" id="inputAction" name="inputAction">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="btnSaveNewGroup">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+</body>
+</html>

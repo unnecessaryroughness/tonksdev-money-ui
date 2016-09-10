@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title><%=title%></title>
+    <title><%=pageTitle%></title>
     <%- include('includes/bootstrapSetup.ejs') %>
 </head>
 
@@ -11,7 +11,7 @@
 
     <div class="main-content-frame">
 
-      <h3>My Accounts</h3>
+      <h3>My Accounts (<%=header.selectedAccountGroup%>)</h3>
       <table class="table table-striped">
         <thead class="thead-inverse">
           <tr>
@@ -21,7 +21,7 @@
           </tr>
         </thead>
         <tbody>
-          <% allAccounts.accountList.forEach(function(val, idx, arr) { %>
+          <% pageData.accountList.forEach(function(val, idx, arr) { %>
             <tr>
               <td><%=val.accountCode%></td>
               <td><%=val.accountName%></td>
@@ -30,6 +30,14 @@
           <% }) %>
         </tbody>
       </table>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 grid-col-border">payday countdown goes here</div>
+        <div class="col-md-6 grid-col-border">calendar goes here</div>
+      </div>
+    </div>
+
   </div>
 </body>
 </html>
