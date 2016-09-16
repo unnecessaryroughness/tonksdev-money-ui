@@ -3,15 +3,16 @@ const helper = function() {
 
   function generateViewData(envVars, envSession, envUser, envQSParams, envBody, pageTitle, pageData) {
     let rtnVal = {
-            header: {
-              environment: envVars.environment,
-              loggedIn: envUser ? true : false,
-              loggedInUser: envUser ? envUser : {displayName: 'not logged in'},
-              loggedInUserGroups: envUser ? envUser.groups : ['none'],
-              selectedAccountGroup: envSession.accountGroupName || '',
+            "header": {
+              "environment": envVars.environment,
+              "loggedIn": envUser ? true : false,
+              "loggedInUser": envUser ? envUser : {displayName: 'not logged in'},
+              "loggedInUserGroups": envUser ? envUser.groups : ['none'],
+              "selectedAccountGroup": envSession.accountGroupName || '',
             },
-            pageTitle: pageTitle,
-            pageData: (typeof pageData === 'string') ? JSON.parse(pageData) : pageData
+            "pageTitle": pageTitle,
+            "pageData": (typeof pageData === 'string') ? JSON.parse(pageData) : pageData,
+            "pageError": envBody.error
           };
 
     // console.log("rtnVal", rtnVal);

@@ -3,6 +3,8 @@ var debug = require('debug')('tonksDEV:routing'),
     path = require('path'),
     express = require('express'),
     tonksDEVUser = require('../models/tonksdevUserModel.js'),
+    sessionHelpers = require('../common/sessionHelpers'),
+    errorController = require('../controllers/errorController'),
     callAPI = require('../common/callAPI');
 
 var routes = function(moneyUIVars) {
@@ -24,9 +26,16 @@ var routes = function(moneyUIVars) {
 
     rootRouter.route('/balances')
       .get(function(req, res, next) {
+        if (sessionHelpers.userIsLoggedIn(req)) {    //only do anything if user is logged in
           homepageController.getBalancesData(moneyUIVars, req.session, req.user, req.params, req.body, function(err, homepageData) {
             res.render('balances', homepageData);
           });
+        } else {
+          errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params,
+                            {'error' : {'error': 403, 'message': 'forbidden'}}, function(err, errorData) {
+            res.status(403).render('error', errorData);
+          })
+        }
       })
 
 

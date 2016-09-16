@@ -5,7 +5,7 @@ const helper = function() {
         typeof req.session != 'undefined' &&
         typeof req.session.passport != 'undefined' &&
         typeof req.session.passport.user != 'undefined') {
-        
+
         console.log("logged IN")
         return true;
     } else {
@@ -19,4 +19,4 @@ const helper = function() {
   }
 }
 
-module.exports = helper;
+module.exports = helper();

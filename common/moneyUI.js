@@ -5,7 +5,8 @@ var express      = require('express'),
     debug        = require('debug')('tonksDEV:money:ui:server'),
     session      = require('express-session'),
     mongoose     = require('mongoose'),
-    mongoStore   = require('connect-mongo')(session);
+    mongoStore   = require('connect-mongo')(session),
+    errorController = require('../controllers/errorController');
 
 //Define the application object
 var moneyUI = function() {
@@ -78,12 +79,12 @@ var moneyUI = function() {
         //development error handler - show stack trace
             if (self.variables.environment === 'development') {
                 self.app.use(function(err, req, res, next) {
-                    debug('UI-ERROR (DEV): ' + err.error + ': ' + err.message);
+                    debug('UI-ERROR (DEV): ' + err.error + ': ' + err.message, JSON.stringify(err));
                     res.status(err.status || 500);
-                    res.render('error', {
-                        message: err.message,
-                        error: err
-                    });
+                    errorController.getErrorPageData(self.variables, req.session, req.user, req.params,
+                                      {'error' : {'error': err.status || 500, 'message': err.message}}, function(err, errorData) {
+                        res.render('error', errorData);
+                    })
                 });
             }
 
@@ -91,10 +92,10 @@ var moneyUI = function() {
             self.app.use(function(err, req, res, next) {
                 debug('UI-ERROR: ' + err.error + ': ' + err.message);
                 res.status(err.status || 500);
-                res.render('error', {
-                    message: err.message,
-                    error: {}
-                });
+                errorController.getErrorPageData(self.variables, req.session, req.user, req.params,
+                                  {'error' : {'error': err.status || 500, 'message': 'Ooops. This is a little embarrasing.'}}, function(err, errorData) {
+                    res.render('error', errorData);
+                })
             });
     };
 

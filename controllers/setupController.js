@@ -34,9 +34,28 @@ const controller = function(moneyUIVars) {
     });
   }
 
+
+  const deleteAccGroup = function(envVars, envSession, envUser, envQSParams, envBody, done) {
+
+    let postBody = {
+      "accountGroup": {
+        "password": envBody.inputPassword,
+      }
+    }
+
+    callAPI(envVars.apiaddress + '/account/group/' + envBody.inputId, 'DELETE', postBody,
+                                {userid: envSession.passport.user}, function(err, response, data) {
+
+        let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+        done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
+    });
+  }
+
+
   return {
     getAccGroupPageData: getAccGroupPageData,
-    addNewAccGroup: addNewAccGroup
+    addNewAccGroup: addNewAccGroup,
+    deleteAccGroup: deleteAccGroup
   }
 }
 

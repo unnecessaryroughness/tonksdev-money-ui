@@ -26,7 +26,11 @@
             <tr>
               <td><%=val.groupCode%></td>
               <td><%=val.description%></td>
-              <td><button class="btn btn-warning">Leave Group</button> <button class="btn btn-danger">Delete Group</button></td>
+              <td>
+                  <button class="btn btn-primary btn-edit-ag" data-type="edit" data-groupid="<%=val.id%>">Edit</button>
+                  <button class="btn btn-warning btn-leave-ag" data-type="leave" data-groupid="<%=val.id%>">Leave</button>
+                  <button class="btn btn-danger btn-delete-ag" data-toggle="modal" data-target="#passwordModal" data-type="delete" data-groupid="<%=val.id%>">Delete</button>
+                </td>
             </tr>
           <% }) %>
         </tbody>
@@ -67,6 +71,32 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary" id="btnSaveNewGroup">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Supply Group Password Modal -->
+      <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Supply Account Group Password</h4>
+            </div>
+            <div class="modal-body">
+              <form id="frmPassword" action="" method="POST">
+                <div class="form-group">
+                  <label for="inputPassword">Group Password</label>
+                  <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="password">
+                </div>
+                <input type="hidden" id="inputAction" name="inputAction">
+                <input type="hidden" id="inputId" name="inputId">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="btnSubmitPassword">Submit</button>
             </div>
           </div>
         </div>

@@ -19,6 +19,16 @@ h3 {
 
 }
 
+.error-message-header {
+  margin-top: 1.5em;
+  font-weight: bold;
+  background: #eee;
+  padding: 0.5em;
+}
+
+.error-message {
+  padding: 0 1em;
+}
 
 thead {
   font-weight: bold;

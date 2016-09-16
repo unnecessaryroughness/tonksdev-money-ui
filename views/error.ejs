@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
-    <title>Error</title>
+    <title><%=pageTitle%></title>
+    <%- include('includes/bootstrapSetup.ejs') %>
 </head>
 
+
 <body>
-    <h1>An Error Occurred!</h1>
-    <h2><%=error.message%></h2>
-    <h3><%=error.error%></h3>
+    <%- include('includes/navbar.ejs') %>
+
+    <div class="main-content-frame">
+      <h3>An Error Occurred!</h3>
+
+      <% if (typeof pageError.errDetails !== "undefined") { %>
+        <p class="error-message-header">Code</p>
+        <p class="error-message"><%=pageError.errDetails.number%></p>
+        <p class="error-message-header">Message</p>
+        <p class="error-message"><%=pageError.errDetails.description%></p>
+        <p class="error-message-header">Stack</p>
+        <p class="error-message"><%=pageError.errDetails.stack%></p>
+        </p>
+      <% } else { %>
+        <% if (typeof pageError.error !== "undefined") { %>
+          <p class="error-message-header">Code</p>
+          <p class="error-message"><%=pageError.error%></p>
+        <% } %>
+        <% if (typeof pageError.message !== "undefined") { %>
+          <p class="error-message-header">Message</p>
+          <p class="error-message"><%=pageError.message%></p>
+        <% } %>
+      <% } %>
+
+    </div>
 </body>
 </html>

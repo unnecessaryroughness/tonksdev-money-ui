@@ -1,7 +1,8 @@
 var express = require('express'),
     debug   = require('debug')('tonksDEV:money:ui:router:setup'),
     callAPI = require('../common/callAPI'),
-    sessionHelpers = require('../common/sessionHelpers')();
+    sessionHelpers = require('../common/sessionHelpers'),
+    errorController = require('../controllers/errorController');
 
 var routes = function(moneyUIVars) {
     'use strict';
@@ -17,7 +18,12 @@ var routes = function(moneyUIVars) {
                 res.render('setup/accgroups', pageData);
               });
             } else {
-              return res.render('error', {'error' : {'error': 403, 'message': 'forbidden'}});
+              errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params,
+                                {'error' : {'error': 403, 'message': 'forbidden'}},
+                                function(err, errorData) {
+
+                res.status(403).render('error', errorData);
+              })
             }
           })
         .post(function(req, res, next) {
@@ -34,13 +40,41 @@ var routes = function(moneyUIVars) {
                   break;
 
                 case "leave":
+                  errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params,
+                                    {'error' : {'error': 200, 'message': 'received request to leave ' + req.body.inputLeaveId}},
+                                    function(cErr, errorData) {
+
+                      res.status(200).render('error', errorData);
+                  })
+                  break;
+
+                case "update":
+                  errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params,
+                                    {'error' : {'error': 200, 'message': 'received request to update ' + req.body.inputUpdateId}},
+                                    function(cErr, errorData) {
+
+                      res.status(200).render('error', errorData);
+                  })
                   break;
 
                 case "delete":
+                  setupController.deleteAccGroup(moneyUIVars, req.session, req.user, req.params, req.body, function(err, newGroupData) {
+                    if (!err) {
+                      res.redirect('back');
+                    } else {
+                      errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params, {'error': err}, function(cErr, errorData) {
+                          res.status(err.statusCode || 500).render('error', errorData);
+                      })
+                    }
+                  });
                   break;
 
                 default:
-                  return res.render('error', {'error' : {'error': 404, 'message': 'not found'}});
+                  errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params,
+                                    {'error':{'error': 404, 'message': 'not found'}}, function(cErr, errorData) {
+
+                      res.status(500).render('error', errorData);
+                  })
                   break;
               }
             }
