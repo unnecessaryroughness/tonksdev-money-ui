@@ -17,6 +17,7 @@ const controller = function(moneyUIVars) {
 
     callAPI(envVars.apiaddress + '/account/group/' + envSession.accountGroupId + '/allaccounts', 'GET', null, {userid: userid}, function(err, response, data) {
       let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+      if (!apiResponse.data.accountList) apiResponse.data = {accountList: []};
       done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody,
                                                               'tonksDEV Money: Balances', apiResponse.data));
     });
