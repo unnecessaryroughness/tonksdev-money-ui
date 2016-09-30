@@ -40,12 +40,21 @@ var routes = function(moneyUIVars) {
                   break;
 
                 case "leave":
-                  errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params,
-                                    {'error' : {'error': 200, 'message': 'received request to leave ' + req.body.inputLeaveId}},
-                                    function(cErr, errorData) {
-
-                      res.status(200).render('error', errorData);
-                  })
+                  setupController.leaveAccGroup(moneyUIVars, req.session, req.user, req.params, req.body, function(err, newGroupData) {
+                    if (!err) {
+                      res.redirect('back');
+                    } else {
+                      errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params, {'error': err}, function(cErr, errorData) {
+                          res.status(err.statusCode || 500).render('error', errorData);
+                      })
+                    }
+                  });
+                  // errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params,
+                  //                   {'error' : {'error': 200, 'message': 'received request to leave ' + req.body.inputLeaveId}},
+                  //                   function(cErr, errorData) {
+                  //
+                  //     res.status(200).render('error', errorData);
+                  // })
                   break;
 
                 case "update":

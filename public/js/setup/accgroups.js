@@ -10,7 +10,7 @@ $(function() {
     });
 
     $(".btn-leave-ag").on("click", function(event) {
-        appendSubmitForm('leave', [{fieldName: 'LeaveId', fieldVal: $(this).data('groupid')}])
+        appendSubmitForm('leave', [{fieldName: 'LeaveGroup', fieldVal: $(this).data('groupname')}])
     });
 
     $("#btnSaveNewGroup").on("click", function() {

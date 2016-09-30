@@ -27,9 +27,10 @@
               <td><%=val.groupCode%></td>
               <td><%=val.description%></td>
               <td>
-                  <button class="btn btn-primary btn-edit-ag" data-type="edit" data-groupid="<%=val.id%>">Edit</button>
-                  <button class="btn btn-warning btn-leave-ag" data-type="leave" data-groupid="<%=val.id%>">Leave</button>
-                  <button class="btn btn-danger btn-delete-ag" data-toggle="modal" data-target="#passwordModal" data-type="delete" data-groupid="<%=val.id%>">Delete</button>
+                  <button class="btn btn-primary btn-edit-ag" data-type="edit" data-groupid="<%=val.id%>" data-groupname="<%=val.groupCode%>">Edit</button>
+                  <button class="btn btn-warning btn-leave-ag" data-type="leave" data-groupid="<%=val.id%>" data-groupname="<%=val.groupCode%>">Leave</button>
+                  <button class="btn btn-danger btn-delete-ag" data-toggle="modal" data-target="#passwordModal"
+                                      data-type="delete" data-groupid="<%=val.id%>" data-groupname="<%=val.groupCode%>">Delete</button>
                 </td>
             </tr>
           <% }) %>
