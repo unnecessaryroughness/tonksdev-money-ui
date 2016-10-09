@@ -23,7 +23,9 @@ module.exports = function(moneyUI) {
             if (response.statusCode !== 200) {
               done({error: response.statusCode, message: 'error retrieving user'}, {displayName: 'unknown'});
             } else {
-              done(err, JSON.parse(user).user);
+              let userObj = JSON.parse(user).user;
+              userObj.groups = userObj.groups.sort();
+              done(err, userObj);
             }
         });
     });

@@ -27,10 +27,9 @@
               <td><%=val.groupCode%></td>
               <td><%=val.description%></td>
               <td>
-                  <button class="btn btn-primary btn-edit-ag" data-type="edit" data-groupid="<%=val.id%>" data-groupname="<%=val.groupCode%>">Edit</button>
-                  <button class="btn btn-warning btn-leave-ag" data-type="leave" data-groupid="<%=val.id%>" data-groupname="<%=val.groupCode%>">Leave</button>
-                  <button class="btn btn-danger btn-delete-ag" data-toggle="modal" data-target="#passwordModal"
-                                      data-type="delete" data-groupid="<%=val.id%>" data-groupname="<%=val.groupCode%>">Delete</button>
+                  <button class="btn btn-primary btn-edit-ag" data-toggle="modal" data-target="#editModal"
+                                      data-type="edit" data-groupid="<%=val.id%>" data-groupname="<%=val.groupCode%>"
+                                      data-groupdesc="<%=val.description%>">Edit</button>
                 </td>
             </tr>
           <% }) %>
@@ -38,7 +37,7 @@
       </table>
 
       <button class="btn btn-success" data-toggle="modal" data-target="#createModal">Create a new Group</button>
-      <button class="btn">Join an existing Group</button>
+      <button class="btn" data-toggle="modal" data-target="#groupCodeModal">Join an existing Group</button>
 
       <!-- Create New Group Modal -->
       <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -77,8 +76,54 @@
         </div>
       </div>
 
+
+      <!-- Edit Group Modal -->
+      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Edit Account Group</h4>
+            </div>
+            <div class="modal-body">
+              <form id="frmEdit" action="" method="POST">
+                <div class="form-group">
+                  <label for="inputEditGroupCode">Group Code</label>
+                  <input type="text" class="form-control" id="inputEditGroupCode" name="inputEditGroupCode" placeholder="NEWGROUP" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="inputEditDescription">Group Description</label>
+                  <input type="text" class="form-control" id="inputEditDescription" name="inputEditDescription" placeholder="new group description">
+                </div>
+                <div class="form-group">
+                  <label for="inputEditCurrentPassword">Current Group Password</label>
+                  <input type="password" class="form-control" id="inputEditCurrentPassword" name="inputEditCurrentPassword" placeholder="current password">
+                </div>
+                <div class="form-group">
+                  <label for="inputEditNewPassword">New Group Password</label>
+                  <input type="password" class="form-control" id="inputEditNewPassword" name="inputEditNewPassword" placeholder="new password">
+                </div>
+                <div class="form-group">
+                  <label for="confirmEditNewPassword">Confirm New Group Password</label>
+                  <input type="password" class="form-control" id="confirmEditNewPassword" placeholder="new password">
+                </div>
+                <input type="hidden" id="inputEditId" name="inputEditId">
+                <input type="hidden" id="inputAction" name="inputAction">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" id="btnEditDeleteGroup">Delete Group</button>
+              <button type="button" class="btn btn-warning" id="btnEditLeaveGroup">Leave Group</button>
+              <button type="button" class="btn btn-primary" id="btnEditSaveGroup">Save Changes</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <!-- Supply Group Password Modal -->
-      <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <!-- <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -98,6 +143,37 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary" id="btnSubmitPassword">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+
+
+      <!-- Supply Group Name & Password Modal -->
+      <div class="modal fade" id="groupCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Join an Existing Account Group</h4>
+            </div>
+            <div class="modal-body">
+              <form id="frmGroupCode" action="" method="POST">
+                <div class="form-group">
+                  <label for="inputCode">Group Code</label>
+                  <input type="text" class="form-control" id="inputCode" name="inputJoinGroup" placeholder="GROUPCODE">
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword">Group Password</label>
+                  <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="password">
+                </div>
+                <input type="hidden" id="inputAction" name="inputAction">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="btnSubmitGroupCode">Submit</button>
             </div>
           </div>
         </div>

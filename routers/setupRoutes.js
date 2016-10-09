@@ -32,11 +32,26 @@ var routes = function(moneyUIVars) {
               switch(req.body.inputAction) {
                 case "create":
                   setupController.addNewAccGroup(moneyUIVars, req.session, req.user, req.params, req.body, function(err, newGroupData) {
-                    res.redirect('back');
+                    if (!err) {
+                      res.redirect('back');
+                    } else {
+                      errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params, {'error': err}, function(cErr, errorData) {
+                          res.status(err.statusCode || 500).render('error', errorData);
+                      })
+                    }
                   });
                   break;
 
                 case "join":
+                  setupController.joinAccGroup(moneyUIVars, req.session, req.user, req.params, req.body, function(err, newGroupData) {
+                    if (!err) {
+                      res.redirect('back');
+                    } else {
+                      errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params, {'error': err}, function(cErr, errorData) {
+                          res.status(err.statusCode || 500).render('error', errorData);
+                      })
+                    }
+                  });
                   break;
 
                 case "leave":
@@ -49,21 +64,18 @@ var routes = function(moneyUIVars) {
                       })
                     }
                   });
-                  // errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params,
-                  //                   {'error' : {'error': 200, 'message': 'received request to leave ' + req.body.inputLeaveId}},
-                  //                   function(cErr, errorData) {
-                  //
-                  //     res.status(200).render('error', errorData);
-                  // })
                   break;
 
                 case "update":
-                  errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params,
-                                    {'error' : {'error': 200, 'message': 'received request to update ' + req.body.inputUpdateId}},
-                                    function(cErr, errorData) {
-
-                      res.status(200).render('error', errorData);
-                  })
+                  setupController.editAccGroup(moneyUIVars, req.session, req.user, req.params, req.body, function(err, newGroupData) {
+                    if (!err) {
+                      res.redirect('back');
+                    } else {
+                      errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params, {'error': err}, function(cErr, errorData) {
+                          res.status(err.statusCode || 500).render('error', errorData);
+                      })
+                    }
+                  });
                   break;
 
                 case "delete":

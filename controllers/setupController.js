@@ -35,15 +35,46 @@ const controller = function(moneyUIVars) {
   }
 
 
+  const editAccGroup = function(envVars, envSession, envUser, envQSParams, envBody, done) {
+
+    let postBody = {
+      "accountGroup": {
+        "description": envBody.inputEditDescription,
+        "password": envBody.inputEditCurrentPassword
+      }
+    }
+
+    let postPWBody = {
+      "oldPassword": envBody.inputEditCurrentPassword,
+      "newPassword": envBody.inputEditNewPassword
+    }
+
+    //edit the group description
+    callAPI(envVars.apiaddress + '/account/group/' + envBody.inputEditId, 'PUT', postBody, {userid: envSession.passport.user}, function(err, response, data) {
+        let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+
+        //update the group password
+        if (envBody.inputEditNewPassword && envBody.inputEditNewPassword.length > 0 && envBody.inputEditNewPassword !== envBody.inputEditCurrentPassword) {
+          callAPI(envVars.apiaddress + '/account/group/' + envBody.inputEditId + '/changepassword', 'PUT', postPWBody, {userid: envSession.passport.user}, function(err, response, data) {
+            let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+            done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
+          });
+        } else {
+          done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
+        }
+    });
+  }
+
+
   const deleteAccGroup = function(envVars, envSession, envUser, envQSParams, envBody, done) {
 
     let postBody = {
       "accountGroup": {
-        "password": envBody.inputPassword,
+        "password": envBody.inputEditCurrentPassword
       }
     }
 
-    callAPI(envVars.apiaddress + '/account/group/' + envBody.inputId, 'DELETE', postBody,
+    callAPI(envVars.apiaddress + '/account/group/' + envBody.inputEditId, 'DELETE', postBody,
                                 {userid: envSession.passport.user}, function(err, response, data) {
 
         let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
@@ -53,11 +84,24 @@ const controller = function(moneyUIVars) {
 
 
   const leaveAccGroup = function(envVars, envSession, envUser, envQSParams, envBody, done) {
+    callAPI(envVars.apiaddress + '/user/' + envSession.passport.user + '/group/' + envBody.inputEditGroupCode, 'DELETE', {},
+                                {userid: envSession.passport.user}, function(err, response, data) {
 
-    debug(envBody);
-    debug("LEAVE>>>>> " + envVars.apiaddress + '/user/' + envSession.passport.user + '/group/' + envBody.inputLeaveGroup);
+        let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+        done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
+    });
+  }
 
-    callAPI(envVars.apiaddress + '/user/' + envSession.passport.user + '/group/' + envBody.inputLeaveGroup, 'DELETE', {},
+
+  const joinAccGroup = function(envVars, envSession, envUser, envQSParams, envBody, done) {
+
+    let putBody = {
+      "accountGroup": {
+        "password": envBody.inputPassword
+      }
+    }
+
+    callAPI(envVars.apiaddress + '/user/' + envSession.passport.user + '/group/' + envBody.inputJoinGroup, 'PUT', putBody,
                                 {userid: envSession.passport.user}, function(err, response, data) {
 
         let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
@@ -70,7 +114,9 @@ const controller = function(moneyUIVars) {
     getAccGroupPageData: getAccGroupPageData,
     addNewAccGroup: addNewAccGroup,
     deleteAccGroup: deleteAccGroup,
-    leaveAccGroup: leaveAccGroup
+    leaveAccGroup: leaveAccGroup,
+    joinAccGroup: joinAccGroup,
+    editAccGroup: editAccGroup
   }
 }
 

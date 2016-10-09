@@ -2,11 +2,13 @@ $(function() {
     'use strict';
 
     $(".btn-delete-ag").on("click", function(event) {
-        $("#inputId").val($(this).data('groupid'));
+        $("#frmPassword #inputId").val($(this).data('groupid'));
     });
 
     $(".btn-edit-ag").on("click", function(event) {
-        appendSubmitForm('update', [{fieldName: 'UpdateId', fieldVal: $(this).data('groupid')}])
+        $("#inputEditId").val($(this).data('groupid'));
+        $("#inputEditGroupCode").val($(this).data('groupname'));
+        $("#inputEditDescription").val($(this).data('groupdesc'));
     });
 
     $(".btn-leave-ag").on("click", function(event) {
@@ -19,11 +21,37 @@ $(function() {
         $("#frmCreate").submit();
     });
 
+    $("#btnEditSaveGroup").on("click", function() {
+        $("#editModal").modal("hide");
+        $("#frmEdit #inputAction").val("update");
+        $("#frmEdit").submit();
+    });
+
+    $("#btnEditLeaveGroup").on("click", function() {
+        $("#editModal").modal("hide");
+        $("#frmEdit #inputAction").val("leave");
+        $("#frmEdit").submit();
+    });
+
+    $("#btnEditDeleteGroup").on("click", function() {
+        $("#editModal").modal("hide");
+        $("#frmEdit #inputAction").val("delete");
+        $("#frmEdit").submit();
+    });
+
     $("#btnSubmitPassword").on("click", function() {
         $("#passwordModal").modal("hide");
         $("#frmPassword #inputAction").val("delete");
         $("#frmPassword").submit();
     });
+
+    $("#btnSubmitGroupCode").on("click", function() {
+        $("#groupCodeModal").modal("hide");
+        $("#frmGroupCode #inputAction").val("join");
+        $("#frmGroupCode").submit();
+    });
+
+
 
 })
 
