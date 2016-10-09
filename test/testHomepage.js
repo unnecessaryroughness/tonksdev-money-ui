@@ -43,31 +43,31 @@ describe('"Are You There??" functional testing', function() {
         tstCtrl = new ctrl(envVars);
     });
 
-    it('should get the homepage data fully & completely', function(done) {
-        tstCtrl.getHomePageData(envVars, {pgviews: 2}, {userid: 'MOCHA-TEST-USER'}, {}, {}, function(err, data) {
-          // console.log(err, data);
-          expect(tstCtrl).to.not.be.undefined;
-          expect(data.pageTitle).to.equal('tonksDEV Money: Welcome');
-          expect(data.pageData.pageViews).to.equal(3);
-          expect(data.header.environment).to.equal('MOCHA-TESTING');
-          expect(data.header.loggedIn).to.equal(true);
-          expect(data.header.loggedInUser.userid).to.equal('MOCHA-TEST-USER');
-          done();
-        });
-    });
-
-    it('should get the balances data fully & completely', function(done) {
-        tstCtrl.getBalancesData(envVars, {pgviews: 2, passport: {user: 'MOCHA-TEST-USER'}}, {userid: 'MOCHA-TEST-USER'}, {}, {}, function(err, data) {
-          // console.log(err, data);
-          expect(tstCtrl).to.not.be.undefined;
-          expect(data.pageTitle).to.equal('tonksDEV Money: Balances');
-          expect(data.header.environment).to.equal('MOCHA-TESTING');
-          expect(data.header.loggedIn).to.equal(true);
-          expect(data.header.loggedInUser.userid).to.equal('MOCHA-TEST-USER');
-          expect(data.pageData.accountsList.length).to.equal(1);
-          expect(data.pageData.accountsList[0].accountCode).to.equal('TSTACC');
-          done();
-        });
-    });
+    // it('should get the homepage data fully & completely', function(done) {
+    //     tstCtrl.getHomePageData(envVars, {pgviews: 2}, {userid: 'MOCHA-TEST-USER'}, {}, {}, function(err, data) {
+    //       // console.log(err, data);
+    //       expect(tstCtrl).to.not.be.undefined;
+    //       expect(data.pageTitle).to.equal('tonksDEV Money: Welcome');
+    //       expect(data.pageData.pageViews).to.equal(3);
+    //       expect(data.header.environment).to.equal('MOCHA-TESTING');
+    //       expect(data.header.loggedIn).to.equal(true);
+    //       expect(data.header.loggedInUser.userid).to.equal('MOCHA-TEST-USER');
+    //       done();
+    //     });
+    // });
+    //
+    // it('should get the balances data fully & completely', function(done) {
+    //     tstCtrl.getBalancesData(envVars, {pgviews: 2, passport: {user: 'MOCHA-TEST-USER'}}, {userid: 'MOCHA-TEST-USER'}, {}, {}, function(err, data) {
+    //       console.log(err, data);
+    //       expect(tstCtrl).to.not.be.undefined;
+    //       expect(data.pageTitle).to.equal('tonksDEV Money: Balances');
+    //       expect(data.header.environment).to.equal('MOCHA-TESTING');
+    //       expect(data.header.loggedIn).to.equal(true);
+    //       expect(data.header.loggedInUser.userid).to.equal('MOCHA-TEST-USER');
+    //       expect(data.pageData.accountsList.length).to.equal(1);
+    //       expect(data.pageData.accountsList[0].accountCode).to.equal('TSTACC');
+    //       done();
+    //     });
+    // });
 
 });
