@@ -4,6 +4,7 @@
 <head>
     <title><%=pageTitle%></title>
     <%- include('../includes/bootstrapSetup.ejs') %>
+    <%- include('../includes/bootstrap-dialog.ejs') %>
     <script src="/js/setup/accgroups.js"></script>
 </head>
 
@@ -38,6 +39,7 @@
 
       <button class="btn btn-success" data-toggle="modal" data-target="#createModal">Create a new Group</button>
       <button class="btn" data-toggle="modal" data-target="#groupCodeModal">Join an existing Group</button>
+      <button class="btn" id="testDialog">Test Dialog</button>
 
       <!-- Create New Group Modal -->
       <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -51,19 +53,23 @@
               <form id="frmCreate" action="" method="POST">
                 <div class="form-group">
                   <label for="inputGroupCode">Group Code</label>
-                  <input type="text" class="form-control" id="inputGroupCode" name="inputGroupCode" placeholder="NEWGROUP">
+                  <input type="text" class="form-control allcaps mandatory" id="inputGroupCode" name="inputGroupCode" placeholder="NEWGROUP" required>
                 </div>
                 <div class="form-group">
                   <label for="inputDescription">Group Description</label>
-                  <input type="text" class="form-control" id="inputDescription" name="inputDescription" placeholder="new group description">
+                  <input type="text" class="form-control mandatory" id="inputDescription" name="inputDescription" placeholder="new group description" required>
                 </div>
                 <div class="form-group">
                   <label for="inputPassword">Group Password</label>
-                  <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="password">
+                  <input type="password" class="form-control mandatory" id="inputPassword" name="inputPassword" placeholder="password" required>
                 </div>
                 <div class="form-group">
                   <label for="confirmPassword">Confirm Password</label>
-                  <input type="password" class="form-control" id="confirmPassword" placeholder="confirm password">
+                  <input type="password" class="form-control mandatory" id="confirmPassword" placeholder="confirm password" required>
+                </div>
+                <div id="warning-labels" class="form-group">
+                  <label id="lblNoMatch" class="form-inline-error-message">Passwords do not match</label>
+                  <label id="lblMandatoryFields" class="form-inline-error-message">All fields are mandatory</label>
                 </div>
                 <input type="hidden" id="inputAction" name="inputAction">
               </form>
@@ -112,10 +118,10 @@
               </form>
             </div>
             <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-danger" id="btnEditDeleteGroup">Delete Group</button>
               <button type="button" class="btn btn-warning" id="btnEditLeaveGroup">Leave Group</button>
               <button type="button" class="btn btn-primary" id="btnEditSaveGroup">Save Changes</button>
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
@@ -135,7 +141,7 @@
               <form id="frmGroupCode" action="" method="POST">
                 <div class="form-group">
                   <label for="inputCode">Group Code</label>
-                  <input type="text" class="form-control" id="inputCode" name="inputJoinGroup" placeholder="GROUPCODE">
+                  <input type="text" class="form-control allcaps" id="inputCode" name="inputJoinGroup" placeholder="GROUPCODE">
                 </div>
                 <div class="form-group">
                   <label for="inputPassword">Group Password</label>

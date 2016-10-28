@@ -30,6 +30,19 @@ h3 {
   padding: 0 1em;
 }
 
+form .form-inline-error-message {
+  color: #d00;
+  display: none;
+}
+
+form .form-inline-error-bgcolor {
+  background: #fdd;
+}
+
+form .allcaps {
+  text-transform: uppercase;
+}
+
 thead {
   font-weight: bold;
   background: #444;

@@ -1,6 +1,10 @@
 $(function() {
     'use strict';
 
+    $("#testDialog").on("click", function(event) {
+        showConfirmDialog("my title here", "my body text here", function() { window.alert("CLICK CALLBACK!!")});
+    });
+
     $(".btn-delete-ag").on("click", function(event) {
         $("#frmPassword #inputId").val($(this).data('groupid'));
     });
@@ -16,9 +20,33 @@ $(function() {
     });
 
     $("#btnSaveNewGroup").on("click", function() {
-        $("#createModal").modal("hide");
-        $("#inputAction").val("create");
-        $("#frmCreate").submit();
+      $(".mandatory").removeClass("form-inline-error-bgcolor");
+      $("#warning-labels label").hide();
+
+      if ($("#inputPassword").val() === $("#confirmPassword").val()) {
+        let emptyInput = false;
+        $(".mandatory").each(function(val, idx) {
+            if ($(this).val() === "") {
+              emptyInput = true;
+            }
+        });
+        if (emptyInput) {
+          $("#lblMandatoryFields").show();
+          $("input").addClass("form-inline-error-bgcolor");
+          $("input:visible:first").focus();
+          return false;
+        } else {
+          $("#inputGroupCode").val($("#inputGroupCode").val().toUpperCase());
+          $("#createModal").modal("hide");
+          $("#inputAction").val("create");
+          $("#frmCreate").submit();
+        }
+      } else {
+        $("#lblNoMatch").show();
+        $("#inputPassword").addClass("form-inline-error-bgcolor");
+        $("#confirmPassword").addClass("form-inline-error-bgcolor");
+        return false;
+      }
     });
 
     $("#btnEditSaveGroup").on("click", function() {
@@ -35,8 +63,13 @@ $(function() {
 
     $("#btnEditDeleteGroup").on("click", function() {
         $("#editModal").modal("hide");
-        $("#frmEdit #inputAction").val("delete");
-        $("#frmEdit").submit();
+        showConfirmDialog("Delete Account Group -- Confirm?",
+                          "Are you sure you want to permanently delete this account group " +
+                          "AND all accounts contained in this account group?",
+                          function() {
+           $("#frmEdit #inputAction").val("delete");
+           $("#frmEdit").submit();
+         });
     });
 
     $("#btnSubmitPassword").on("click", function() {
@@ -52,7 +85,18 @@ $(function() {
     });
 
 
+    $("#createModal").on("hidden.bs.modal", function() {
+        $("#inputGroupCode").val("");
+        $("#inputDescription").val("");
+        $("#inputPassword").val("");
+        $("#confirmPassword").val("");
+        $(".mandatory").removeClass("form-inline-error-bgcolor");
+        $("#lblNoMatch").hide();
+    });
 
+    $(".modal").on("shown.bs.modal", function() {
+        $("input:visible:first").focus();
+    });
 })
 
 
