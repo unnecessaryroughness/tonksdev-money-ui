@@ -1,10 +1,6 @@
 $(function() {
     'use strict';
 
-    $("#testDialog").on("click", function(event) {
-        showConfirmDialog("my title here", "my body text here", function() { window.alert("CLICK CALLBACK!!")});
-    });
-
     $(".btn-delete-ag").on("click", function(event) {
         $("#frmPassword #inputId").val($(this).data('groupid'));
     });
@@ -91,7 +87,7 @@ $(function() {
         $("#inputPassword").val("");
         $("#confirmPassword").val("");
         $(".mandatory").removeClass("form-inline-error-bgcolor");
-        $("#lblNoMatch").hide();
+        $("#lblMandatoryFields").hide();
     });
 
     $(".modal").on("shown.bs.modal", function() {
