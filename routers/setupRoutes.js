@@ -15,16 +15,9 @@ var routes = function(moneyUIVars) {
     setupRouter.route('/accgroups')
         .get(function(req, res, next) {
             if (sessionHelpers.userIsLoggedIn(req)) {    //only do anything if user is logged in
-              setupController.getAccGroupPageData(moneyUIVars, req.session, req.user, req.params, req.body, function(err, pageData) {
-                res.render('setup/accgroups', pageData);
-              });
+              controllerHelpers.routeGet(setupController.getAccGroupPageData, moneyUIVars, req, res, 'setup/accgroups');
             } else {
-              errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params,
-                                {'error' : {'error': 403, 'message': 'forbidden'}},
-                                function(err, errorData) {
-
-                res.status(403).render('error', errorData);
-              })
+              controllerHelpers.routeError(moneyUIVars, req, res, 403, 'forbidden');
             }
           })
         .post(function(req, res, next) {
@@ -32,71 +25,27 @@ var routes = function(moneyUIVars) {
 
               switch(req.body.inputAction) {
                 case "create":
-                  setupController.addNewAccGroup(moneyUIVars, req.session, req.user, req.params, req.body, function(err, newGroupData) {
-                    if (!err) {
-                      res.redirect('back');
-                    } else {
-                      errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params, {'error': err}, function(cErr, errorData) {
-                          res.status(err.statusCode || 500).render('error', errorData);
-                      })
-                    }
-                  });
+                  controllerHelpers.routePost(setupController.addNewAccGroup, moneyUIVars, req, res);
                   break;
 
                 case "join":
-                  setupController.joinAccGroup(moneyUIVars, req.session, req.user, req.params, req.body, function(err, newGroupData) {
-                    if (!err) {
-                      res.redirect('back');
-                    } else {
-                      errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params, {'error': err}, function(cErr, errorData) {
-                          res.status(err.statusCode || 500).render('error', errorData);
-                      })
-                    }
-                  });
+                  controllerHelpers.routePost(setupController.joinAccGroup, moneyUIVars, req, res);
                   break;
 
                 case "leave":
-                  setupController.leaveAccGroup(moneyUIVars, req.session, req.user, req.params, req.body, function(err, newGroupData) {
-                    if (!err) {
-                      res.redirect('back');
-                    } else {
-                      errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params, {'error': err}, function(cErr, errorData) {
-                          res.status(err.statusCode || 500).render('error', errorData);
-                      })
-                    }
-                  });
+                  controllerHelpers.routePost(setupController.leaveAccGroup, moneyUIVars, req, res);
                   break;
 
                 case "update":
-                  setupController.editAccGroup(moneyUIVars, req.session, req.user, req.params, req.body, function(err, newGroupData) {
-                    if (!err) {
-                      res.redirect('back');
-                    } else {
-                      errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params, {'error': err}, function(cErr, errorData) {
-                          res.status(err.statusCode || 500).render('error', errorData);
-                      })
-                    }
-                  });
+                  controllerHelpers.routePost(setupController.editAccGroup, moneyUIVars, req, res);
                   break;
 
                 case "delete":
-                  setupController.deleteAccGroup(moneyUIVars, req.session, req.user, req.params, req.body, function(err, newGroupData) {
-                    if (!err) {
-                      res.redirect('back');
-                    } else {
-                      errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params, {'error': err}, function(cErr, errorData) {
-                          res.status(err.statusCode || 500).render('error', errorData);
-                      })
-                    }
-                  });
+                  controllerHelpers.routePost(setupController.deleteAccGroup, moneyUIVars, req, res);
                   break;
 
                 default:
-                  errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params,
-                                    {'error':{'error': 404, 'message': 'not found'}}, function(cErr, errorData) {
-
-                      res.status(500).render('error', errorData);
-                  })
+                  controllerHelpers.routeError(moneyUIVars, req, res, 404, 'not found');
                   break;
               }
             }
@@ -105,16 +54,9 @@ var routes = function(moneyUIVars) {
     setupRouter.route('/accounts')
         .get(function(req, res, next) {
             if (sessionHelpers.userIsLoggedIn(req)) {    //only do anything if user is logged in
-              setupController.getAccountsPageData(moneyUIVars, req.session, req.user, req.params, req.body, function(err, pageData) {
-                res.render('setup/accounts', pageData);
-              });
+              controllerHelpers.routeGet(setupController.getAccountsPageData, moneyUIVars, req, res, 'setup/accounts');
             } else {
-              errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params,
-                                {'error' : {'error': 403, 'message': 'forbidden'}},
-                                function(err, errorData) {
-
-                res.status(403).render('error', errorData);
-              })
+              controllerHelpers.routeError(moneyUIVars, req, res, 403, 'forbidden');
             }
           })
         .post(function(req, res, next) {
@@ -122,49 +64,19 @@ var routes = function(moneyUIVars) {
 
               switch(req.body.inputAction) {
                 case "create":
-                  setupController.addNewAccount(moneyUIVars, req.session, req.user, req.params, req.body, function(err, newGroupData) {
-                    if (!err) {
-                      res.redirect('back');
-                    } else {
-                      errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params, {'error': err}, function(cErr, errorData) {
-                          res.status(err.statusCode || 500).render('error', errorData);
-                      })
-                    }
-                  });
+                  controllerHelpers.routePost(setupController.addNewAccount, moneyUIVars, req, res);
                   break;
 
                 case "update":
-                debug("calling the new ROUTE method");
-                  controllerHelpers.route(setupController.editAccount, moneyUIVars, req, res);
-
-                  // setupController.editAccount(moneyUIVars, req.session, req.user, req.params, req.body, function(err, newGroupData) {
-                  //   if (!err) {
-                  //     res.redirect('back');
-                  //   } else {
-                  //     errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params, {'error': err}, function(cErr, errorData) {
-                  //         res.status(err.statusCode || 500).render('error', errorData);
-                  //     })
-                  //   }
-                  // });
+                  controllerHelpers.routePost(setupController.editAccount, moneyUIVars, req, res);
                   break;
 
-                  case "delete":
-                    setupController.deleteAccount(moneyUIVars, req.session, req.user, req.params, req.body, function(err, newGroupData) {
-                      if (!err) {
-                        res.redirect('back');
-                      } else {
-                        errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params, {'error': err}, function(cErr, errorData) {
-                            res.status(err.statusCode || 500).render('error', errorData);
-                        })
-                      }
-                    });
-                    break;
+                case "delete":
+                  controllerHelpers.routePost(setupController.deleteAccount, moneyUIVars, req, res);
+                  break;
 
               default:
-                errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params,
-                                  {'error':{'error': 404, 'message': 'action not found (' + req.body.inputAction + ')'}}, function(cErr, errorData) {
-                    res.status(500).render('error', errorData);
-                })
+                  controllerHelpers.routeError(moneyUIVars, req, res, 404, 'action not found (' + req.body.inputAction + ')');
                 break;
             }
           }

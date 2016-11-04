@@ -68,14 +68,9 @@ $(function() {
          });
     });
 
-    $("#btnSubmitPassword").on("click", function() {
-        $("#passwordModal").modal("hide");
-        $("#frmPassword #inputAction").val("delete");
-        $("#frmPassword").submit();
-    });
-
     $("#btnSubmitGroupCode").on("click", function() {
         $("#groupCodeModal").modal("hide");
+        $("#frmGroupCode #inputJoinGroup").val($("#inputJoinGroup").val().toUpperCase());
         $("#frmGroupCode #inputAction").val("join");
         $("#frmGroupCode").submit();
     });

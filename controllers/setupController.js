@@ -73,7 +73,6 @@ const controller = function(moneyUIVars) {
         "password": envBody.inputEditCurrentPassword
       }
     }
-
     callAPI(envVars.apiaddress + '/account/group/' + envBody.inputEditId, 'DELETE', postBody,
                                 {userid: envSession.passport.user}, function(err, response, data) {
 
@@ -124,7 +123,7 @@ const controller = function(moneyUIVars) {
       apiResponse.data = JSON.stringify(tmpRsp);
 
       done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody,
-                                              'tonksDEV Money: Account Group Setup', apiResponse.data));
+                                              'tonksDEV Money: Account Setup', apiResponse.data));
     });
   };
 
