@@ -114,13 +114,22 @@ const controller = function(moneyUIVars) {
   const getAccountsPageData = function(envVars, envSession, envUser, envQSParams, envBody, done) {
 
     callAPI(envVars.apiaddress + '/account/group/' + envSession.accountGroupId + '/allaccounts', 'GET', null, {userid: envSession.passport.user}, function(err, response, data) {
-      let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
 
-      let tmpRsp = JSON.parse(apiResponse.data);
-      tmpRsp.accountList.forEach(function(acct, idx) {
-        acct.accountTypeText = translateAcctType(acct.accountType);
-      })
-      apiResponse.data = JSON.stringify(tmpRsp);
+      //default apiResponse to an empty object
+      let apiResponse = {data:{accountList: []}, err: err};
+
+      //if some data was returned overwrite the apiResponse object
+      if (response.statusCode === 200) {
+        apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+
+        let tmpRsp = JSON.parse(apiResponse.data);
+        tmpRsp.accountList.forEach(function(acct, idx) {
+          acct.accountTypeText = translateAcctType(acct.accountType);
+        })
+        apiResponse.data = JSON.stringify(tmpRsp);
+      } else {
+        apiResponse.err = {"error": response.statusCode, "message": "no accounts found"}
+      }
 
       done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody,
                                               'tonksDEV Money: Account Setup', apiResponse.data));

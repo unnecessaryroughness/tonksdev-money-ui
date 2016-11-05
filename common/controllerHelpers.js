@@ -8,7 +8,7 @@ const helper = function() {
         envRes.render(viewUrl, pageData);
       } else {
         errorController.getErrorPageData(envVars, envReq.session, envReq.user, envReq.params, {'error': err}, function(cErr, errorData) {
-            envRes.status(err.statusCode || 500).render('error', errorData);
+            envRes.status(err.error || 500).render('error', errorData);
         })
       }
     });
@@ -20,7 +20,7 @@ const helper = function() {
         envRes.redirect('back');
       } else {
         errorController.getErrorPageData(envVars, envReq.session, envReq.user, envReq.params, {'error': err}, function(cErr, errorData) {
-            envRes.status(err.statusCode || 500).render('error', errorData);
+            envRes.status(err.error || 500).render('error', errorData);
         })
       }
     });
