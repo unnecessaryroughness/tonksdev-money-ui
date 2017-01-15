@@ -14,15 +14,13 @@ const controller = function(moneyUIVars) {
 
   const getBalancesData = function(envVars, envSession, envUser, envQSParams, envBody, done) {
     let userid = (typeof envSession.passport !== 'undefined') ? envSession.passport.user : 'no-user';
-
     callAPI(envVars.apiaddress + '/account/group/' + envSession.accountGroupId + '/allaccounts', 'GET', null, {userid: userid}, function(err, response, data) {
       let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
-      if (!apiResponse.data.accountList) apiResponse.data = {accountList: []};
+      if (!JSON.parse(apiResponse.data).accountList) apiResponse.data = {accountList: []};
       done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody,
                                                               'tonksDEV Money: Balances', apiResponse.data));
     });
   };
-
 
   return {
     getHomePageData: getHomePageData,

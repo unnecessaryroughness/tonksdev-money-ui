@@ -30,6 +30,10 @@ h3 {
   padding: 0 1em;
 }
 
+.field-format-currency{
+  text-align: right;
+}
+
 form .form-inline-error-message {
   color: #d00;
   display: none;

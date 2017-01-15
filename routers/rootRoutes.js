@@ -27,8 +27,8 @@ var routes = function(moneyUIVars) {
     rootRouter.route('/balances')
       .get(function(req, res, next) {
         if (sessionHelpers.userIsLoggedIn(req)) {    //only do anything if user is logged in
-          homepageController.getBalancesData(moneyUIVars, req.session, req.user, req.params, req.body, function(err, homepageData) {
-            res.render('balances', homepageData);
+          homepageController.getBalancesData(moneyUIVars, req.session, req.user, req.params, req.body, function(err, balancePageData) {
+            res.render('balances', balancePageData);
           });
         } else {
           errorController.getErrorPageData(moneyUIVars, req.session, req.user, req.params,
