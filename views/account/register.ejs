@@ -5,7 +5,8 @@
     <title><%=pageTitle%></title>
     <%- include('../includes/bootstrapSetup.ejs') %>
     <%- include('../includes/bootstrap-dialog.ejs') %>
-    <script src="/js/setup/accounts.js"></script>
+    <link href="/css/register.css" rel="stylesheet">
+    <script src="/js/account/register.js"></script>
 </head>
 
 <body>
@@ -30,7 +31,8 @@
         </thead>
         <tbody>
           <% pageData.transactionList.forEach(function(val, idx, arr) { %>
-            <tr data-txid="<%=val.id%>" data-cleared="<%=val.isCleared%>" data-placeholder="<%=val.isPlaceholder%>">
+            <tr class="<%=(val.isCleared ? '' : 'uncleared')%> <%=(val.isPlaceholder ? 'placeholder' : '')%>" 
+                data-txid="<%=val.id%>" data-cleared="<%=val.isCleared%>" data-placeholder="<%=val.isPlaceholder%>">
               <td><%=val.transactionDate%></td>
               <td><%=val.payee.name%></td>
               <td><%=val.category.name%></td>

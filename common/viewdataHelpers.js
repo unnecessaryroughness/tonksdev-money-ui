@@ -8,7 +8,7 @@ const helper = function() {
               "loggedIn": envUser ? true : false,
               "loggedInUser": envUser ? envUser : {displayName: 'not logged in'},
               "loggedInUserGroups": envUser ? envUser.groups : ['none'],
-              "selectedAccountGroup": envSession.accountGroupName || '',
+              "selectedAccountGroup": envSession.accountGroupName || (envUser ? envUser.groups[0] : ''),
             },
             "pageTitle": pageTitle,
             "pageData": (typeof pageData === 'string') ? JSON.parse(pageData) : pageData,

@@ -1,0 +1,11 @@
+tr[data-placeholder="true"] {
+  xxxcolor: #00d;
+}
+
+tr[data-cleared="false"] {
+  xxxcolor: #d00;
+}
+
+.uncleared {
+  color: #d00;
+}

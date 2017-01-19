@@ -11,7 +11,17 @@ const controller = function(moneyUIVars) {
     // API call for transaction register
     callAPI(envVars.apiaddress + '/transaction/recent/10/' + envQSParams.accid, 'GET', null, {userid: envSession.passport.user}, function(err, response, data) {
       let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
-      let jsoResponse = JSON.parse(apiResponse.data);
+      let jsoResponse = {};
+
+      if (JSON.stringify(apiResponse.data) !== "{}") {
+        jsoResponse = JSON.parse(apiResponse.data);
+      } else {
+        //if no transactions found, stub with an empty transactions list and override the returned error
+        jsoResponse = {transactionList: []};
+        if (apiResponse.err && JSON.parse(apiResponse.err).errDetails.number === 404) {
+          apiResponse.err = null;
+        }
+      }
 
       callAPI(envVars.apiaddress + '/account/' + envQSParams.accid, 'GET', null, {userid: envSession.passport.user}, function(accterr, acctresponse, acctdata) {
         let acctApiResponse = viewdataHelpers.sanitizeErrAndData(accterr, acctdata, acctresponse.statusCode);

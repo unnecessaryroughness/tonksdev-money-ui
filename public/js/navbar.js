@@ -4,21 +4,26 @@ $(function() {
 
     $(".accountgroup-option").on("click", function(e) {
         if ($(this).text() !== "none") {
-          $.ajax({
-            url: location.origin + '/ajax/switchag',
-            data: {"accountGroupName": $(this).text()},
-            type: 'POST',
-            success: function(data) {
-              refreshAGMenu(data.accountGroupName);
-              location.reload();
-            },
-            error: function(xhr, status, error) {
-              console.log("Error: " + error.message);
-            }
-          });
+          ajaxSwitchAG($(this).text());
         }
     })
 })
+
+
+function ajaxSwitchAG(groupCode) {
+  $.ajax({
+    url: location.origin + '/ajax/switchag',
+    data: {"accountGroupName": groupCode},
+    type: 'POST',
+    success: function(data) {
+      refreshAGMenu(data.accountGroupName);
+      location.reload();
+    },
+    error: function(xhr, status, error) {
+      console.log("Error: " + error.message);
+    }
+  });
+}
 
 function refreshAGMenu(selectedGroup) {
   $(".accountgroup-option").each(function(obj, idx) {
