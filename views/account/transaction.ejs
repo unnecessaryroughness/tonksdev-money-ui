@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title><%=pageTitle%></title>
+    <%- include('../includes/bootstrapSetup.ejs') %>
+    <%- include('../includes/bootstrap-dialog.ejs') %>
+    <link href="/css/transaction.css" rel="stylesheet">
+    <script src="/js/account/transaction.js"></script>
+</head>
+
+<body>
+    <%- include('../includes/navbar.ejs') %>
+
+    <div class="main-content-frame">
+      <h3>Transaction: <%=pageData.transaction.id%></h3>
+
+      <p><%=JSON.stringify(pageData)%></p>
+
+    </div>
+</body>
+</html>

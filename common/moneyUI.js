@@ -62,11 +62,13 @@ var moneyUI = function() {
             var rootRouter = require('../routers/rootRoutes')(self.variables);
             var setupRouter = require('../routers/setupRoutes')(self.variables);
             var regRouter = require('../routers/regRoutes')(self.variables);
+            var transRouter = require('../routers/transRoutes')(self.variables);
             self.app.use('/', rootRouter);
             self.app.use('/ajax', ajaxRouter);
             self.app.use('/auth', authRouter);
             self.app.use('/setup', setupRouter);
             self.app.use('/account/register', regRouter);
+            self.app.use('/account/transaction', transRouter);
 
         //default route error handler - did not find a matching route - throw 404
             self.app.use(function(req, res, next) {
