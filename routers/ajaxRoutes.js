@@ -1,6 +1,7 @@
 var express = require('express'),
     debug   = require('debug')('tonksDEV:money:ui:router:ajax'),
-    callAPI = require('../common/callAPI');
+    callAPI = require('../common/callAPI'),
+    calendarHelper = require("../common/calendarHelpers");
 
 var routes = function(moneyUIVars) {
     'use strict';
@@ -50,6 +51,13 @@ var routes = function(moneyUIVars) {
         } else {
           return res.status(403).json({'error': "forbidden"});
         }
+      })
+
+
+    ajaxRouter.route("/caldata")
+      .get(function(req, res, next) {
+          let rtnVal = calendarHelper.getCalData(req.query.monthReq, req.query.defaultDate);
+          return res.status(200).json(rtnVal);
       })
 
     return ajaxRouter;

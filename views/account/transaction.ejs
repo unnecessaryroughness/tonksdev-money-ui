@@ -6,17 +6,107 @@
     <%- include('../includes/bootstrapSetup.ejs') %>
     <%- include('../includes/bootstrap-dialog.ejs') %>
     <link href="/css/transaction.css" rel="stylesheet">
+    <link href="/css/calendar.css" rel="stylesheet">
     <script src="/js/account/transaction.js"></script>
+    <script src="/js/calendar/generatecalendar.js"></script>
 </head>
 
 <body>
     <%- include('../includes/navbar.ejs') %>
 
     <div class="main-content-frame">
-      <h3>Transaction: <%=pageData.transaction.id%></h3>
+      <h3>Edit Transaction</h3>
 
-      <p><%=JSON.stringify(pageData)%></p>
+      <div class="input-col" id="input-col-1">
+        <div class="input-group">
+          <label for="txnId">Transaction Id</label>
+          <label class="input-label" id="txnId"><%=pageData.transaction.id%></label>
+        </div>
+
+        <div class="input-group">
+          <label for="txnType">Transaction Type</label>
+          <select class="input-width-medium" name="txnType" id="txnType">
+            <option value="Payment">Payment</option>
+            <option value="Deposit">Deposit</option>
+            <option value="Transfer">Transfer</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="input-col" id="input-col-2">
+        <div class="input-group">
+          <label for="txnDate">Date</label>
+          <input class="input-width-narrow" name="txnDate" id="txnDate" value="<%=pageData.transaction.transactionDate%>"></input>
+          <div class="calendar" id="txnDateCal"></div>
+        </div>
+      </div>
+
+      <div class="input-col" id="input-col-3">
+        <div class="input-group">
+            <label for="txnAccount">Account</label>
+            <select class="input-width-wide" name="txnAccont" id="txnAccount">
+              <% pageData.accountList.forEach(function(val, idx) { %>
+                  <%- "<option " + (val.accountCode === pageData.transaction.account.code ? "selected" : "")  + ">" + val.accountCode + "</option>" %>
+              <% }); %>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="txnPayee">Pay To</label>
+            <select class="input-width-medium" name="txnPayee" id="txnPayee">
+              <% pageData.payeeList.forEach(function(val, idx) { %>
+                  <%- "<option " + (val.id === pageData.transaction.payee.id ? "selected" : "")  + ">" + val.payeeName + "</option>" %>
+              <% }); %>
+            </select>
+            <button type="button" class="btn btn-primary btn-narrow" id="btnNewPayee">New</button>
+        </div>
+
+        <div class="input-group">
+            <label for="txnCategory">Category</label>
+            <select class="input-width-medium" name="txnCategory" id="txnCategory">
+              <% pageData.categoryList.forEach(function(val, idx) { %>
+                  <%- "<option " + (val.id === pageData.transaction.category.id ? "selected" : "")  + ">" + val.categoryName + "</option>" %>
+              <% }); %>
+            </select>
+            <button type="button" class="btn btn-primary btn-narrow" id="btnNewCategory">New</button>
+        </div>
+
+        <div class="input-group">
+            <label for="txnNotes">Notes</label>
+            <textarea class="input-width-wide" name="txnNotes" id="txnNotes"><%=pageData.transaction.notes%></textarea>
+        </div>
+      </div>
+
+      <div class="input-col" id="input-col-4">
+        <div class="input-group">
+            <label for="txnCleared">Reconciled</label>
+            <input type="checkbox" name="txnCleared" id="txnCleared" <%=(pageData.transaction.isCleared ? "checked" : "")%>></input>
+        </div>
+
+        <div class="input-group">
+            <label for="txnPlaceholder">Placeholder</label>
+            <input type="checkbox" name="txnPlaceholder" id="txnPlaceholder" <%=(pageData.transaction.isPlaceholder ? "checked" : "")%>></input>
+        </div>
+
+        <div class="input-group">
+          <label for="txnAmount">Amount</label>
+          <input class="input-width-medium" name="txnAmount" id="txnAmount" value="<%=pageData.transaction.amount%>"></input>
+        </div>
+
+        <div class="input-group" data-return-to-account="<%=pageData.transaction.account.id%>">
+          <button type="button" class="btn btn-primary" id="btnSaveTxn">Save</button>
+          <button type="button" class="btn btn-default" id="btnCloseTxn">Close</button>
+          <button type="button" class="btn btn-danger" id="btnDeleteTxn">Delete</button>
+        </div>
+
+      </div>
+
+      <div class="data-listing"><%=JSON.stringify(pageData)%></div>
 
     </div>
+
+    <script>
+      var saveObj = <%- JSON.stringify(pageData.transaction)%>;
+    </script>
 </body>
 </html>

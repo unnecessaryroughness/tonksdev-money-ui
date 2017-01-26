@@ -72,7 +72,7 @@ var moneyUI = function() {
 
         //default route error handler - did not find a matching route - throw 404
             self.app.use(function(req, res, next) {
-                debug('UI-ERROR: failed to match a route... this is the default route error handler');
+                debug('UI-ERROR: failed to match a route... this is the default route error handler -> ' + req.url);
                 var err = new Error('Not Found');
                 err.status = 404;
                 next(err);

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="/gencal"></script>
+    <title>Test Calendar</title>
+    <style>
+        .calendar {
+            display: inline-block;
+        }
+        .tblCalendar {
+            border: 2px solid #666;
+        }
+        .caltoday {
+            background: #bbf !important;
+            color: #00f;
+            font-weight: bold;
+        }
+        .calselected {
+            background: #44f !important;
+            color: #fff !important;
+        }
+        .tCell {
+            width: 25px;
+            height: 20px;
+            font-size: 11pt;
+            padding: 2px;
+        }
+        .thCalMonthName {
+            width: 150px;
+        }
+        .thCalHeader {
+            background: #666;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .tdCalDay {
+            background: #eee;
+            text-align: center;
+        }
+    </style>
+</head>
+    <body>
+        <div class="calendar" id="basetable"></div>
+        <div class="calendar" id="basetable2"></div>
+        <div class="calendar" id="basetable3"></div>
+
+    <script>
+
+        $(function() {
+
+            var calname1 = "testcal";
+            var calname2 = "testcal2";
+            var calname3 = "testcal3";
+
+            $("#basetable").html(generateCalendarTable(calname1, 42));
+            $("#basetable2").html(generateCalendarTable(calname2, 42));
+            $("#basetable3").html(generateCalendarTable(calname3, 42));
+
+
+            //initialise with this month
+            var d = new Date();
+            refreshCal(calname1, ("00"+((d.getMonth()+1).toString())).slice(-2) + (d.getFullYear()).toString(), d.getDate().toString());
+            refreshCal(calname2, "052016", "22");
+            refreshCal(calname3, "092016", "5");
+        });
+
+    </script>
+
+    </body>
+</html>

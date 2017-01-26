@@ -1,0 +1,37 @@
+.calendar {
+    display: block;
+    margin: 1em 0;
+}
+.tblCalendar {
+    border: 2px solid #666;
+}
+.caltoday {
+    background: #bbf !important;
+    color: #00f;
+    font-weight: bold;
+}
+.calselected {
+    background: #44f !important;
+    color: #fff !important;
+}
+.tCell {
+    width: 25px;
+    height: 20px;
+    font-size: 11pt;
+    padding: 2px;
+}
+.thCalMonthName {
+    width: 150px;
+    text-align: center;
+}
+.thCalHeader {
+    background: #666;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+}
+.tdCalDay {
+    background: #eee;
+    text-align: center;
+}

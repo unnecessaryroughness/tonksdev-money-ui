@@ -31,12 +31,12 @@
         </thead>
         <tbody>
           <% pageData.transactionList.forEach(function(val, idx, arr) { %>
-            <tr class="<%=(val.isCleared ? '' : 'uncleared')%> <%=(val.isPlaceholder ? 'placeholder' : '')%>" 
+            <tr class="<%=(val.isCleared ? '' : 'uncleared')%> <%=(val.isPlaceholder ? 'placeholder' : '')%>"
                 data-txid="<%=val.id%>" data-cleared="<%=val.isCleared%>" data-placeholder="<%=val.isPlaceholder%>">
               <td><%=val.transactionDate%></td>
               <td><%=val.payee.name%></td>
               <td><%=val.category.name%></td>
-              <td class="field-format-currency"><%=val.amount%></td>
+              <td class="field-format-currency"><a href="/account/transaction/<%=val.id%>"><%=val.amount%></a></td>
               <td class="field-format-currency"><%=val.balance%></td>
             </tr>
           <% }) %>
