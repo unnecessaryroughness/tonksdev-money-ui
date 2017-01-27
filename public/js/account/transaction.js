@@ -42,11 +42,20 @@ $(function() {
   //wire up save button
   $("#btnSaveTxn").on("click", function(e) {
 
-    window.alert(saveObj.id);
 
     //IF THE TXN TYPE IS PAYMENT NEGATE THE VALUE INPUT SO IT IS SAVED AS A MINUS VALUE
+    saveObj.amount = ( $("#txnType").val() === "Payment" ) ? $("#txnAmount").val() - ($("#txnAmount").val() * 2) : $("#txnAmount").val();
+    saveObj.notes = $("#txnNotes").val();
+    saveObj.category.id = $("#txnCategory").val();
+    saveObj.category.name = $("#txnCategory option:selected").text();
+    saveObj.payee.id = $("#txnPayee").val();
+    saveObj.payee.name = $("#txnPayee option:selected").text();
+    saveObj.transactionDate = $("#txnDate").val();
 
+    // console.log(saveObj);
+    // return;
 
+    // window.alert(saveObj.id + " " + $("#txnNotes").val());
 
     //construct save object
     // let saveObj = {
@@ -87,25 +96,28 @@ $(function() {
     //   }
     // }
 
+    let returnToAccount = $(this).parent().data("return-to-account");
 
     //submit ajax request
-    // $.ajax({
-    //   url: location.origin + '/ajax/cleartxn',
-    //   data: {"transactionId": txid},
-    //   type: 'PUT',
-    //   success: function(data) {
-    //     if (data.isCleared) {
-    //       elem.parent().removeClass("uncleared");
-    //     } else {
-    //       elem.parent().addClass("uncleared")
-    //     }
-    //   },
-    //   error: function(xhr, status, error) {
-    //     console.log("Error: " + error.message);
-    //   }
-    // });
+    $.ajax({
+      url: location.origin + '/ajax/updatetxn',
+      data: {"transaction": saveObj},
+      type: 'PUT',
+      success: function(data) {
+        if (data.response.transaction &&  data.response.transaction.amount) {
+          // console.log(data);
+          // window.alert("saved ok - " + data.response.transaction.amount + " " + data.response.transaction.notes)
+          window.location.href = "/account/register/" + returnToAccount;
+        } else {
+          window.alert("save failed :-(");
+          // console.log(data);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.log("Error: " + error.message);
+      }
+    });
 
-    window.location.href = "/account/register/" + $(this).parent().data("return-to-account");
   })
 
   //wire up delete button

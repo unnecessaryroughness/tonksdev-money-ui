@@ -17,7 +17,7 @@
           <tr>
             <td>Account</td>
             <td>Account Name</td>
-            <td>Balance</td>
+            <td class="field-format-currency">Balance</td>
           </tr>
         </thead>
         <tbody>
@@ -25,7 +25,7 @@
             <tr>
               <td><a href="/account/register/<%=val.id%>"><%=val.accountCode%></a></td>
               <td><%=val.accountName%></td>
-              <td>£<%=val.balance%></td>
+              <td class="field-format-currency">£<%=val.balance%></td>
             </tr>
           <% }) %>
         </tbody>

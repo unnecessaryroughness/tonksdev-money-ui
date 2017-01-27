@@ -55,7 +55,8 @@
             <label for="txnPayee">Pay To</label>
             <select class="input-width-medium" name="txnPayee" id="txnPayee">
               <% pageData.payeeList.forEach(function(val, idx) { %>
-                  <%- "<option " + (val.id === pageData.transaction.payee.id ? "selected" : "")  + ">" + val.payeeName + "</option>" %>
+                  <%- "<option value='" + val.id + "' " +
+                        (val.id === pageData.transaction.payee.id ? "selected" : "")  + ">" + val.payeeName + "</option>" %>
               <% }); %>
             </select>
             <button type="button" class="btn btn-primary btn-narrow" id="btnNewPayee">New</button>
@@ -65,7 +66,8 @@
             <label for="txnCategory">Category</label>
             <select class="input-width-medium" name="txnCategory" id="txnCategory">
               <% pageData.categoryList.forEach(function(val, idx) { %>
-                  <%- "<option " + (val.id === pageData.transaction.category.id ? "selected" : "")  + ">" + val.categoryName + "</option>" %>
+                  <%- "<option value='" + val.id + "' " +
+                          (val.id === pageData.transaction.category.id ? "selected" : "")  + ">" + val.categoryName + "</option>" %>
               <% }); %>
             </select>
             <button type="button" class="btn btn-primary btn-narrow" id="btnNewCategory">New</button>
@@ -101,7 +103,7 @@
 
       </div>
 
-      <div class="data-listing"><%=JSON.stringify(pageData)%></div>
+      <!-- <div class="data-listing"><%=JSON.stringify(pageData)%></div> -->
 
     </div>
 

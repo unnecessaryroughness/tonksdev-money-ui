@@ -30,10 +30,6 @@ h3 {
   padding: 0 1em;
 }
 
-.field-format-currency{
-  text-align: right;
-}
-
 form .form-inline-error-message {
   color: #d00;
   display: none;
@@ -95,4 +91,8 @@ thead {
 
 .grid-col-border-red {
   border: 1px solid #f00;
+}
+
+.field-format-currency{
+  text-align: right;
 }
