@@ -17,6 +17,7 @@ const controller = function(moneyUIVars) {
 
     // API call for transaction register
     callAPI(envVars.apiaddress + '/transaction/' + envQSParams.txnid, 'GET', null, {userid: envSession.passport.user}, function(txnerr, txnresponse, txndata) {
+
       let txnApiResponse = viewdataHelpers.sanitizeErrAndData(txnerr, txndata, txnresponse.statusCode);
       let jsoResponse = JSON.parse(txnApiResponse.data);
 
@@ -39,6 +40,18 @@ const controller = function(moneyUIVars) {
             let catApiResponse = viewdataHelpers.sanitizeErrAndData(caterr, catdata, catresponse.statusCode);
             let catList = JSON.parse(catApiResponse.data);
             jsoResponse.categoryList = catList.categoryList;
+
+            //if there is no account id set this must be a new transaction.
+            //the account id is stored in the querystring parameter. use it and look up the account code & name
+            if (!jsoResponse.transaction.account.id) {
+              jsoResponse.transaction.account.id = envQSParams.accid;
+              jsoResponse.accountList.forEach(function(val, idx) {
+                if (val.id === jsoResponse.transaction.account.id) {
+                  jsoResponse.transaction.account.code = val.accountCode;
+                  jsoResponse.transaction.account.name = val.accountName;
+                }
+              })
+            }
 
             done(null, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody,
                       'tonksDEV Money: Transaction' + jsoResponse.transaction.id, JSON.stringify(jsoResponse)));

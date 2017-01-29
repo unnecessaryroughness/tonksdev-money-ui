@@ -23,7 +23,7 @@
         <tbody>
           <% pageData.accountList.forEach(function(val, idx, arr) { %>
             <tr>
-              <td><a href="/account/register/<%=val.id%>"><%=val.accountCode%></a></td>
+              <td><a href="/account/<%=val.id%>/register"><%=val.accountCode%></a></td>
               <td><%=val.accountName%></td>
               <td class="field-format-currency">£<%=val.balance%></td>
             </tr>

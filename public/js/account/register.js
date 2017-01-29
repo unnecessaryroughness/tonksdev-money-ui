@@ -4,6 +4,9 @@ $(function() {
     callAjaxClearedTxnApi($(this).parent().attr("data-txid"), $(this));
   })
 
+  $("#btnAddNewTxn").on("click", function(e) {
+    window.location.href="/account/" + $(this).data("accid") + "/transaction/0"
+  })
 
 
   callAjaxClearedTxnApi = function(txid, elem) {

@@ -9,7 +9,7 @@ const controller = function(moneyUIVars) {
   const getRegisterPageData = function(envVars, envSession, envUser, envQSParams, envBody, done) {
 
     // API call for transaction register
-    callAPI(envVars.apiaddress + '/transaction/recent/10/' + envQSParams.accid, 'GET', null, {userid: envSession.passport.user}, function(err, response, data) {
+    callAPI(envVars.apiaddress + '/transaction/recent/100/' + envQSParams.accid, 'GET', null, {userid: envSession.passport.user}, function(err, response, data) {
       let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
       let jsoResponse = {};
 

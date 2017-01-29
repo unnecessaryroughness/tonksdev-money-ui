@@ -46,7 +46,8 @@
             <label for="txnAccount">Account</label>
             <select class="input-width-wide" name="txnAccont" id="txnAccount">
               <% pageData.accountList.forEach(function(val, idx) { %>
-                  <%- "<option " + (val.accountCode === pageData.transaction.account.code ? "selected" : "")  + ">" + val.accountCode + "</option>" %>
+                  <%- "<option value='" + val.id + "' " +
+                      (val.accountCode === pageData.transaction.account.code ? "selected" : "")  + ">" + val.accountCode + "</option>" %>
               <% }); %>
             </select>
         </div>
@@ -92,7 +93,7 @@
 
         <div class="input-group">
           <label for="txnAmount">Amount</label>
-          <input class="input-width-medium" name="txnAmount" id="txnAmount" value="<%=pageData.transaction.amount%>"></input>
+          <input class="input-width-medium" name="txnAmount" id="txnAmount" value="<%=pageData.transaction.amount.toFixed(2)%>"></input>
         </div>
 
         <div class="input-group" data-return-to-account="<%=pageData.transaction.account.id%>">
@@ -108,6 +109,8 @@
     </div>
 
     <script>
+      <% pageData.transaction.account.group.id = header.selectedAccountGroupId;
+         pageData.transaction.account.group.code = header.selectedAccountGroup; %>
       var saveObj = <%- JSON.stringify(pageData.transaction)%>;
     </script>
 </body>

@@ -7,7 +7,7 @@ tr[data-cleared="false"] {
 }
 
 .uncleared {
-  color: #7500dd;
+  color: #dd00a5;
 }
 
 .field-format-dr {
@@ -16,4 +16,8 @@ tr[data-cleared="false"] {
 
 .field-format-cr {
   color: #0a0;
+}
+
+.btn-register {
+  margin: 1em 0;
 }
