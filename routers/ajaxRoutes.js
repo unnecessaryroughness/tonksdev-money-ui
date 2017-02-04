@@ -64,8 +64,6 @@ var routes = function(moneyUIVars) {
     ajaxRouter.route("/updatetxn")
       .put(function(req, res, next) {
 
-        console.log("HERE!!! IsNew = " + req.body.isNew);
-
         if (typeof req.session.passport !== 'undefined') {    //only do anything if user is logged in
 
           if (req.body.isNew === "true") {

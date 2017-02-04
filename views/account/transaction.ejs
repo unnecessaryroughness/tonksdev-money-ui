@@ -93,7 +93,7 @@
 
         <div class="input-group">
           <label for="txnAmount">Amount</label>
-          <input class="input-width-medium" name="txnAmount" id="txnAmount" value="<%=pageData.transaction.amount.toFixed(2)%>"></input>
+          <input class="input-width-medium" name="txnAmount" id="txnAmount" value="<%=(pageData.transaction.amount) ? pageData.transaction.amount.toFixed(2) : 0.00 %>"></input>
         </div>
 
         <div class="input-group" data-return-to-account="<%=pageData.transaction.account.id%>">
