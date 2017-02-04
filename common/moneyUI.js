@@ -98,8 +98,16 @@ var moneyUI = function() {
             self.app.use(function(err, req, res, next) {
                 debug('UI-ERROR: ' + err.error + ': ' + err.message);
                 res.status(err.status || 500);
+
+                //***** TEMPORARY REPORTING OF ERRORS TO PRODUCTION ******//
+
+                // errorController.getErrorPageData(self.variables, req.session, req.user, req.params,
+                //                   {'error' : {'error': err.status || 500, 'message': 'Ooops. This is a little embarrasing.'}}, function(err, errorData) {
+
                 errorController.getErrorPageData(self.variables, req.session, req.user, req.params,
-                                  {'error' : {'error': err.status || 500, 'message': 'Ooops. This is a little embarrasing.'}}, function(err, errorData) {
+                                  {'error' : {'error': err.status || 500, 'message': err.message}}, function(err, errorData) {
+
+
                     res.render('error', errorData);
                 })
             });
