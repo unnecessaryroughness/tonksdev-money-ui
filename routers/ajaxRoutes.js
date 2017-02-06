@@ -68,13 +68,9 @@ var routes = function(moneyUIVars) {
 
           if (req.body.isNew === "true") {
 
-            console.log("isNew is " + req.body.isNew)
-
             //call API to get update transaction record
             callAPI(moneyUIVars.apiaddress + '/transaction/', 'POST',
                     req.body, {userid: req.session.passport.user}, function(err, response, data) {
-
-              console.log(response.statusCode, data);
 
               if (err || response.statusCode === 200) {
                 return res.status(200).json({'response': data});
@@ -86,8 +82,6 @@ var routes = function(moneyUIVars) {
             //call API to get update transaction record
             callAPI(moneyUIVars.apiaddress + '/transaction/' + req.body.transaction.id, 'PUT',
                       req.body, {userid: req.session.passport.user}, function(err, response, data) {
-
-              console.log(response.statusCode, data);
 
               if (err || response.statusCode === 200) {
                 return res.status(200).json({'response': data});

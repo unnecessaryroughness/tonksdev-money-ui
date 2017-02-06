@@ -52,8 +52,8 @@
             </select>
         </div>
 
-        <div class="input-group">
-            <label for="txnPayee">Pay To</label>
+        <div class="input-group" id="input-group-txnPayee">
+            <label id="lblPayee" for="txnPayee">Pay To</label>
             <select class="input-width-medium" name="txnPayee" id="txnPayee">
               <% pageData.payeeList.forEach(function(val, idx) { %>
                   <%- "<option value='" + val.id + "' " +
@@ -61,6 +61,16 @@
               <% }); %>
             </select>
             <button type="button" class="btn btn-primary btn-narrow" id="btnNewPayee">New</button>
+        </div>
+
+        <div class="input-group input-group-hidden" id="input-group-txnTxfAccount">
+            <label for="txnTxfAccount">Transfer To</label>
+            <select class="input-width-medium" name="txnTxfAccount" id="txnTxfAccount">
+              <% pageData.accountList.forEach(function(val, idx) { %>
+                  <%- "<option value='" + val.id + "' " +
+                      (val.accountCode === pageData.transaction.account.code ? "selected" : "")  + ">" + val.accountCode + "</option>" %>
+              <% }); %>
+            </select>
         </div>
 
         <div class="input-group">

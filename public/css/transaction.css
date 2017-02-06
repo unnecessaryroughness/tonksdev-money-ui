@@ -14,6 +14,10 @@
   height: 7em;
 }
 
+.input-group-hidden {
+  display: none;
+}
+
 .input-group > label {
   display: block;
   width: 10em;
@@ -62,7 +66,7 @@
 }
 
 .input-group > button {
-  width: 7em;
+  width: 5em;
   margin: 0.2em;
 }
 

@@ -15,6 +15,8 @@ $(function() {
     } else if ($("#txnAmount").val() >= 0) {
       $("#txnType").val("Deposit");
     }
+
+    assessTxnTypeFields();
   }
 
 
@@ -32,6 +34,12 @@ $(function() {
   //refresh date field when calendar changed
   $("#txnDateCal_txtDate").on("change", function(e) {
      $("#txnDate").val($(this).val());
+  })
+
+
+  //switch fields around when transaction type changed to Transfer
+  $("#txnType").on("change", function(e) {
+      assessTxnTypeFields();
   })
 
 
@@ -63,6 +71,8 @@ $(function() {
     saveObj.notes = $("#txnNotes").val();
     saveObj.isCleared = $("#txnCleared").is(":checked");
     saveObj.isPlaceholder = $("#txnPlaceholder").is(":checked");
+    saveObj.payee.transferAccount.id = $("#txnTxfAccount").val();
+    saveObj.payee.transferAccount.code = $("#txnTxfAccount option:selected").text();
 
     let returnToAccount = $(this).parent().data("return-to-account");
 
@@ -79,7 +89,7 @@ $(function() {
         }
       },
       error: function(xhr, status, error) {
-        console.log("Error: " + error.message);
+        console.log("Error: " + JSON.stringify(error) );
       }
     });
 
@@ -90,5 +100,27 @@ $(function() {
     window.location.href = "/account/" + $(this).parent().data("return-to-account") + "/register";
   })
 
-
 });
+
+
+function assessTxnTypeFields() {
+    switch($("#txnType").val()) {
+      case "Transfer":
+        $("#txnPayee").val("");
+        $("#input-group-txnPayee").addClass("input-group-hidden");
+        $("#input-group-txnTxfAccount").removeClass("input-group-hidden");
+        break;
+      case "Payment":
+        $("#txnTxfAccount").val("");
+        $("#lblPayee").text("Pay To");
+        $("#input-group-txnTxfAccount").addClass("input-group-hidden");
+        $("#input-group-txnPayee").removeClass("input-group-hidden");
+        break;
+      case "Deposit":
+        $("#txnTxfAccount").val("");
+        $("#lblPayee").text("Received From");
+        $("#input-group-txnTxfAccount").addClass("input-group-hidden");
+        $("#input-group-txnPayee").removeClass("input-group-hidden");
+        break;
+    }
+  }
