@@ -5,6 +5,7 @@ $(function() {
   if (JSON.stringify(saveObj.payee.transferAccount) !== "{}") {
     //this is a transfer... set up the screen accordingly
     $("#txnType").val("Transfer")
+    $("#txnAmount").val(($("#txnAmount").val() - ($("#txnAmount").val()*2)).toFixed(2))
 
   } else {
     if ($("#txnAmount").val().length === 0) {
@@ -51,16 +52,14 @@ $(function() {
   //wire up save button
   $("#btnSaveTxn").on("click", function(e) {
 
-
     //IF THE TXN TYPE IS PAYMENT NEGATE THE VALUE INPUT SO IT IS SAVED AS A MINUS VALUE
-    saveObj.amount = ( $("#txnType").val() === "Payment" ) ? $("#txnAmount").val() - ($("#txnAmount").val() * 2) : $("#txnAmount").val();
+    saveObj.amount = ( $("#txnType").val() !== "Deposit" ) ? $("#txnAmount").val() - ($("#txnAmount").val() * 2) : $("#txnAmount").val();
 
     //IF THE CURRENT ACCOUNT ID <> PREVIOUS ACCOUNT ID THEN SET THE VALUE OF THE PREVIOUS ACCONT ID/code
     if ($("#txnAccount").val() !== saveObj.account.id) {
       saveObj.account.previous.id = saveObj.account.id;
       saveObj.account.previous.code = saveObj.account.code;
     }
-
     saveObj.transactionDate = $("#txnDate").val();
     saveObj.account.id = $("#txnAccount").val();
     saveObj.account.code = $("#txnAccount option:selected").text();
@@ -71,10 +70,16 @@ $(function() {
     saveObj.notes = $("#txnNotes").val();
     saveObj.isCleared = $("#txnCleared").is(":checked");
     saveObj.isPlaceholder = $("#txnPlaceholder").is(":checked");
-    saveObj.payee.transferAccount.id = $("#txnTxfAccount").val();
-    saveObj.payee.transferAccount.code = $("#txnTxfAccount option:selected").text();
+
+    if (!$("#txnTxfAccount").val()) {
+      saveObj.payee.transferAccount = {}
+    } else {
+      saveObj.payee.transferAccount.id = $("#txnTxfAccount").val();
+      saveObj.payee.transferAccount.code = $("#txnTxfAccount option:selected").text();
+    }
 
     let returnToAccount = $(this).parent().data("return-to-account");
+
 
     //submit ajax request
     $.ajax({
