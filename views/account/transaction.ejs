@@ -21,6 +21,7 @@
         <div class="input-group">
           <label for="txnId">Transaction Id</label>
           <label class="input-label" id="txnId"><%=pageData.transaction.id%></label>
+          <label class="input-label" id="txfId"><%=pageData.transaction.payee.transferAccount.transaction%></label>
         </div>
 
         <div class="input-group">
@@ -68,7 +69,7 @@
             <select class="input-width-medium" name="txnTxfAccount" id="txnTxfAccount">
               <% pageData.accountList.forEach(function(val, idx) { %>
                   <%- "<option value='" + val.id + "' " +
-                      (val.accountCode === pageData.transaction.account.code ? "selected" : "")  + ">" + val.accountCode + "</option>" %>
+                      (val.accountCode === pageData.transaction.payee.transferAccount.code ? "selected" : "")  + ">" + val.accountCode + "</option>" %>
               <% }); %>
             </select>
         </div>
@@ -106,7 +107,7 @@
           <input class="input-width-medium" name="txnAmount" id="txnAmount" value="<%=(pageData.transaction.amount) ? pageData.transaction.amount.toFixed(2) : 0.00 %>"></input>
         </div>
 
-        <div class="input-group" data-return-to-account="<%=pageData.transaction.account.id%>">
+        <div id="button-group" class="input-group" data-return-to-account="<%=pageData.transaction.account.id%>">
           <button type="button" class="btn btn-primary" id="btnSaveTxn">Save</button>
           <button type="button" class="btn btn-default" id="btnCloseTxn">Close</button>
           <button type="button" class="btn btn-danger" id="btnDeleteTxn">Delete</button>

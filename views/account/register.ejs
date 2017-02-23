@@ -30,10 +30,20 @@
         </thead>
         <tbody>
           <% pageData.transactionList.forEach(function(val, idx, arr) { %>
+
+            <%
+              var prefix, suffix, isTransfer = (val.payee.transferAccount && val.payee.transferAccount.code);
+              if (isTransfer) {
+                prefix = (val.amount >= 0) ? "FROM>> " : "TO>> ";
+                suffix = (val.amount < 0) ? "" : "";
+              }
+
+            %>
+
             <tr class="<%=(val.isCleared ? '' : 'uncleared')%> <%=(val.isPlaceholder ? 'placeholder' : '')%>"
                 data-txid="<%=val.id%>" data-cleared="<%=val.isCleared%>" data-placeholder="<%=val.isPlaceholder%>">
               <td><%=val.transactionDate%></td>
-              <td><%=val.payee.name%></td>
+              <td><%=(isTransfer) ? prefix + val.payee.transferAccount.code + suffix : val.payee.name%></td>
               <td><%=val.category.name%></td>
               <td class="field-format-currency"><a class="field-format-dr" href="/account/<%=pageData.account.id%>/transaction/<%=val.id%>"><%=(val.amount < 0 ? val.amount.toFixed(2) : "")%></a></td>
               <td class="field-format-currency"><a class="field-format-cr" href="/account/<%=pageData.account.id%>/transaction/<%=val.id%>"><%=(val.amount >= 0 ? val.amount.toFixed(2) : "")%></a></td>

@@ -16,9 +16,9 @@ $(function() {
     } else if ($("#txnAmount").val() >= 0) {
       $("#txnType").val("Deposit");
     }
-
-    assessTxnTypeFields();
   }
+
+  assessTxnTypeFields();
 
 
 
@@ -72,8 +72,10 @@ $(function() {
     saveObj.isPlaceholder = $("#txnPlaceholder").is(":checked");
 
     if (!$("#txnTxfAccount").val()) {
-      saveObj.payee.transferAccount = {}
+      delete saveObj.payee.transferAccount;
     } else {
+      delete saveObj.payee.id;
+      delete saveObj.payee.name;
       saveObj.payee.transferAccount.id = $("#txnTxfAccount").val();
       saveObj.payee.transferAccount.code = $("#txnTxfAccount option:selected").text();
     }
@@ -94,7 +96,7 @@ $(function() {
         }
       },
       error: function(xhr, status, error) {
-        console.log("Error: " + JSON.stringify(error) );
+        console.log("Error: " + JSON.stringify(error),  xhr.responseText );
       }
     });
 
@@ -102,8 +104,29 @@ $(function() {
 
   //wire up delete button
   $("#btnDeleteTxn").on("click", function(e) {
-    window.location.href = "/account/" + $(this).parent().data("return-to-account") + "/register";
-  })
+    showConfirmDialog("Delete Transaction -- Confirm?",
+                      "Are you sure you want to permanently delete this transaction? " +
+                      "This process cannot be reversed!",
+                      function() {
+
+                        //submit ajax request
+                        $.ajax({
+                          url: location.origin + '/ajax/deletetxn',
+                          data: {"transaction": {id: saveObj.id}},
+                          type: 'DELETE',
+                          success: function(data) {
+                            if (data.response.saveStatus &&  data.response.saveStatus === "deleted") {
+                              window.location.href = "/account/" + $("#button-group").data("return-to-account") + "/register";
+                            } else {
+                              window.alert("delete failed :-( " + JSON.stringify(data));
+                            }
+                          },
+                          error: function(xhr, status, error) {
+                            console.log("Error: " + JSON.stringify(error),  xhr.responseText );
+                          }
+                        });
+                      });
+     });
 
 });
 
