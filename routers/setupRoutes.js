@@ -83,6 +83,37 @@ var routes = function(moneyUIVars) {
         });
 
 
+    setupRouter.route("/categories")
+      .get(function(req, res, next) {
+        if (sessionHelpers.userIsLoggedIn(req)) {    //only do anything if user is logged in
+          controllerHelpers.routeGet(setupController.getCategoriesPageData, moneyUIVars, req, res, 'setup/categories');
+        } else {
+          controllerHelpers.routeError(moneyUIVars, req, res, 403, 'forbidden');
+        }
+      })
+      .post(function(req, res, next) {
+        if (sessionHelpers.userIsLoggedIn(req)) {
+          switch(req.body.inputAction) {
+            case "create":
+              controllerHelpers.routePost(setupController.addNewCategory, moneyUIVars, req, res);
+              break;
+
+            case "update":
+              controllerHelpers.routePost(setupController.editCategory, moneyUIVars, req, res);
+              break;
+
+            case "delete":
+              controllerHelpers.routePost(setupController.deleteCategory, moneyUIVars, req, res);
+              break;
+
+          default:
+              controllerHelpers.routeError(moneyUIVars, req, res, 404, 'action not found (' + req.body.inputAction + ')');
+            break;
+          }
+        }
+      });
+
+
     return setupRouter;
 };
 

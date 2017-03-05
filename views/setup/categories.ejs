@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title><%=pageTitle%></title>
+    <%- include('../includes/bootstrapSetup.ejs') %>
+    <%- include('../includes/bootstrap-dialog.ejs') %>
+    <script src="/js/setup/categories.js"></script>
+</head>
+
+<body>
+    <%- include('../includes/navbar.ejs') %>
+
+    <div class="main-content-frame">
+      <h3>Categories Setup</h3>
+
+      <div class="header-button-row">
+        <button class="btn btn-success" data-toggle="modal" data-target="#createModal">Create a new Category</button>
+      </div>
+
+      <table class="table table-striped">
+        <thead class="thead-inverse">
+          <tr>
+            <td>Category</td>
+            <td>Action</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% pageData.categoryList.forEach(function(val, idx, arr) { %>
+            <tr>
+              <td><%=val.categoryName%></td>
+              <td>
+                  <button class="btn btn-primary btn-edit-ag" data-toggle="modal" data-target="#editModal" data-categoryid="<%=val.id%>"
+                                      data-type="edit" data-categoryname="<%=val.categoryName%>">Edit</button>
+                </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+
+      <!-- Create New Category Modal -->
+      <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Create a New Category</h4>
+            </div>
+            <div class="modal-body">
+              <form id="frmCreateCategory" action="" method="POST">
+                <div class="form-group">
+                  <label for="inputCategoryName">Category Name</label>
+                  <input type="text" class="form-control mandatory" id="inputCategoryName" name="inputCategoryName" placeholder="New Category Name" required>
+                </div>
+                <div id="warning-labels" class="form-group">
+                  <label id="lblMandatoryFields" class="form-inline-error-message">All fields are mandatory</label>
+                </div>
+                <input type="hidden" id="inputAction" name="inputAction" value="create">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="btnSaveNewCategory">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Edit Group Modal -->
+      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Edit Category</h4>
+            </div>
+            <div class="modal-body">
+              <form id="frmEdit" action="" method="POST">
+                <div class="form-group">
+                  <label for="inputEditCategoryName">Category Name</label>
+                  <input type="text" class="form-control" id="inputEditCategoryName" name="inputEditCategoryName" placeholder="New Category Name">
+                </div>
+                <input type="hidden" id="inputCategoryId" name="inputCategoryId">
+                <input type="hidden" id="inputAction" name="inputAction">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" id="btnEditDeleteCategory">Delete</button>
+              <button type="button" class="btn btn-primary" id="btnEditSaveCategory">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+</body>
+</html>

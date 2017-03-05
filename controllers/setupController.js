@@ -214,6 +214,74 @@ const controller = function(moneyUIVars) {
   }
 
 
+
+  //SETUP CATEGORIES FUNCTIONS
+
+    const getCategoriesPageData = function(envVars, envSession, envUser, envQSParams, envBody, done) {
+
+      callAPI(envVars.apiaddress + '/category/allcategories/' + envSession.accountGroupId, 'GET', null, {userid: envSession.passport.user}, function(err, response, data) {
+
+        //default apiResponse to an empty object
+        let apiResponse = {data:{categoryList: []}, err: err};
+
+        //if some data was returned overwrite the apiResponse object
+        if (response.statusCode === 200) {
+          apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+        } else {
+          apiResponse.err = {"error": response.statusCode, "message": "no categories found"}
+        }
+
+        done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody,
+                                                'tonksDEV Money: Category Setup', apiResponse.data));
+      });
+    };
+
+
+    const addNewCategory = function(envVars, envSession, envUser, envQSParams, envBody, done) {
+      let postBody = {
+        "category": {
+          "categoryName": envBody.inputCategoryName,
+          "accountGroup": envSession.accountGroupId
+        }
+      }
+
+      callAPI(envVars.apiaddress + '/category', 'POST', postBody, {userid: envSession.passport.user}, function(err, response, data) {
+          let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+          done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
+      });
+    }
+
+
+    const editCategory = function(envVars, envSession, envUser, envQSParams, envBody, done) {
+      let postBody = {
+        "category": {
+          "categoryId": envBody.inputCategoryId,
+          "categoryName": envBody.inputEditCategoryName,
+          "accountGroup": envSession.accountGroupId
+        }
+      }
+
+      //edit the group description
+      callAPI(envVars.apiaddress + '/category/' + envBody.inputCategoryId, 'PUT', postBody, {userid: envSession.passport.user}, function(err, response, data) {
+          let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+          done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
+      });
+    }
+
+
+    const deleteCategory = function(envVars, envSession, envUser, envQSParams, envBody, done) {
+      let postBody = {};
+
+      callAPI(envVars.apiaddress + '/category/' + envBody.inputCategoryId, 'DELETE', postBody,
+                                  {userid: envSession.passport.user}, function(err, response, data) {
+
+          let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+          done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
+      });
+    }
+
+
+
   return {
     getAccGroupPageData: getAccGroupPageData,
     addNewAccGroup: addNewAccGroup,
@@ -224,7 +292,11 @@ const controller = function(moneyUIVars) {
     getAccountsPageData: getAccountsPageData,
     addNewAccount: addNewAccount,
     editAccount: editAccount,
-    deleteAccount: deleteAccount
+    deleteAccount: deleteAccount,
+    getCategoriesPageData: getCategoriesPageData,
+    addNewCategory: addNewCategory,
+    editCategory: editCategory,
+    deleteCategory: deleteCategory
   }
 }
 

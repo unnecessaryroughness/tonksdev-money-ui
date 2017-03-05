@@ -96,3 +96,7 @@ thead {
 .field-format-currency{
   text-align: right;
 }
+
+.header-button-row {
+  margin: 0.5em 0;
+}
