@@ -1,8 +1,21 @@
 $(function() {
 
-  //initial screen build activity
+  //very first thing... check if there is a cached txn in a cookie. If so, restore it and delete the Cookie
+  let cachedTxn = Cookies.getJSON("cachedTxn");
+  let cachedPayee = Cookies.getJSON("cachedPayee");
+  if (cachedTxn && cachedTxn.id) {
+    saveObj = cachedTxn;
+    refreshFromSaveObj();
+    $("#txnPayee option:contains(" + cachedPayee + ")").attr("selected", "selected");
+    Cookies.remove("cachedTxn");
+    Cookies.remove("cachedPayee");
+  } else {
+    console.log("Fail!!! I got this: ", cachedTxn);
+  }
 
-  if (JSON.stringify(saveObj.payee.transferAccount) !== "{}") {
+
+  //initial screen build activity
+  if (JSON.stringify(saveObj.payee.transferAccount) !== "{}" && typeof saveObj.payee.transferAccount !== "undefined") {
     //this is a transfer... set up the screen accordingly
     $("#txnType").val("Transfer")
     $("#txnAmount").val(($("#txnAmount").val() - ($("#txnAmount").val()*2)).toFixed(2))
@@ -44,6 +57,10 @@ $(function() {
   })
 
 
+  //wire up callback for new Payee button click
+  $("#btnSaveNewPayee").data("presaveCallback", storeCurrentRecordToCookie)
+
+
   //wire up close button
   $("#btnCloseTxn").on("click", function(e) {
     window.location.href = "/account/" + $(this).parent().data("return-to-account") + "/register";
@@ -52,36 +69,8 @@ $(function() {
   //wire up save button
   $("#btnSaveTxn").on("click", function(e) {
 
-    //IF THE TXN TYPE IS PAYMENT NEGATE THE VALUE INPUT SO IT IS SAVED AS A MINUS VALUE
-    saveObj.amount = ( $("#txnType").val() !== "Deposit" ) ? $("#txnAmount").val() - ($("#txnAmount").val() * 2) : $("#txnAmount").val();
-
-    //IF THE CURRENT ACCOUNT ID <> PREVIOUS ACCOUNT ID THEN SET THE VALUE OF THE PREVIOUS ACCONT ID/code
-    if ($("#txnAccount").val() !== saveObj.account.id) {
-      saveObj.account.previous.id = saveObj.account.id;
-      saveObj.account.previous.code = saveObj.account.code;
-    }
-    saveObj.transactionDate = $("#txnDate").val();
-    saveObj.account.id = $("#txnAccount").val();
-    saveObj.account.code = $("#txnAccount option:selected").text();
-    saveObj.payee.id = $("#txnPayee").val();
-    saveObj.payee.name = $("#txnPayee option:selected").text();
-    saveObj.category.id = $("#txnCategory").val();
-    saveObj.category.name = $("#txnCategory option:selected").text();
-    saveObj.notes = $("#txnNotes").val();
-    saveObj.isCleared = $("#txnCleared").is(":checked");
-    saveObj.isPlaceholder = $("#txnPlaceholder").is(":checked");
-
-    if (!$("#txnTxfAccount").val()) {
-      delete saveObj.payee.transferAccount;
-    } else {
-      delete saveObj.payee.id;
-      delete saveObj.payee.name;
-      saveObj.payee.transferAccount.id = $("#txnTxfAccount").val();
-      saveObj.payee.transferAccount.code = $("#txnTxfAccount option:selected").text();
-    }
-
+    updateSaveObj();
     let returnToAccount = $(this).parent().data("return-to-account");
-
 
     //submit ajax request
     $.ajax({
@@ -152,3 +141,62 @@ function assessTxnTypeFields() {
         break;
     }
   }
+
+
+function updateSaveObj() {
+  //IF THE TXN TYPE IS PAYMENT NEGATE THE VALUE INPUT SO IT IS SAVED AS A MINUS VALUE
+  saveObj.amount = ( $("#txnType").val() !== "Deposit" ) ? $("#txnAmount").val() - ($("#txnAmount").val() * 2) : $("#txnAmount").val();
+
+  //IF THE CURRENT ACCOUNT ID <> PREVIOUS ACCOUNT ID THEN SET THE VALUE OF THE PREVIOUS ACCONT ID/code
+  if ($("#txnAccount").val() !== saveObj.account.id) {
+    saveObj.account.previous.id = saveObj.account.id;
+    saveObj.account.previous.code = saveObj.account.code;
+  }
+  saveObj.transactionDate = $("#txnDate").val();
+  saveObj.account.id = $("#txnAccount").val();
+  saveObj.account.code = $("#txnAccount option:selected").text();
+  saveObj.payee.id = $("#txnPayee").val();
+  saveObj.payee.name = $("#txnPayee option:selected").text();
+  saveObj.category.id = $("#txnCategory").val();
+  saveObj.category.name = $("#txnCategory option:selected").text();
+  saveObj.notes = $("#txnNotes").val();
+  saveObj.isCleared = $("#txnCleared").is(":checked");
+  saveObj.isPlaceholder = $("#txnPlaceholder").is(":checked");
+
+  if (!$("#txnTxfAccount").val()) {
+    delete saveObj.payee.transferAccount;
+  } else {
+    delete saveObj.payee.id;
+    delete saveObj.payee.name;
+    saveObj.payee.transferAccount.id = $("#txnTxfAccount").val();
+    saveObj.payee.transferAccount.code = $("#txnTxfAccount option:selected").text();
+  }
+}
+
+
+function refreshFromSaveObj() {
+  $("#txnAmount").val(saveObj.amount);
+  $("#txnDate").val(saveObj.transactionDate);
+  $("#txnAccount").val(saveObj.account.id);
+  $("#txnAccount option:selected").text(saveObj.account.code);
+  $("#txnPayee").val(saveObj.payee.id);
+  // $("#txnPayee option:selected").text(saveObj.payee.name);
+  $("#txnCategory").val(saveObj.category.id);
+  // $("#txnCategory option:selected").text(saveObj.category.name);
+  $("#txnNotes").val(saveObj.notes);
+  $("#txnCleared").is(":checked", saveObj.isCleared);
+  $("#txnPlaceholder").is(":checked", saveObj.isPlaceholder);
+  if (saveObj.payee.transferAccount) {
+    $("#txnTxfAccount").val(saveObj.payee.transferAccount.id);
+    $("#txnTxfAccount option:selected").text(saveObj.payee.transferAccount.code);
+  }
+}
+
+
+
+function storeCurrentRecordToCookie() {
+  updateSaveObj();
+  let in30minutes = 1/48;
+  Cookies.set("cachedTxn", saveObj, {expires: in30minutes});
+  Cookies.set("cachedPayee", $("#inputPayeeName").val(), {expires: in30minutes})
+}

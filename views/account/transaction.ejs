@@ -5,10 +5,12 @@
     <title><%=pageTitle%></title>
     <%- include('../includes/bootstrapSetup.ejs') %>
     <%- include('../includes/bootstrap-dialog.ejs') %>
+    <%- include('../includes/newpayee-dialog.ejs') %>
     <link href="/css/transaction.css" rel="stylesheet">
     <link href="/css/calendar.css" rel="stylesheet">
     <script src="/js/account/transaction.js"></script>
     <script src="/js/calendar/generatecalendar.js"></script>
+    <script src="/js/includes/newpayee.js"></script>
 </head>
 
 <body>
@@ -61,7 +63,7 @@
                         (val.id === pageData.transaction.payee.id ? "selected" : "")  + ">" + val.payeeName + "</option>" %>
               <% }); %>
             </select>
-            <button type="button" class="btn btn-primary btn-narrow" id="btnNewPayee">New</button>
+            <button type="button" class="btn btn-primary btn-narrow" data-toggle="modal" data-target="#createPayeeModal" id="btnNewPayee">New</button>
         </div>
 
         <div class="input-group input-group-hidden" id="input-group-txnTxfAccount">

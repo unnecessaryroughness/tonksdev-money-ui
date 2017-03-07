@@ -114,6 +114,37 @@ var routes = function(moneyUIVars) {
       });
 
 
+    setupRouter.route("/payees")
+      .get(function(req, res, next) {
+        if (sessionHelpers.userIsLoggedIn(req)) {    //only do anything if user is logged in
+          controllerHelpers.routeGet(setupController.getPayeesPageData, moneyUIVars, req, res, 'setup/payees');
+        } else {
+          controllerHelpers.routeError(moneyUIVars, req, res, 403, 'forbidden');
+        }
+      })
+      .post(function(req, res, next) {
+        if (sessionHelpers.userIsLoggedIn(req)) {
+          switch(req.body.inputAction) {
+            case "create":
+              controllerHelpers.routePost(setupController.addNewPayee, moneyUIVars, req, res);
+              break;
+
+            case "update":
+              controllerHelpers.routePost(setupController.editPayee, moneyUIVars, req, res);
+              break;
+
+            case "delete":
+              controllerHelpers.routePost(setupController.deletePayee, moneyUIVars, req, res);
+              break;
+
+          default:
+              controllerHelpers.routeError(moneyUIVars, req, res, 404, 'action not found (' + req.body.inputAction + ')');
+            break;
+          }
+        }
+      });
+
+
     return setupRouter;
 };
 

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title><%=pageTitle%></title>
+    <%- include('../includes/bootstrapSetup.ejs') %>
+    <%- include('../includes/bootstrap-dialog.ejs') %>
+    <script src="/js/setup/payees.js"></script>
+</head>
+
+<body>
+    <%- include('../includes/navbar.ejs') %>
+
+    <div class="main-content-frame">
+      <h3>Payees Setup</h3>
+
+      <div class="header-button-row">
+        <button class="btn btn-success" data-toggle="modal" data-target="#createModal">Create a new Payee</button>
+      </div>
+
+      <table class="table table-striped">
+        <thead class="thead-inverse">
+          <tr>
+            <td>Payee</td>
+            <td>Action</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% pageData.payeeList.forEach(function(val, idx, arr) { %>
+            <tr>
+              <td><%=val.payeeName%></td>
+              <td>
+                  <button class="btn btn-primary btn-edit-ag" data-toggle="modal" data-target="#editModal" data-payeeid="<%=val.id%>"
+                                      data-type="edit" data-payeename="<%=val.payeeName%>">Edit</button>
+                </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+
+      <!-- Create New Payee Modal -->
+      <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Create a New Payee</h4>
+            </div>
+            <div class="modal-body">
+              <form id="frmCreatePayee" action="" method="POST">
+                <div class="form-group">
+                  <label for="inputPayeeName">Payee Name</label>
+                  <input type="text" class="form-control mandatory" id="inputPayeeName" name="inputPayeeName" placeholder="New Payee Name" required>
+                </div>
+                <div id="warning-labels" class="form-group">
+                  <label id="lblMandatoryFields" class="form-inline-error-message">All fields are mandatory</label>
+                </div>
+                <input type="hidden" id="inputAction" name="inputAction" value="create">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="btnSaveNewPayee">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Edit Group Modal -->
+      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Edit Payee</h4>
+            </div>
+            <div class="modal-body">
+              <form id="frmEdit" action="" method="POST">
+                <div class="form-group">
+                  <label for="inputEditPayeeName">Payee Name</label>
+                  <input type="text" class="form-control" id="inputEditPayeeName" name="inputEditPayeeName" placeholder="New Payee Name">
+                </div>
+                <input type="hidden" id="inputPayeeId" name="inputPayeeId">
+                <input type="hidden" id="inputAction" name="inputAction">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" id="btnEditDeletePayee">Delete</button>
+              <button type="button" class="btn btn-primary" id="btnEditSavePayee">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+</body>
+</html>
