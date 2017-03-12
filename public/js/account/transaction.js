@@ -3,19 +3,25 @@ $(function() {
   //very first thing... check if there is a cached txn in a cookie. If so, restore it and delete the Cookie
   let cachedTxn = Cookies.getJSON("cachedTxn");
   let cachedPayee = Cookies.getJSON("cachedPayee");
+  let cachedCategory = Cookies.getJSON("cachedCategory");
   if (cachedTxn && cachedTxn.id) {
     saveObj = cachedTxn;
     refreshFromSaveObj();
     $("#txnPayee option:contains(" + cachedPayee + ")").attr("selected", "selected");
+    $("#txnCategory option:contains(" + cachedCategory + ")").attr("selected", "selected");
     Cookies.remove("cachedTxn");
     Cookies.remove("cachedPayee");
+    Cookies.remove("cachedCategory");
   } else {
-    console.log("Fail!!! I got this: ", cachedTxn);
+    // console.log("Fail!!! I got this: ", cachedTxn);
   }
 
 
   //initial screen build activity
-  if (JSON.stringify(saveObj.payee.transferAccount) !== "{}" && typeof saveObj.payee.transferAccount !== "undefined") {
+  if (JSON.stringify(saveObj.payee.transferAccount) !== "{}" &&
+          typeof saveObj.payee.transferAccount !== "undefined" &&
+          saveObj.payee.transferAccount.id) {
+
     //this is a transfer... set up the screen accordingly
     $("#txnType").val("Transfer")
     $("#txnAmount").val(($("#txnAmount").val() - ($("#txnAmount").val()*2)).toFixed(2))
@@ -23,16 +29,15 @@ $(function() {
   } else {
     if ($("#txnAmount").val().length === 0) {
       $("#txnType").val("Payment");
-    } else if ($("#txnAmount").val() < 0) {
+    } else if ($("#txnAmount").val() <= 0) {
       $("#txnType").val("Payment");
-      $("#txnAmount").val($("#txnAmount").val() - ($("#txnAmount").val()*2))
-    } else if ($("#txnAmount").val() >= 0) {
+      $("#txnAmount").val(($("#txnAmount").val() - ($("#txnAmount").val()*2)).toFixed(2));
+    } else if ($("#txnAmount").val() > 0) {
       $("#txnType").val("Deposit");
     }
   }
 
   assessTxnTypeFields();
-
 
 
   //refresh calendar when date field changed
@@ -59,6 +64,7 @@ $(function() {
 
   //wire up callback for new Payee button click
   $("#btnSaveNewPayee").data("presaveCallback", storeCurrentRecordToCookie)
+  $("#btnSaveNewCategory").data("presaveCallback", storeCurrentRecordToCookie)
 
 
   //wire up close button
@@ -199,4 +205,5 @@ function storeCurrentRecordToCookie() {
   let in30minutes = 1/48;
   Cookies.set("cachedTxn", saveObj, {expires: in30minutes});
   Cookies.set("cachedPayee", $("#inputPayeeName").val(), {expires: in30minutes})
+  Cookies.set("cachedCategory", $("#inputCategoryName").val(), {expires: in30minutes})
 }

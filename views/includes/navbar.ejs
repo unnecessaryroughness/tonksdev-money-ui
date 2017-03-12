@@ -38,7 +38,9 @@
             <li role="separator" class="divider"></li>
             <li class="dropdown-header">Switch Account Groups:</li>
             <% header.loggedInUserGroups.forEach(function(groupname, groupidx, grouplist) { %>
-              <li class="accountgroup-option"><a href="#"><%=groupname%></a></li>
+              <%if (groupname !== "ALLUSERS") { %>
+                <li class="accountgroup-option"><a href="#"><%=groupname%></a></li>
+              <% } %>
             <% }) %>
 
             <li role="separator" class="divider"></li>
@@ -60,4 +62,5 @@
 </nav>
 <script>
   var CURRENT_ACCOUNT_GROUP = "<%=header.selectedAccountGroup%>";
+  var CURRENT_ACCOUNT_GROUP_ID = "<%=header.selectedAccountGroupId%>";
 </script>

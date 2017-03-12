@@ -6,11 +6,13 @@
     <%- include('../includes/bootstrapSetup.ejs') %>
     <%- include('../includes/bootstrap-dialog.ejs') %>
     <%- include('../includes/newpayee-dialog.ejs') %>
+    <%- include('../includes/newcategory-dialog.ejs') %>
     <link href="/css/transaction.css" rel="stylesheet">
     <link href="/css/calendar.css" rel="stylesheet">
     <script src="/js/account/transaction.js"></script>
     <script src="/js/calendar/generatecalendar.js"></script>
     <script src="/js/includes/newpayee.js"></script>
+    <script src="/js/includes/newcategory.js"></script>
 </head>
 
 <body>
@@ -84,7 +86,7 @@
                           (val.id === pageData.transaction.category.id ? "selected" : "")  + ">" + val.categoryName + "</option>" %>
               <% }); %>
             </select>
-            <button type="button" class="btn btn-primary btn-narrow" id="btnNewCategory">New</button>
+            <button type="button" class="btn btn-primary btn-narrow" data-toggle="modal" data-target="#createCategoryModal" id="btnNewCategory">New</button>
         </div>
 
         <div class="input-group">
@@ -106,7 +108,7 @@
 
         <div class="input-group">
           <label for="txnAmount">Amount</label>
-          <input class="input-width-medium" name="txnAmount" id="txnAmount" value="<%=(pageData.transaction.amount) ? pageData.transaction.amount.toFixed(2) : 0.00 %>"></input>
+          <input class="input-width-medium" name="txnAmount" id="txnAmount" value="<%=(pageData.transaction.amount) ? parseFloat(pageData.transaction.amount).toFixed(2) : 0.00 %>"></input>
         </div>
 
         <div id="button-group" class="input-group" data-return-to-account="<%=pageData.transaction.account.id%>">
