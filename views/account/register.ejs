@@ -14,8 +14,17 @@
 
     <div class="main-content-frame">
       <h3><%=pageData.account.accountName%></h3>
+      <div>
+        <select class="input-width-medium" id="accountShortcut">
+          <% pageData.accountList.forEach(function(val, idx, arr) { %>
+            <option value="<%=val.id%>"
+              <%-(val.accountCode === pageData.account.accountCode ? "selected" : "")  + ">" + val.accountCode + "</option>" %>
+          <% }); %>
+        </select>
+      </div>
 
-      <button class="btn btn-success btn-register" id="btnAddNewTxn" data-accid="<%=pageData.account.id%>">Add a new Transaction</button>
+
+      <button class="btn btn-success btn-register" id="btnAddNewTxn" data-accid="<%=pageData.account.id%>" accesskey="n">Add a new Transaction</button>
 
       <table class="table table-striped">
         <thead class="thead-inverse">
@@ -29,6 +38,7 @@
           </tr>
         </thead>
         <tbody>
+          <% var previousDate = '', foundDateLine = false; %>
           <% pageData.transactionList.forEach(function(val, idx, arr) { %>
 
             <%
@@ -38,10 +48,26 @@
                 suffix = (val.amount < 0) ? "" : "";
               }
 
+              var futureDateClass = '',
+                  dateLineClass = '',
+                  today = new Date(),
+                  transDate = new Date(val.transactionDate);
+
+              if (!foundDateLine && val.transactionDate !== previousDate && transDate < today) {
+                dateLineClass = 'register-date-line';
+                foundDateLine = true;
+              } else {
+                dateLineClass = '';
+                futureDateClass = (transDate > today) ? 'register-future-date' : '';
+              }
+
             %>
 
-            <tr class="<%=(val.isCleared ? '' : 'uncleared')%> <%=(val.isPlaceholder ? 'placeholder' : '')%>"
-                data-txid="<%=val.id%>" data-cleared="<%=val.isCleared%>" data-placeholder="<%=val.isPlaceholder%>">
+            <tr class="<%=dateLineClass%>" data-txid="<%=val.id%>"
+                                           data-cleared="<%=val.isCleared%>"
+                                           data-placeholder="<%=val.isPlaceholder%>" 
+                                           data-futuredate="<%=(transDate > today) ? 'true' : 'false'%>">
+
               <td><%=val.transactionDate%></td>
               <td><%=(isTransfer) ? prefix + val.payee.transferAccount.code + suffix : val.payee.name%></td>
               <td><%=val.category.name%></td>
@@ -53,6 +79,7 @@
         </tbody>
       </table>
 
+      <!-- <pre><%=JSON.stringify(pageData);%></pre> -->
 
     </div>
 </body>

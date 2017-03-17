@@ -3,11 +3,16 @@ tr[data-placeholder="true"] {
 }
 
 tr[data-cleared="false"] {
-  xxxcolor: #d00;
+  color: #dd00a5;
 }
 
-.uncleared {
-  color: #dd00a5;
+tr[data-futuredate="true"] {
+  color: #888888;
+}
+
+select {
+  height: 2em;
+  display: inline-block;
 }
 
 .field-format-dr {
@@ -20,4 +25,8 @@ tr[data-cleared="false"] {
 
 .btn-register {
   margin: 1em 0;
+}
+
+.register-date-line {
+  border-top: 3px solid #2626b8;
 }

@@ -27,4 +27,9 @@ $(function() {
     });
   }
 
+
+  $("#accountShortcut").on("change", function(e){
+    window.location.href="/account/" + $(this).val() + "/register/";
+  })
+
 });
