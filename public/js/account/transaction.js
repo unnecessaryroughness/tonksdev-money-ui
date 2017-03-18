@@ -39,6 +39,25 @@ $(function() {
 
   assessTxnTypeFields();
 
+  //set initial focus
+  if ($("#txnType").val() === "Transfer") {
+    $("#txnTxfAccount").focus();
+  } else {
+    $("#txnPayee").focus();
+  }
+
+
+  //auto highlight amount field contents on focus
+  $("#txnAmount").on("focus", function(e) {
+    $(this).select();
+  })
+
+  $("#txnAmount").on("keypress", function(e) {
+    if (e.which === 13) {
+      $("#btnSaveTxn").click();
+      return false;
+    }
+  })
 
   //refresh calendar when date field changed
   $("#txnDate").on("change", function(e) {

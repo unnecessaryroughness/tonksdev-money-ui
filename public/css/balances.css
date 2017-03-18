@@ -1,0 +1,11 @@
+table[id="countdown"] {
+  margin: 1em 0;
+}
+
+table[id="countdown"] th {
+  background: #eee;
+}
+
+table[id="countdown"] tr td, table[id="countdown"] tr th   {
+  padding: 0.2em 0.5em;
+}

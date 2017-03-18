@@ -1,7 +1,8 @@
 var express = require('express'),
     debug   = require('debug')('tonksDEV:money:ui:router:ajax'),
     callAPI = require('../common/callAPI'),
-    calendarHelper = require("../common/calendarHelpers");
+    calendarHelper = require("../common/calendarHelpers"),
+    cashPerDayController = require("../controllers/cashPerDayController");
 
 var routes = function(moneyUIVars) {
     'use strict';
@@ -112,6 +113,15 @@ var routes = function(moneyUIVars) {
         } else {
           return res.status(403).json({'error': "forbidden"});
         }
+      })
+
+
+    ajaxRouter.route("/cashperday")
+      .get(function(req, res, next) {
+          console.log(typeof cashPerDayController.cashPerDay)
+          cashPerDayController.cashPerDay(req.query.payday, req.query.balance, null, function(err, rtnVal) {
+            return res.status(200).json(rtnVal);
+          });
       })
 
 
