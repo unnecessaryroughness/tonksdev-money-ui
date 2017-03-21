@@ -2,12 +2,12 @@ tr[data-placeholder="true"] {
   color: #00d;
 }
 
-tr[data-cleared="false"] {
-  color: #dd00a5;
-}
-
 tr[data-futuredate="true"] {
   color: #888888;
+}
+
+.uncleared {
+  color: #dd00a5;
 }
 
 select {

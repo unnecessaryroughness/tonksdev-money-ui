@@ -1,9 +1,17 @@
 $(function() {
 
     //page onload scripts
+
+    //generate calendar
+    $("#txnDateCal").html(generateCalendarTable("txnDateCal", 42));
+    var d = new Date();
+    refreshCal("txnDateCal", ("00"+((d.getMonth()+1).toString())).slice(-2) + (d.getFullYear()).toString(), d.getDate().toString());
+
+
+    //get cash per day
     $.ajax({
       url: location.origin + '/ajax/cashperday',
-      data: {"payday": 27, "balance": $("#totalBalance").text()},
+      data: {"payday": 27, "balance": $("#totalCABalance").text()},
       type: 'GET',
       success: function(data) {
         $("#today").text(data.today);

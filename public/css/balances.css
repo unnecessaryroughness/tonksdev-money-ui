@@ -9,3 +9,20 @@ table[id="countdown"] th {
 table[id="countdown"] tr td, table[id="countdown"] tr th   {
   padding: 0.2em 0.5em;
 }
+
+.account-category {
+  width: 98%;
+  margin: 2em auto;
+}
+
+#column-account {
+  width: 25%;
+}
+
+#column-name {
+  width: 50%;
+}
+
+#column-balance {
+  width: 25%;
+}

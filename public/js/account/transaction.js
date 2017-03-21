@@ -7,11 +7,15 @@ $(function() {
   if (cachedTxn && cachedTxn.id) {
     saveObj = cachedTxn;
     refreshFromSaveObj();
-    $("#txnPayee option:contains(" + cachedPayee + ")").attr("selected", "selected");
-    $("#txnCategory option:contains(" + cachedCategory + ")").attr("selected", "selected");
+    if (cachedPayee) {
+      $("#txnPayee option:contains(" + cachedPayee + ")").attr("selected", "selected");
+      Cookies.remove("cachedPayee");
+    }
+    if (cachedCategory) {
+      $("#txnCategory option:contains(" + cachedCategory + ")").attr("selected", "selected");
+      Cookies.remove("cachedCategory");
+    }
     Cookies.remove("cachedTxn");
-    Cookies.remove("cachedPayee");
-    Cookies.remove("cachedCategory");
   } else {
     // console.log("Fail!!! I got this: ", cachedTxn);
   }
@@ -81,7 +85,7 @@ $(function() {
   })
 
 
-  //wire up callback for new Payee button click
+  //wire up callbacks for new Payee & Category button clicks
   $("#btnSaveNewPayee").data("presaveCallback", storeCurrentRecordToCookie)
   $("#btnSaveNewCategory").data("presaveCallback", storeCurrentRecordToCookie)
 
@@ -223,6 +227,10 @@ function storeCurrentRecordToCookie() {
   updateSaveObj();
   let in30minutes = 1/48;
   Cookies.set("cachedTxn", saveObj, {expires: in30minutes});
-  Cookies.set("cachedPayee", $("#inputPayeeName").val(), {expires: in30minutes})
-  Cookies.set("cachedCategory", $("#inputCategoryName").val(), {expires: in30minutes})
+  if ($("#inputPayeeName")) {
+    Cookies.set("cachedPayee", $("#inputPayeeName").val(), {expires: in30minutes})
+  }
+  if ($("#inputCategoryName")) {
+    Cookies.set("cachedCategory", $("#inputCategoryName").val(), {expires: in30minutes})
+  }
 }

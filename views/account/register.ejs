@@ -63,9 +63,9 @@
 
             %>
 
-            <tr class="<%=dateLineClass%>" data-txid="<%=val.id%>"
+            <tr class="<%=dateLineClass%> <%=(val.isCleared) ? '': 'uncleared' %>" data-txid="<%=val.id%>"
                                            data-cleared="<%=val.isCleared%>"
-                                           data-placeholder="<%=val.isPlaceholder%>" 
+                                           data-placeholder="<%=val.isPlaceholder%>"
                                            data-futuredate="<%=(transDate > today) ? 'true' : 'false'%>">
 
               <td><%=val.transactionDate%></td>
