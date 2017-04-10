@@ -30,3 +30,23 @@ select {
 .register-date-line {
   border-top: 3px solid #2626b8;
 }
+
+.conditional-field-narrow {
+  display: table-cell;
+}
+
+.conditional-field-wide {
+  display: none;
+}
+
+@media (min-width: 768px) {
+
+  .conditional-field-narrow {
+    display: none;
+  }
+
+  .conditional-field-wide {
+    display: table-cell;
+  }
+
+}

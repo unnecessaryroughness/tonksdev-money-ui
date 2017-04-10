@@ -31,9 +31,10 @@
           <tr>
             <td>Date</td>
             <td>Payee</td>
-            <td>Category</td>
-            <td class="field-format-currency">Amount Dr</td>
-            <td class="field-format-currency">Amount Cr</td>
+            <td class="conditional-field-wide">Category</td>
+            <td class="field-format-currency conditional-field-wide">Amount Dr</td>
+            <td class="field-format-currency conditional-field-wide">Amount Cr</td>
+            <td class="field-format-currency conditional-field-narrow">Amount Cr/Dr</td>
             <td class="field-format-currency">Balance</td>
           </tr>
         </thead>
@@ -70,9 +71,10 @@
 
               <td><%=val.transactionDate%></td>
               <td><%=(isTransfer) ? prefix + val.payee.transferAccount.code + suffix : val.payee.name%></td>
-              <td><%=val.category.name%></td>
-              <td class="field-format-currency"><a class="field-format-dr" href="/account/<%=pageData.account.id%>/transaction/<%=val.id%>"><%=(val.amount < 0 ? parseFloat(val.amount).toFixed(2) : "")%></a></td>
-              <td class="field-format-currency"><a class="field-format-cr" href="/account/<%=pageData.account.id%>/transaction/<%=val.id%>"><%=(val.amount >= 0 ? parseFloat(val.amount).toFixed(2) : "")%></a></td>
+              <td class="conditional-field-wide"><%=val.category.name%></td>
+              <td class="field-format-currency conditional-field-wide"><a class="field-format-dr" href="/account/<%=pageData.account.id%>/transaction/<%=val.id%>"><%=(val.amount < 0 ? parseFloat(val.amount).toFixed(2) : "")%></a></td>
+              <td class="field-format-currency conditional-field-wide"><a class="field-format-cr" href="/account/<%=pageData.account.id%>/transaction/<%=val.id%>"><%=(val.amount >= 0 ? parseFloat(val.amount).toFixed(2) : "")%></a></td>
+              <td class="field-format-currency conditional-field-narrow"><a class="<%=(val.amount < 0 ? 'field-format-dr' : 'field-format-cr');%>" href="/account/<%=pageData.account.id%>/transaction/<%=val.id%>"><%=parseFloat(val.amount).toFixed(2)%></a></td>
               <td class="field-format-currency"><a href="/account/<%=pageData.account.id%>/transaction/<%=val.id%>"><%=val.balance%></a></td>
             </tr>
           <% }) %>
