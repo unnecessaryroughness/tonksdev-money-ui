@@ -32,4 +32,6 @@ $(function() {
     window.location.href="/account/" + $(this).val() + "/register/";
   })
 
+  window.scrollBy(0,-100);
+
 });

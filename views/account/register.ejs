@@ -45,8 +45,9 @@
             <%
               var prefix, suffix, isTransfer = (val.payee.transferAccount && val.payee.transferAccount.code);
               if (isTransfer) {
-                prefix = (val.amount >= 0) ? "FROM>> " : "TO>> ";
-                suffix = (val.amount < 0) ? "" : "";
+                anchor = "<a href='/account/" + val.payee.transferAccount.id + "/register/#hlink-"+ val.payee.transferAccount.transaction + "'>";
+                prefix = (val.amount >= 0) ? anchor + "FROM&gt;&gt; " : anchor + "TO&gt;&gt; ";
+                suffix = (val.amount >= 0) ? "</a>" : "";
               }
 
               var futureDateClass = '',
@@ -68,14 +69,13 @@
                                            data-cleared="<%=val.isCleared%>"
                                            data-placeholder="<%=val.isPlaceholder%>"
                                            data-futuredate="<%=(transDate > today) ? 'true' : 'false'%>">
-
               <td><%=val.transactionDate%></td>
-              <td><%=(isTransfer) ? prefix + val.payee.transferAccount.code + suffix : val.payee.name%></td>
+              <td><%-(isTransfer) ? prefix + val.payee.transferAccount.code + suffix : val.payee.name%></td>
               <td class="conditional-field-wide"><%=val.category.name%></td>
               <td class="field-format-currency conditional-field-wide"><a class="field-format-dr" href="/account/<%=pageData.account.id%>/transaction/<%=val.id%>"><%=(val.amount < 0 ? parseFloat(val.amount).toFixed(2) : "")%></a></td>
               <td class="field-format-currency conditional-field-wide"><a class="field-format-cr" href="/account/<%=pageData.account.id%>/transaction/<%=val.id%>"><%=(val.amount >= 0 ? parseFloat(val.amount).toFixed(2) : "")%></a></td>
               <td class="field-format-currency conditional-field-narrow"><a class="<%=(val.amount < 0 ? 'field-format-dr' : 'field-format-cr');%>" href="/account/<%=pageData.account.id%>/transaction/<%=val.id%>"><%=parseFloat(val.amount).toFixed(2)%></a></td>
-              <td class="field-format-currency"><a href="/account/<%=pageData.account.id%>/transaction/<%=val.id%>"><%=val.balance%></a></td>
+              <td class="field-format-currency"><a id="hlink-<%=val.id%>" href="/account/<%=pageData.account.id%>/transaction/<%=val.id%>"><%=val.balance%></a></td>
             </tr>
           <% }) %>
         </tbody>
