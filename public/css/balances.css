@@ -6,6 +6,10 @@ table[id="countdown"] th {
   background: #eee;
 }
 
+table[id="countdown"] td {
+  background: #fff;
+}
+
 table[id="countdown"] tr td, table[id="countdown"] tr th   {
   padding: 0.2em 0.5em;
 }
@@ -25,4 +29,22 @@ table[id="countdown"] tr td, table[id="countdown"] tr th   {
 
 #column-balance {
   width: 25%;
+}
+
+.showborder {
+  border: 2px solid #f00;
+}
+
+.toolbox-panel {
+  background: #fff;
+}
+
+
+@media (min-width: 992px) {
+  .toolbox-panel {
+    background: #999;
+  }
+  .toolbox-panel h4 {
+    color: #fff;
+  }
 }

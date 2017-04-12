@@ -13,7 +13,7 @@
 <body>
     <%- include('includes/navbar.ejs') %>
 
-    <div class="main-content-frame">
+    <div class="col-md-9">
       <% var totalCABalance = parseFloat(0.00), totalSABalance = parseFloat(0.00), totalCCBalance = parseFloat(0.00); %>
 
       <h3>My Accounts (<%=header.selectedAccountGroup%>)</h3>
@@ -111,30 +111,29 @@
             </tbody>
           </table>
         </div>
-
-      </div>
-
-
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-        </div>
-        <div class="col-md-6" id="paydayCountdown">
-          <table id="countdown">
-            <tbody>
-              <tr><th>Today:</th>               <td id="today"></td></tr>
-              <tr><th>Next Pay Day:</th>        <td id="nextPayDay"></td></tr>
-              <tr><th>Days Until Pay Day:</th>  <td id="daysToPayDay"></td></tr>
-              <tr><th>Total Balance:</th>       <td id="totalBal"></td></tr>
-              <tr><th>Cash per Day:</th>        <td id="cashPerDay"></td></tr>
-              <tr><th>Cash per Week:</th>       <td id="cashPerWeek"></td></tr>
-            </tbody>
-          </table>
-          <div class="calendar" id="txnDateCal"></div>
-        </div>
       </div>
     </div>
 
-  </div>
+    <div class="col-md-3 toolbox-header">
+      <h3>Toolbox</h3>
+    </div>
+    <div class="col-sm-3 col-3 toolbox-panel">
+      <h4>Calendar</h4>
+      <div class="calendar" id="txnDateCal"></div>
+    </div>
+    <div class="col-sm-3 col-3 toolbox-panel" id="paydayCountdown">
+      <h4>Payday Countdown</h4>
+      <table id="countdown">
+        <tbody>
+          <!-- <tr><th>Today:</th>               <td id="today"></td></tr> -->
+          <tr><th>Next Pay Day:</th>        <td id="nextPayDay"></td></tr>
+          <tr><th>Days Until Pay Day:</th>  <td id="daysToPayDay"></td></tr>
+          <tr><th>Total Balance:</th>       <td id="totalBal"></td></tr>
+          <tr><th>Cash Per Day:</th>        <td id="cashPerDay"></td></tr>
+          <tr><th>Cash Per Week:</th>       <td id="cashPerWeek"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
 </body>
 </html>
