@@ -5,7 +5,7 @@
   float: left;
   padding: 0.2em;
   margin: 0.2em;
-  /*border: 1px solid #0f0;*/
+  border: 1px solid #0f0;
 }
 
 .input-group {
@@ -50,6 +50,14 @@
   width: 8em;
 }
 
+.input-group > .input-width-100pc {
+  width: 100%;
+}
+
+.input-group > .input-width-75pc {
+  width: 75%;
+}
+
 .input-group > select {
   height: 2em;
   display: inline-block;
@@ -74,6 +82,14 @@
   width: 4em;
   height: 2em;
   line-height: 1.2em;
+}
+
+.input-group > button.btn-25pc {
+  width: 24%;
+  line-height: 1.2em;
+  margin: 0 0 0.1em 1%;
+  font-size:12px;
+  padding: 0.6em 0.1em;
 }
 
 .data-listing {

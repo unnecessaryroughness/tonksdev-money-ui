@@ -81,7 +81,12 @@ $(function() {
 
   //switch fields around when transaction type changed to Transfer
   $("#txnType").on("change", function(e) {
-      assessTxnTypeFields();
+    assessTxnTypeFields();
+  })
+
+  //perform math on the amount field
+  $("#txnAmount").on("blur", function(e) {
+    $(this).val(eval($(this).val()).toFixed(2));
   })
 
 

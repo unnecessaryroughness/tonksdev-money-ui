@@ -13,127 +13,130 @@
 <body>
     <%- include('includes/navbar.ejs') %>
 
-    <div class="col-md-9">
-      <% var totalCABalance = parseFloat(0.00), totalSABalance = parseFloat(0.00), totalCCBalance = parseFloat(0.00); %>
+    <div class="container">
+    <div class="row">
+        <div class="col-md-9">
+          <% var totalCABalance = parseFloat(0.00), totalSABalance = parseFloat(0.00), totalCCBalance = parseFloat(0.00); %>
 
-      <h3>My Accounts (<%=header.selectedAccountGroup%>)</h3>
+          <h3>My Accounts (<%=header.selectedAccountGroup%>)</h3>
 
-      <div id="account-summary">
+          <div id="account-summary">
 
-        <div class="account-category">
-          <h4>Current Accounts</h4>
-          <table class="table table-striped">
-            <thead class="thead-inverse">
-              <tr>
-                <td id="column-account">Account</td>
-                <td id="column-name">Account Name</td>
-                <td id="column-balance" class="field-format-currency">Balance</td>
-              </tr>
-            </thead>
-            <tbody>
-              <% pageData.accountList.forEach(function(val, idx, arr) { %>
-                <% if (val.accountType === "CA") { %>
+            <div class="account-category">
+              <h4>Current Accounts</h4>
+              <table class="table table-striped">
+                <thead class="thead-inverse">
                   <tr>
-                    <td><a href="/account/<%=val.id%>/register"><%=val.accountCode%></a></td>
-                    <td><%=val.accountName%></td>
-                    <td class="field-format-currency">£<%=val.balance%></td>
-                    <% totalCABalance += parseFloat(val.balance); %>
+                    <td id="column-account">Account</td>
+                    <td id="column-name">Account Name</td>
+                    <td id="column-balance" class="field-format-currency">Balance</td>
                   </tr>
-                <% } %>
-              <% }) %>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td class="field-format-currency"><strong>£<span id="totalCABalance"><%=parseFloat(totalCABalance).toFixed(2)%></span></strong></td>
-                </tr>
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                  <% pageData.accountList.forEach(function(val, idx, arr) { %>
+                    <% if (val.accountType === "CA") { %>
+                      <tr>
+                        <td><a href="/account/<%=val.id%>/register"><%=val.accountCode%></a></td>
+                        <td><%=val.accountName%></td>
+                        <td class="field-format-currency">£<%=val.balance%></td>
+                        <% totalCABalance += parseFloat(val.balance); %>
+                      </tr>
+                    <% } %>
+                  <% }) %>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td class="field-format-currency"><strong>£<span id="totalCABalance"><%=parseFloat(totalCABalance).toFixed(2)%></span></strong></td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+            <div class="account-category">
+              <h4>Savings Accounts</h4>
+              <table class="table table-striped">
+                <thead class="thead-inverse">
+                  <tr>
+                    <td id="column-account">Account</td>
+                    <td id="column-name">Account Name</td>
+                    <td id="column-balance" class="field-format-currency">Balance</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% pageData.accountList.forEach(function(val, idx, arr) { %>
+                    <% if (val.accountType === "SA") { %>
+                      <tr>
+                        <td><a href="/account/<%=val.id%>/register"><%=val.accountCode%></a></td>
+                        <td><%=val.accountName%></td>
+                        <td class="field-format-currency">£<%=val.balance%></td>
+                        <% totalSABalance += parseFloat(val.balance); %>
+                      </tr>
+                    <% } %>
+                  <% }) %>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td class="field-format-currency"><strong>£<span id="totalSABalance"><%=parseFloat(totalSABalance).toFixed(2)%></span></strong></td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+            <div class="account-category">
+              <h4>Credit/Store Cards</h4>
+              <table class="table table-striped">
+                <thead class="thead-inverse">
+                  <tr>
+                    <td id="column-account">Account</td>
+                    <td id="column-name">Account Name</td>
+                    <td id="column-balance" class="field-format-currency">Balance</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% pageData.accountList.forEach(function(val, idx, arr) { %>
+                    <% if (val.accountType === "CC" || val.accountType === "SC") { %>
+                      <tr>
+                        <td><a href="/account/<%=val.id%>/register"><%=val.accountCode%></a></td>
+                        <td><%=val.accountName%></td>
+                        <td class="field-format-currency">£<%=val.balance%></td>
+                        <% totalCCBalance += parseFloat(val.balance); %>
+                      </tr>
+                    <% } %>
+                  <% }) %>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td class="field-format-currency"><strong>£<span id="totalCCBalance"><%=parseFloat(totalCCBalance).toFixed(2)%></span></strong></td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
-
-        <div class="account-category">
-          <h4>Savings Accounts</h4>
-          <table class="table table-striped">
-            <thead class="thead-inverse">
-              <tr>
-                <td id="column-account">Account</td>
-                <td id="column-name">Account Name</td>
-                <td id="column-balance" class="field-format-currency">Balance</td>
-              </tr>
-            </thead>
-            <tbody>
-              <% pageData.accountList.forEach(function(val, idx, arr) { %>
-                <% if (val.accountType === "SA") { %>
-                  <tr>
-                    <td><a href="/account/<%=val.id%>/register"><%=val.accountCode%></a></td>
-                    <td><%=val.accountName%></td>
-                    <td class="field-format-currency">£<%=val.balance%></td>
-                    <% totalSABalance += parseFloat(val.balance); %>
-                  </tr>
-                <% } %>
-              <% }) %>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td class="field-format-currency"><strong>£<span id="totalSABalance"><%=parseFloat(totalSABalance).toFixed(2)%></span></strong></td>
-                </tr>
-            </tbody>
-          </table>
+        <div class="col-md-3 toolbox-header">
+          <h3>Toolbox</h3>
         </div>
-
-
-        <div class="account-category">
-          <h4>Credit/Store Cards</h4>
-          <table class="table table-striped">
-            <thead class="thead-inverse">
-              <tr>
-                <td id="column-account">Account</td>
-                <td id="column-name">Account Name</td>
-                <td id="column-balance" class="field-format-currency">Balance</td>
-              </tr>
-            </thead>
+        <div class="col-sm-3 toolbox-panel">
+          <h4>Calendar</h4>
+          <div class="calendar" id="txnDateCal"></div>
+        </div>
+        <div class="col-sm-3 col-3 toolbox-panel" id="paydayCountdown">
+          <h4>Payday Countdown</h4>
+          <table id="countdown">
             <tbody>
-              <% pageData.accountList.forEach(function(val, idx, arr) { %>
-                <% if (val.accountType === "CC" || val.accountType === "SC") { %>
-                  <tr>
-                    <td><a href="/account/<%=val.id%>/register"><%=val.accountCode%></a></td>
-                    <td><%=val.accountName%></td>
-                    <td class="field-format-currency">£<%=val.balance%></td>
-                    <% totalCCBalance += parseFloat(val.balance); %>
-                  </tr>
-                <% } %>
-              <% }) %>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td class="field-format-currency"><strong>£<span id="totalCCBalance"><%=parseFloat(totalCCBalance).toFixed(2)%></span></strong></td>
-                </tr>
+              <!-- <tr><th>Today:</th>               <td id="today"></td></tr> -->
+              <tr><th>Next Pay Day:</th>        <td id="nextPayDay"></td></tr>
+              <tr><th>Days Until Pay Day:</th>  <td id="daysToPayDay"></td></tr>
+              <tr><th>Total Balance:</th>       <td id="totalBal"></td></tr>
+              <tr><th>Cash Per Day:</th>        <td id="cashPerDay"></td></tr>
+              <tr><th>Cash Per Week:</th>       <td id="cashPerWeek"></td></tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
-
-    <div class="col-md-3 toolbox-header">
-      <h3>Toolbox</h3>
-    </div>
-    <div class="col-sm-3 col-3 toolbox-panel">
-      <h4>Calendar</h4>
-      <div class="calendar" id="txnDateCal"></div>
-    </div>
-    <div class="col-sm-3 col-3 toolbox-panel" id="paydayCountdown">
-      <h4>Payday Countdown</h4>
-      <table id="countdown">
-        <tbody>
-          <!-- <tr><th>Today:</th>               <td id="today"></td></tr> -->
-          <tr><th>Next Pay Day:</th>        <td id="nextPayDay"></td></tr>
-          <tr><th>Days Until Pay Day:</th>  <td id="daysToPayDay"></td></tr>
-          <tr><th>Total Balance:</th>       <td id="totalBal"></td></tr>
-          <tr><th>Cash Per Day:</th>        <td id="cashPerDay"></td></tr>
-          <tr><th>Cash Per Week:</th>       <td id="cashPerWeek"></td></tr>
-        </tbody>
-      </table>
-    </div>
-
 </body>
 </html>

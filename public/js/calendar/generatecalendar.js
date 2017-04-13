@@ -116,7 +116,7 @@ function refreshCal(calname, monthyear, defdate) {
         $("#" + calname + " .tdCalDay").on("click", function() {
             if ($(this).text().length > 0) {
                 $("#" + calname + " .tdCalDay").removeClass("calselected");
-                $("#" + calname + "_txtDate").val(new Date(data.year, data.month-1, parseInt($(this).text())).toISOString().substr(0,10));
+                $("#" + calname + "_txtDate").val(new Date(data.year, data.month-1, parseInt($(this).text())+1).toISOString().substr(0,10));
                 $(this).addClass("calselected");
                 $("#" + calname + "_txtDate").change();
             }
