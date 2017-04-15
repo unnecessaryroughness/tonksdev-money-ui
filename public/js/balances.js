@@ -11,7 +11,7 @@ $(function() {
     //get cash per day
     $.ajax({
       url: location.origin + '/ajax/cashperday',
-      data: {"payday": 27, "balance": $("#totalCABalance").text()},
+      data: {"payday": myPayday, "balance": $("#totalCABalance").text()},
       type: 'GET',
       success: function(data) {
         $("#today").text(data.today);

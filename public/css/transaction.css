@@ -12,6 +12,7 @@
   padding: 1em;
   /*border: 1px solid #0f0;*/
   height: 7em;
+  width: 100%;
 }
 
 .input-group-hidden {
