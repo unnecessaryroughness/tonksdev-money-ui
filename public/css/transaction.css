@@ -1,4 +1,5 @@
 * {
+  font-size: 16px;
 }
 
 .input-col {
@@ -98,4 +99,10 @@
   clear: both;
   font-family: "courier new";
   font-size: 8;
+}
+
+@media (min-width: 768px) {
+  * {
+    font-size: 14px;
+  }
 }
