@@ -13,6 +13,7 @@
     <script src="/js/calendar/generatecalendar.js"></script>
     <script src="/js/includes/newpayee.js"></script>
     <script src="/js/includes/newcategory.js"></script>
+    <script>var sessionData = <%-JSON.stringify(sessionData)%>;</script>
 </head>
 
 <body>
@@ -125,7 +126,7 @@
 
       </div>
 
-      <!-- <div class="data-listing"><%=JSON.stringify(pageData)%></div> -->
+      <div class="data-listing"><%=JSON.stringify(sessionData)%></div>
 
     </div>
     </div>

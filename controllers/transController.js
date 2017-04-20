@@ -54,7 +54,7 @@ const controller = function(moneyUIVars) {
             }
 
             done(null, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody,
-                      'tonksDEV Money: Transaction' + jsoResponse.transaction.id, JSON.stringify(jsoResponse)));
+                      'tonksDEV Money: Transaction ' + jsoResponse.transaction.id, JSON.stringify(jsoResponse)));
           });
         });
       });

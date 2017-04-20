@@ -12,6 +12,9 @@ const helper = function() {
               "selectedAccountGroupId": envSession.accountGroupId || '',
               "selectedAccountId": envQSParams.accid
             },
+            "sessionData": {
+              "lastNewTransactionDate": envSession.lastNewTransactionDate
+            },
             "pageTitle": pageTitle,
             "pageData": (typeof pageData === 'string') ? JSON.parse(pageData) : pageData,
             "pageError": envBody.error

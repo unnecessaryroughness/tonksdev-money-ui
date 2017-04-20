@@ -74,6 +74,7 @@ var routes = function(moneyUIVars) {
                     req.body, {userid: req.session.passport.user}, function(err, response, data) {
 
               if (err || response.statusCode === 200) {
+                req.session.lastNewTransactionDate = req.body.transaction.transactionDate;
                 return res.status(200).json({'response': data});
               } else {
                 return res.status(404).json({'response': "transaction not found", "data": data, "stack": err});

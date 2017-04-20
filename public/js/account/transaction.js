@@ -69,6 +69,12 @@ $(function() {
     refreshCal("txnDateCal", ("00"+((d.getMonth()+1).toString())).slice(-2) + (d.getFullYear()).toString(), d.getDate().toString());
   })
 
+
+  //replace the date with the lastNewTransactionDate if available and this is a NEW transaction
+  if (window.location.href.substr(-2) === "/0") {
+    $("#txnDate").val(sessionData.lastNewTransactionDate);
+  }
+
   //generate calendar
   $("#txnDateCal").html(generateCalendarTable("txnDateCal", 42));
   $("#txnDate").change();
