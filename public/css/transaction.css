@@ -1,5 +1,4 @@
 * {
-  font-size: 16px;
 }
 
 .input-col {
@@ -10,6 +9,7 @@
 }
 
 .input-group {
+  font-size: 16px;
   padding: 1em;
   /*border: 1px solid #0f0;*/
   height: 7em;
@@ -102,7 +102,7 @@
 }
 
 @media (min-width: 768px) {
-  * {
+  .input-group {
     font-size: 14px;
   }
 }
