@@ -73,7 +73,9 @@ $(function() {
   //replace the date with the lastNewTransactionDate if available and this is a NEW transaction
   //show Reduce Placeholder group if this is a new transaction only
   if (window.location.href.substr(-2) === "/0") {
-    $("#txnDate").val(sessionData.lastNewTransactionDate);
+    if (sessionData.lastNewTransactionDate && sessionData.lastNewTransactionDate.length > 0) {
+      $("#txnDate").val(sessionData.lastNewTransactionDate);
+    }
     $("#input-group-txnReduce").removeClass("input-group-hidden");
   }
 

@@ -22,7 +22,7 @@
 
 .input-group > label {
   display: block;
-  width: 10em;
+  /*width: 10em;*/
   height: 2em;
   /*border: 1px solid #f00;*/
   padding: 0.2em 0em;
@@ -57,7 +57,7 @@
 }
 
 .input-group > .input-width-75pc {
-  width: 75%;
+  width: 73%;
 }
 
 .input-group > select {
@@ -77,7 +77,7 @@
 
 .input-group > button {
   width: 5em;
-  margin: 0.2em;
+  margin: 0.1em;
 }
 
 .input-group > button.btn-narrow {
