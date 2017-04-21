@@ -39,6 +39,12 @@ select {
   display: none;
 }
 
+#accountShortcut {
+  height: 35px;
+  border-radius: 4px;
+}
+
+
 @media (min-width: 768px) {
 
   .conditional-field-narrow {

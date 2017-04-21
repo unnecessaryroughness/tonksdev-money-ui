@@ -41,20 +41,27 @@ const controller = function(moneyUIVars) {
             let catList = JSON.parse(catApiResponse.data);
             jsoResponse.categoryList = catList.categoryList;
 
-            //if there is no account id set this must be a new transaction.
-            //the account id is stored in the querystring parameter. use it and look up the account code & name
-            if (!jsoResponse.transaction.account.id) {
-              jsoResponse.transaction.account.id = envQSParams.accid;
-              jsoResponse.accountList.forEach(function(val, idx) {
-                if (val.id === jsoResponse.transaction.account.id) {
-                  jsoResponse.transaction.account.code = val.accountCode;
-                  jsoResponse.transaction.account.name = val.accountName;
-                }
-              })
-            }
+            callAPI(envVars.apiaddress + '/transaction/placeholders/' + envQSParams.accid, 'GET', null, {userid: envSession.passport.user}, function(pherr, phresponse, phdata) {
+              let phApiResponse = viewdataHelpers.sanitizeErrAndData(pherr, phdata, phresponse.statusCode);
+              console.log("phApiResponse", phApiResponse.data);
+              let phList = JSON.stringify(phApiResponse.data) !== "{}" ? JSON.parse(phApiResponse.data) : {"transactionList": []};
+              jsoResponse.placeholderList = phList.transactionList;
 
-            done(null, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody,
-                      'tonksDEV Money: Transaction ' + jsoResponse.transaction.id, JSON.stringify(jsoResponse)));
+              //if there is no account id set this must be a new transaction.
+              //the account id is stored in the querystring parameter. use it and look up the account code & name
+              if (!jsoResponse.transaction.account.id) {
+                jsoResponse.transaction.account.id = envQSParams.accid;
+                jsoResponse.accountList.forEach(function(val, idx) {
+                  if (val.id === jsoResponse.transaction.account.id) {
+                    jsoResponse.transaction.account.code = val.accountCode;
+                    jsoResponse.transaction.account.name = val.accountName;
+                  }
+                })
+              }
+
+              done(null, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody,
+                        'tonksDEV Money: Transaction ' + jsoResponse.transaction.id, JSON.stringify(jsoResponse)));
+            });
           });
         });
       });

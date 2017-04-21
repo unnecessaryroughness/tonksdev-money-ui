@@ -71,9 +71,20 @@ $(function() {
 
 
   //replace the date with the lastNewTransactionDate if available and this is a NEW transaction
+  //show Reduce Placeholder group if this is a new transaction only
   if (window.location.href.substr(-2) === "/0") {
     $("#txnDate").val(sessionData.lastNewTransactionDate);
+    $("#input-group-txnReduce").removeClass("input-group-hidden");
   }
+
+  //enable the txnAdjust field when the txnPlaceholder field !== "(none)"
+  $("#txnReduce").on("change", function(e) {
+    if (($(this).val()).length > 0) {
+      $("#txnAdjust").removeAttr("disabled");
+    } else {
+      $("#txnAdjust").attr("disabled", "disabled");
+    }
+  })
 
   //generate calendar
   $("#txnDateCal").html(generateCalendarTable("txnDateCal", 42));
@@ -94,6 +105,7 @@ $(function() {
   $("#txnAmount").on("blur", function(e) {
     $(this).val(eval($(this).val()).toFixed(2));
   })
+
 
 
   //wire up callbacks for new Payee & Category button clicks
@@ -119,7 +131,23 @@ $(function() {
       type: 'PUT',
       success: function(data) {
         if (data.response.transaction &&  data.response.transaction.amount) {
-          window.location.href = "/account/" + returnToAccount + "/register";
+          //if saved and there is a reducePlaceholder specified, make the adjustment now
+          if ( ($("#txnReduce").val() && ($("#txnReduce").val()).length > 0) &&
+               ($("#txnAdjust").val() && parseFloat($("#txnAdjust").val()) != 0.00)  ) {
+                 $.ajax({
+                   url: location.origin + '/ajax/adjusttxn',
+                   data: {"transactionId": $("#txnReduce").val(), "adjustBy": parseFloat($("#txnAdjust").val()).toFixed(2)},
+                   type: 'PUT',
+                   success: function(data) {
+                     window.location.href = "/account/" + returnToAccount + "/register";
+                   },
+                   error: function(xhr, status, error) {
+                     console.log("Error: " + JSON.stringify(error),  xhr.responseText );
+                   }
+                 });
+          } else {
+            window.location.href = "/account/" + returnToAccount + "/register";
+          }
         } else {
           window.alert("save failed :-(");
         }

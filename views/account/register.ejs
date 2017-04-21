@@ -21,10 +21,11 @@
               <%-(val.accountCode === pageData.account.accountCode ? "selected" : "")  + ">" + val.accountCode + "</option>" %>
           <% }); %>
         </select>
+        <button class="btn btn-success btn-register" id="btnAddNewTxn" data-accid="<%=pageData.account.id%>" accesskey="n">Add a new Transaction</button>
+
       </div>
 
 
-      <button class="btn btn-success btn-register" id="btnAddNewTxn" data-accid="<%=pageData.account.id%>" accesskey="n">Add a new Transaction</button>
 
       <table class="table table-striped">
         <thead class="thead-inverse">

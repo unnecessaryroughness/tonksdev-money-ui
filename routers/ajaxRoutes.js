@@ -55,6 +55,27 @@ var routes = function(moneyUIVars) {
       })
 
 
+    //handle request to adjust value of transaction
+    ajaxRouter.route("/adjusttxn")
+      .put(function(req, res, next) {
+        if (typeof req.session.passport !== 'undefined') {    //only do anything if user is logged in
+
+          //call API to get clear transaction
+          callAPI(moneyUIVars.apiaddress + '/transaction/adjust/' + req.body.transactionId, 'PUT',
+                  req.body, {userid: req.session.passport.user}, function(err, response, data) {
+
+              if (err || response.statusCode === 200) {
+                return res.status(200).json(data);
+              } else {
+                return res.status(404).json({'transaction': "not found", "data": JSON.parse(data), "stack": err});
+              }
+          });
+        } else {
+          return res.status(403).json({'error': "forbidden"});
+        }
+      })
+
+
     ajaxRouter.route("/caldata")
       .get(function(req, res, next) {
           let rtnVal = calendarHelper.getCalData(req.query.monthReq, req.query.defaultDate);
