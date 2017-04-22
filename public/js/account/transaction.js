@@ -120,7 +120,8 @@ $(function() {
       success: function(data) {
         let foundTxn = JSON.parse(data).transactionList[0];
         // console.log("found: " + foundTxn.amount + " " + foundTxn.category.name);
-        $("#txnAmount").val(foundTxn.amount);
+        // $("#txnAmount").val((foundTxn.amount-(foundTxn.amount * 2)));
+        $("#txnAmount").val(foundTxn.amount != 0 ? (foundTxn.amount-(foundTxn.amount * 2)) : $("#txnAmount").val());
         $("#txnCategory option").removeAttr("selected");
         $("#txnCategory option:contains(" + foundTxn.category.name + ")").attr("selected", "selected");
       },
@@ -141,7 +142,7 @@ $(function() {
       success: function(data) {
         let foundTxn = JSON.parse(data).transactionList[0];
         // console.log("found: " + foundTxn.amount + " " + foundTxn.category.name);
-        $("#txnAmount").val(foundTxn.amount != 0 ? foundTxn.amount : $("#txnAmount").val());
+        $("#txnAmount").val(foundTxn.amount != 0 ? (foundTxn.amount-(foundTxn.amount * 2)) : $("#txnAmount").val());
       },
       error: function(xhr, status, error) {
         //do nothing
