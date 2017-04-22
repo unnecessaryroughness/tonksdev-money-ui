@@ -76,6 +76,35 @@ var routes = function(moneyUIVars) {
       })
 
 
+      //handle request to get most recent transaction from same payee
+      ajaxRouter.route("/payeerecent")
+        .get(function(req, res, next) {
+          if (typeof req.session.passport !== 'undefined') {    //only do anything if user is logged in
+
+            console.log("query>>", req.query);
+            console.log(moneyUIVars.apiaddress + '/transaction/payeerecent/' + req.query.accountId + '/' +
+                    req.query.payeeId + '/' + req.query.categoryId);
+
+            //call API to get clear transaction
+            callAPI(moneyUIVars.apiaddress + '/transaction/payeerecent/' + req.query.accountId + '/' +
+                    req.query.payeeId + '/' + req.query.categoryId, 'GET',
+                    null, {userid: req.session.passport.user}, function(err, response, data) {
+
+                if (err || response.statusCode === 200) {
+                  console.log(JSON.parse(data))
+                  return res.status(200).json(data);
+                } else {
+                  // return res.status(404).json({'transaction': "not found", "data": JSON.parse(data), "stack": err});
+                  return res.status(200).json('{"transactionList": [{"amount": 0.00, "category": {"name": "Miscellaneous"}}]}');
+                }
+            });
+          } else {
+            return res.status(403).json({'error': "forbidden"});
+          }
+        })
+
+
+
     ajaxRouter.route("/caldata")
       .get(function(req, res, next) {
           let rtnVal = calendarHelper.getCalData(req.query.monthReq, req.query.defaultDate);

@@ -83,8 +83,10 @@ $(function() {
   $("#txnReduce").on("change", function(e) {
     if (($(this).val()).length > 0) {
       $("#txnAdjust").removeAttr("disabled");
+      $("#txnAdjust").val($("#txnAmount").val());
     } else {
       $("#txnAdjust").attr("disabled", "disabled");
+      $("#txnAdjust").val("0.00");
     }
   })
 
@@ -107,6 +109,46 @@ $(function() {
   $("#txnAmount").on("blur", function(e) {
     $(this).val(eval($(this).val()).toFixed(2));
   })
+
+  //recall most recent transaction for same payee when the payee is changed
+  $("#txnPayee").on("change", function(e) {
+    updateSaveObj();
+    $.ajax({
+      url: location.origin + '/ajax/payeerecent',
+      data: {"transactionId": saveObj.id, "accountId": saveObj.account.id, "payeeId": saveObj.payee.id, "categoryId": null},
+      type: 'GET',
+      success: function(data) {
+        let foundTxn = JSON.parse(data).transactionList[0];
+        // console.log("found: " + foundTxn.amount + " " + foundTxn.category.name);
+        $("#txnAmount").val(foundTxn.amount);
+        $("#txnCategory option").removeAttr("selected");
+        $("#txnCategory option:contains(" + foundTxn.category.name + ")").attr("selected", "selected");
+      },
+      error: function(xhr, status, error) {
+        //do nothing
+      }
+    });
+  })
+
+
+  //recall most recent transaction for same payee + category when category is changed
+  $("#txnCategory").on("change", function(e) {
+    updateSaveObj();
+    $.ajax({
+      url: location.origin + '/ajax/payeerecent',
+      data: {"transactionId": saveObj.id, "accountId": saveObj.account.id, "payeeId": saveObj.payee.id, "categoryId": saveObj.category.id},
+      type: 'GET',
+      success: function(data) {
+        let foundTxn = JSON.parse(data).transactionList[0];
+        // console.log("found: " + foundTxn.amount + " " + foundTxn.category.name);
+        $("#txnAmount").val(foundTxn.amount != 0 ? foundTxn.amount : $("#txnAmount").val());
+      },
+      error: function(xhr, status, error) {
+        //do nothing
+      }
+    });
+  })
+
 
 
 
