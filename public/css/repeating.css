@@ -1,0 +1,52 @@
+.field-format-dr {
+  color: #a00;
+}
+
+.field-format-cr {
+  color: #0a0;
+}
+
+.anchor-overspan {
+  display: inline-block;
+  min-height: 100%;
+  width: 100%;
+  padding: 0.2em;
+  text-decoration: none;
+}
+
+.anchor-overspan:hover {
+  text-decoration: none;
+}
+
+.conditional-field-narrow {
+  display: table-cell;
+}
+
+.conditional-field-wide {
+  display: none;
+}
+
+
+.data-listing {
+  display: block;
+  clear: both;
+  font-family: "courier new";
+  font-size: 8;
+  margin: 2em 0;
+  border: 1px solid #ccc;
+  width: 90%;
+}
+
+
+
+@media (min-width: 768px) {
+
+  .conditional-field-narrow {
+    display: none;
+  }
+
+  .conditional-field-wide {
+    display: table-cell;
+  }
+
+}

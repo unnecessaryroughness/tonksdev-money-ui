@@ -17,7 +17,7 @@ const helper = function() {
   const routePost = function(ctrlMethod, envVars, envReq, envRes) {
     ctrlMethod(envVars, envReq.session, envReq.user, envReq.params, envReq.body, function(err, rtnData) {
       if (!err) {
-        envRes.redirect('back');
+        envRes.redirect(envRes.redirectBackTo || 'back');
       } else {
         errorController.getErrorPageData(envVars, envReq.session, envReq.user, envReq.params, {'error': err}, function(cErr, errorData) {
             envRes.status(err.error || 500).render('error', errorData);
