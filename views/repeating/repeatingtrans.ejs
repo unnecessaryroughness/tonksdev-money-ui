@@ -45,9 +45,13 @@
       <!-- <div class="input-col" id="input-col-2"> -->
       <div class="col-sm-3" id="input-col-2">
         <div class="input-group">
-          <label for="txnDate">Date</label>
-          <input class="input-width-narrow" name="txnDate" id="txnDate" value="<%=pageData.transaction.transactionDate%>"></input>
+          <label for="txnDate">Next Due On Date</label>
+          <input class="input-width-narrow" name="txnDate" id="txnDate" value="<%=pageData.transaction.repeating.nextDate.substr(0,10)%>"></input>
           <div class="calendar" id="txnDateCal"></div>
+        </div>
+        <div class="input-group">
+          <label for="txnDate">End On Date</label>
+          <input class="input-width-narrow" name="txnEndOnDate" id="txnEndOnDate" value="<%=pageData.transaction.repeating.endOnDate.substr(0,10)%>"></input>
         </div>
       </div>
 
@@ -104,8 +108,17 @@
       <!-- <div class="input-col" id="input-col-4"> -->
       <div class="col-sm-3" id="input-col-4">
         <div class="input-group">
-            <label for="txnCleared">Reconciled</label>
-            <input type="checkbox" name="txnCleared" id="txnCleared" <%=(pageData.transaction.isCleared ? "checked" : "")%>></input>
+            <label for="txnFrequency">Frequency</label>
+            <select class="input-width-100pc" name="txnFrequency" id="txnFrequency">
+              <option value="D">Daily</option>
+              <option value="W">Weekly</option>
+              <option value="M">Monthly</option>
+              <option value="Y">Yearly</option>
+            </select>
+            <label class="label-inline" for="txnFrequencyMonths">Every</label>
+            <input class="input-inline-narrow" name="txnFrequencyMonths" id="txnFrequencyMonths" value="<%=pageData.transaction.repeating.frequency.increment%>"></input>
+            <label id="lblFrequencyMonths" class="label-inline" for="txnFrequencyMonths">Months</label>
+
         </div>
 
         <div class="input-group">
@@ -135,7 +148,9 @@
         <!-- <div id="button-group" class="btn-group" role="group"data-return-to-account="<%=pageData.transaction.account.id%>"> -->
           <button type="button" class="btn btn-primary" id="btnSaveTxn">Save</button>
           <button type="button" class="btn btn-default" id="btnCloseTxn">Close</button>
+          <br>
           <button type="button" class="btn btn-danger" id="btnDeleteTxn">Delete</button>
+          <button type="button" class="btn btn-warning" id="btnApplyTxn">Apply</button>
         </div>
 
       </div>

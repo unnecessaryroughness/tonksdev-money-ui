@@ -119,6 +119,24 @@ const controller = function(moneyUIVars) {
     });
   }
 
+  const deleteRepeating = function(envVars, envSession, envUser, envQSParams, envBody, done) {
+    let postBody = {transaction: JSON.parse(envBody.inputtransaction)};
+
+    callAPI(envVars.apiaddress + '/repeating/' + postBody.transaction.id, 'DELETE', null, {userid: envSession.passport.user}, function(err, response, data) {
+        let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+        done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
+    });
+  }
+
+  const applyRepeating = function(envVars, envSession, envUser, envQSParams, envBody, done) {
+    let postBody = {transaction: JSON.parse(envBody.inputtransaction)};
+
+    callAPI(envVars.apiaddress + '/repeating/apply/' + postBody.transaction.id, 'POST', null, {userid: envSession.passport.user}, function(err, response, data) {
+        let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+        done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
+    });
+  }
+
 
   // const editPayee = function(envVars, envSession, envUser, envQSParams, envBody, done) {
   //   let postBody = {
@@ -153,7 +171,9 @@ const controller = function(moneyUIVars) {
     getRepeatingPageData: getRepeatingPageData,
     getRepeatingTransPageData: getRepeatingTransPageData,
     addNewRepeating: addNewRepeating,
-    updateRepeating: updateRepeating
+    updateRepeating: updateRepeating,
+    deleteRepeating: deleteRepeating,
+    applyRepeating: applyRepeating
   }
 }
 

@@ -52,6 +52,12 @@
   width: 8em;
 }
 
+.input-group > .input-inline-narrow {
+  display: inline-block;
+  margin: 0.5em;
+  width: 3em;
+}
+
 .input-group > .input-width-100pc {
   width: 100%;
 }
@@ -100,6 +106,12 @@
   font-family: "courier new";
   font-size: 8;
 }
+
+.input-group > label.label-inline {
+  display: inline-block;
+}
+
+
 
 @media (min-width: 768px) {
   .input-group {

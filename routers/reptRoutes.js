@@ -35,7 +35,6 @@ var routes = function(moneyUIVars) {
               switch(req.body.inputAction) {
                 case "create":
                   res.redirectBackTo = "/repeating";
-                  debug("in the create routine");
                   console.log(JSON.parse(req.body.inputtransaction).amount);
                   controllerHelpers.routePost(reptController.addNewRepeating, moneyUIVars, req, res);
                   break;

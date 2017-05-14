@@ -20,6 +20,7 @@
       <table class="table table-striped">
         <thead class="thead-inverse">
           <tr>
+            <td>Next Date</td>
             <td>Payee</td>
             <td class="conditional-field-wide">Category</td>
             <td class="field-format-currency conditional-field-wide">Amount Dr</td>
@@ -39,6 +40,7 @@
               }
             %>
           <tr>
+              <td><a class="anchor-overspan" href="/repeating/<%=val.id%>"><%=val.repeating.nextDate.substr(0,10)%></a></td>
               <td><a class="anchor-overspan" href="/repeating/<%=val.id%>"><%-(isTransfer) ? prefix + val.payee.transferAccount.code + suffix : val.payee.name%></a></td>
               <td class="conditional-field-wide"><a class="anchor-overspan" href="/repeating/<%=val.id%>"><%=val.category.name%></a></td>
               <td class="field-format-currency conditional-field-wide"><a class="anchor-overspan field-format-dr" href="/repeating/<%=val.id%>"><%=(val.amount < 0 ? parseFloat(val.amount).toFixed(2) : "")%></a></td>
@@ -51,6 +53,6 @@
       </table>
     </div>
 
-    <div class="data-listing"><%-JSON.stringify(header)%></div>
-    <div class="data-listing"><%-JSON.stringify(pageData)%></div>
+    <!-- <div class="data-listing"><%-JSON.stringify(header)%></div>
+    <div class="data-listing"><%-JSON.stringify(pageData)%></div> -->
 </body>

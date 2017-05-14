@@ -43,6 +43,10 @@ $(function() {
 
   assessTxnTypeFields();
 
+  $("#txnFrequency").val(saveObj.repeating.frequency.code);
+  refreshFrequencyLabel();
+
+
   //set initial focus
   if ($("#txnType").val() === "Transfer") {
     $("#txnTxfAccount").focus();
@@ -69,6 +73,10 @@ $(function() {
     refreshCal("txnDateCal", ("00"+((d.getMonth()+1).toString())).slice(-2) + (d.getFullYear()).toString(), d.getDate().toString());
   })
 
+  //refresh label on frequency changed
+  $("#txnFrequency").on("change", function(e) {
+    refreshFrequencyLabel();
+  })
 
   //replace the date with the lastNewTransactionDate if available and this is a NEW transaction
   //show Reduce Placeholder group if this is a new transaction only
@@ -165,20 +173,7 @@ $(function() {
 
   //wire up save button
   $("#btnSaveTxn").on("click", function(e) {
-
     updateSaveObj();
-
-    /******* TEMPORARY CODE ***********/
-        saveObj.repeating = {
-          "nextDate": "2017-06-25",
-          "prevDate": "",
-          "endOnDate": "2099-12-25",
-          "frequency": {
-            "code": "M",
-            "increment": 1
-          }}
-    /******* TEMPORARY CODE ***********/
-
     if (window.location.href.substr(-2) === "/0") {
       appendSubmitForm('create', [{fieldName: 'transaction', fieldVal: JSON.stringify(saveObj)}])
     } else {
@@ -188,29 +183,27 @@ $(function() {
 
   //wire up delete button
   $("#btnDeleteTxn").on("click", function(e) {
-    showConfirmDialog("Delete Transaction -- Confirm?",
+    showConfirmDialog("Delete Repeating Transaction -- Confirm?",
                       "Are you sure you want to permanently delete this transaction? " +
                       "This process cannot be reversed!",
                       function() {
-
-                        //submit ajax request
-                        $.ajax({
-                          url: location.origin + '/ajax/deletetxn',
-                          data: {"transaction": {id: saveObj.id}},
-                          type: 'DELETE',
-                          success: function(data) {
-                            if (data.response.saveStatus &&  data.response.saveStatus === "deleted") {
-                              window.location.href = "/account/" + $("#button-group").data("return-to-account") + "/register";
-                            } else {
-                              window.alert("delete failed :-( " + JSON.stringify(data));
-                            }
-                          },
-                          error: function(xhr, status, error) {
-                            console.log("Error: " + JSON.stringify(error),  xhr.responseText );
-                          }
-                        });
+                        updateSaveObj();
+                        appendSubmitForm('delete', [{fieldName: 'transaction', fieldVal: JSON.stringify(saveObj)}])
                       });
-     });
+   });
+
+  //wire up apply button
+  $("#btnApplyTxn").on("click", function(e) {
+    showConfirmDialog("Apply Repeating Transaction -- Confirm?",
+                      "Are you sure you want to apply the next iteration of this transaction? " +
+                      "This process cannot be reversed!",
+                      function() {
+                        updateSaveObj();
+                        appendSubmitForm('apply', [{fieldName: 'transaction', fieldVal: JSON.stringify(saveObj)}])
+                      });
+   });
+
+
 
 });
 
@@ -238,6 +231,7 @@ function assessTxnTypeFields() {
   }
 
 
+
 function updateSaveObj() {
   //IF THE TXN TYPE IS PAYMENT NEGATE THE VALUE INPUT SO IT IS SAVED AS A MINUS VALUE
   saveObj.amount = ( $("#txnType").val() !== "Deposit" ) ? $("#txnAmount").val() - ($("#txnAmount").val() * 2) : $("#txnAmount").val();
@@ -247,7 +241,6 @@ function updateSaveObj() {
     saveObj.account.previous.id = saveObj.account.id;
     saveObj.account.previous.code = saveObj.account.code;
   }
-  saveObj.transactionDate = $("#txnDate").val();
   saveObj.account.id = $("#txnAccount").val();
   saveObj.account.code = $("#txnAccount option:selected").text();
   saveObj.payee.id = $("#txnPayee").val();
@@ -257,6 +250,11 @@ function updateSaveObj() {
   saveObj.notes = $("#txnNotes").val();
   saveObj.isCleared = $("#txnCleared").is(":checked");
   saveObj.isPlaceholder = $("#txnPlaceholder").is(":checked");
+  saveObj.repeating.nextDate = $("#txnDate").val();
+  saveObj.repeating.endOnDate = $("#txnEndOnDate").val();
+  saveObj.repeating.frequency.code = $("#txnFrequency").val();
+  saveObj.repeating.frequency.increment = $("#txnFrequencyMonths").val();
+
 
   if (!$("#txnTxfAccount").val()) {
     delete saveObj.payee.transferAccount;
@@ -271,7 +269,10 @@ function updateSaveObj() {
 
 function refreshFromSaveObj() {
   $("#txnAmount").val(saveObj.amount);
-  $("#txnDate").val(saveObj.transactionDate);
+  $("#txnDate").val(saveObj.repeating.nextDate);
+  $("#txnEndOnDate").val(saveObj.repeating.endOnDate);
+  $("#txnFrequency").val(saveObj.repeating.frequency.code);
+  $("#txnFrequencyMonths").val(saveObj.repeating.frequency.increment);
   $("#txnAccount").val(saveObj.account.id);
   $("#txnAccount option:selected").text(saveObj.account.code);
   $("#txnPayee").val(saveObj.payee.id);
@@ -287,6 +288,26 @@ function refreshFromSaveObj() {
   }
 }
 
+
+function refreshFrequencyLabel() {
+  switch($("#txnFrequency").val()) {
+    case "D":
+      $("#lblFrequencyMonths").text("Days")
+      break;
+    case "W":
+      $("#lblFrequencyMonths").text("Weeks")
+      break;
+    case "M":
+      $("#lblFrequencyMonths").text("Months")
+      break;
+    case "Y":
+      $("#lblFrequencyMonths").text("Years")
+      break;
+    default:
+      $("#lblFrequencyMonths").text("????")
+      break;
+  }
+}
 
 
 function storeCurrentRecordToCookie() {
