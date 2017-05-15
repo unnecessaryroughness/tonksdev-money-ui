@@ -37,6 +37,9 @@
   width: 90%;
 }
 
+.button-margin-1em {
+  margin: 1em 0;
+}
 
 
 @media (min-width: 768px) {

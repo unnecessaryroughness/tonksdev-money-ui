@@ -6,7 +6,7 @@
     <%- include('../includes/bootstrapSetup.ejs') %>
     <link href="/css/repeating.css" rel="stylesheet">
     <!-- <link href="/css/calendar.css" rel="stylesheet"> -->
-    <!-- <script src="/js/balances.js"></script> -->
+    <script src="/js/repeating/repeating.js"></script>
     <!-- <script src="/js/calendar/generatecalendar.js"></script> -->
     <!-- <script>var myPayday=<%=header.loggedInUser.payday%>;</script> -->
 </head>
@@ -16,6 +16,10 @@
 
     <div class="container">
       <h3>Repeating Transactions (<%=header.selectedAccountGroup%>)</h3>
+
+      <div class="button-margin-1em">
+        <button class="btn btn-success btn-register" id="btnAddNewTxn" accesskey="n">Add a new Repeating Transaction</button>
+      </div>
 
       <table class="table table-striped">
         <thead class="thead-inverse">

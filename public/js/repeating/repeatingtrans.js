@@ -43,6 +43,12 @@ $(function() {
 
   assessTxnTypeFields();
 
+  var d = saveObj.repeating.nextDate ? new Date(saveObj.repeating.nextDate) : new Date();
+  var ed = saveObj.repeating.endOnDate ? new Date(saveObj.repeating.endOnDate) : new Date();
+  $("#txnDate").val(d.getFullYear().toString() + "-" + ("00"+(d.getMonth()+1).toString()).slice(-2) + "-" + ("00"+d.getDate().toString()).slice(-2));
+  $("#txnEndOnDate").val(ed.getFullYear().toString() + "-" + ("00"+(ed.getMonth()+1).toString()).slice(-2) + "-" + ("00"+ed.getDate().toString()).slice(-2));
+
+
   $("#txnFrequency").val(saveObj.repeating.frequency.code);
   refreshFrequencyLabel();
 
