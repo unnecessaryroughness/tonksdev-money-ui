@@ -41,6 +41,16 @@
   margin: 1em 0;
 }
 
+.field-validation-bad {
+  background: rgb(238, 169, 169);
+
+}
+
+#rptApplyDate {
+  width: 8em;
+  height: 32px;
+  margin: 0.2em 0;
+}
 
 @media (min-width: 768px) {
 

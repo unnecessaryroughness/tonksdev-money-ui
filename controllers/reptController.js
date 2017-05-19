@@ -79,28 +79,6 @@ const controller = function(moneyUIVars) {
   };
 
 
-//SETUP PAYEES FUNCTIONS
-
-  // const getPayeesPageData = function(envVars, envSession, envUser, envQSParams, envBody, done) {
-  //
-  //   callAPI(envVars.apiaddress + '/payee/allpayees/' + envSession.accountGroupId, 'GET', null, {userid: envSession.passport.user}, function(err, response, data) {
-  //
-  //     //default apiResponse to an empty object
-  //     let apiResponse = {data:{payeeList: []}, err: err};
-  //
-  //     //if some data was returned overwrite the apiResponse object
-  //     if (response.statusCode === 200) {
-  //       apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
-  //     } else {
-  //       apiResponse.err = {"error": response.statusCode, "message": "no payees found"}
-  //     }
-  //
-  //     done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody,
-  //                                             'tonksDEV Money: Payee Setup', apiResponse.data));
-  //   });
-  // };
-
-
   const addNewRepeating = function(envVars, envSession, envUser, envQSParams, envBody, done) {
     let postBody = {transaction: JSON.parse(envBody.inputtransaction)};
 
@@ -137,34 +115,12 @@ const controller = function(moneyUIVars) {
     });
   }
 
-
-  // const editPayee = function(envVars, envSession, envUser, envQSParams, envBody, done) {
-  //   let postBody = {
-  //     "payee": {
-  //       "payeeId": envBody.inputPayeeId,
-  //       "payeeName": envBody.inputEditPayeeName,
-  //       "accountGroup": envSession.accountGroupId
-  //     }
-  //   }
-
-    //edit the group description
-    // callAPI(envVars.apiaddress + '/payee/' + envBody.inputPayeeId, 'PUT', postBody, {userid: envSession.passport.user}, function(err, response, data) {
-    //     let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
-    //     done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
-    // });
-  // }
-
-
-  // const deletePayee = function(envVars, envSession, envUser, envQSParams, envBody, done) {
-  //   let postBody = {};
-  //
-  //   callAPI(envVars.apiaddress + '/payee/' + envBody.inputPayeeId, 'DELETE', postBody,
-  //                               {userid: envSession.passport.user}, function(err, response, data) {
-  //
-  //       let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
-  //       done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
-  //   });
-  // }
+  const applyAllRepeating = function(envVars, envSession, envUser, envQSParams, envBody, done) {
+    callAPI(envVars.apiaddress + '/repeating/group/' + envSession.accountGroupId + '/applyto/' + envBody.inputToDate, 'POST', null, {userid: envSession.passport.user}, function(err, response, data) {
+        let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+        done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
+    });
+  }
 
 
   return {
@@ -173,7 +129,8 @@ const controller = function(moneyUIVars) {
     addNewRepeating: addNewRepeating,
     updateRepeating: updateRepeating,
     deleteRepeating: deleteRepeating,
-    applyRepeating: applyRepeating
+    applyRepeating: applyRepeating,
+    applyAllRepeating: applyAllRepeating
   }
 }
 

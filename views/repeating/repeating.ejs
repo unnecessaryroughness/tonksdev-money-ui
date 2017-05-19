@@ -4,9 +4,12 @@
 <head>
     <title><%=pageTitle%></title>
     <%- include('../includes/bootstrapSetup.ejs') %>
+    <%- include('../includes/bootstrap-dialog.ejs') %>
+
     <link href="/css/repeating.css" rel="stylesheet">
     <!-- <link href="/css/calendar.css" rel="stylesheet"> -->
     <script src="/js/repeating/repeating.js"></script>
+    <script src="/js/includes/adhocsubmitform.js"></script>
     <!-- <script src="/js/calendar/generatecalendar.js"></script> -->
     <!-- <script>var myPayday=<%=header.loggedInUser.payday%>;</script> -->
 </head>
@@ -19,6 +22,11 @@
 
       <div class="button-margin-1em">
         <button class="btn btn-success btn-register" id="btnAddNewTxn" accesskey="n">Add a new Repeating Transaction</button>
+        <button class="btn btn-warning btn-register" id="btnApplyAll" accesskey="a">Apply to Next Pay Day</button>
+        <button class="btn btn-warning btn-register" id="btnApplyAll2" accesskey="b">Apply to +2 Pay Day</button>
+        <button class="btn btn-warning btn-register" id="btnApplyAll3" accesskey="s">Apply to Specific Date</button>
+        <input type="text" id="rptApplyDate" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value="">
+        <input id="hidPayDay" type="hidden" value="<%=parseInt(header.loggedInUser.payday)-1%>">
       </div>
 
       <table class="table table-striped">
@@ -57,6 +65,6 @@
       </table>
     </div>
 
-    <!-- <div class="data-listing"><%-JSON.stringify(header)%></div>
-    <div class="data-listing"><%-JSON.stringify(pageData)%></div> -->
+    <!-- <div class="data-listing"><%-JSON.stringify(header)%></div> -->
+    <!-- <div class="data-listing"><%-JSON.stringify(pageData)%></div> -->
 </body>

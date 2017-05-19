@@ -20,6 +20,14 @@ var routes = function(moneyUIVars) {
               controllerHelpers.routeError(moneyUIVars, req, res, 403, 'forbidden');
             }
           })
+        .post(function(req, res, next) {
+          if (sessionHelpers.userIsLoggedIn(req)) {    //only do anything if user is logged in
+            res.redirectBackTo = "/repeating";
+            controllerHelpers.routePost(reptController.applyAllRepeating, moneyUIVars, req, res);
+          } else {
+            controllerHelpers.routeError(moneyUIVars, req, res, 403, 'forbidden');
+          }
+        })
 
 
     reptRouter.route('/:rptid')
@@ -35,7 +43,6 @@ var routes = function(moneyUIVars) {
               switch(req.body.inputAction) {
                 case "create":
                   res.redirectBackTo = "/repeating";
-                  console.log(JSON.parse(req.body.inputtransaction).amount);
                   controllerHelpers.routePost(reptController.addNewRepeating, moneyUIVars, req, res);
                   break;
 
