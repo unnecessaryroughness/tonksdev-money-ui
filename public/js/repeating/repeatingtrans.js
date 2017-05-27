@@ -77,6 +77,7 @@ $(function() {
   $("#txnDate").on("change", function(e) {
     var d = new Date($("#txnDate").val());
     refreshCal("txnDateCal", ("00"+((d.getMonth()+1).toString())).slice(-2) + (d.getFullYear()).toString(), d.getDate().toString());
+    $("#txnEndOnDate").val(incrementEndDate($(this).val()));
   })
 
   //refresh label on frequency changed
@@ -85,24 +86,12 @@ $(function() {
   })
 
   //replace the date with the lastNewTransactionDate if available and this is a NEW transaction
-  //show Reduce Placeholder group if this is a new transaction only
   if (window.location.href.substr(-2) === "/0") {
     if (sessionData.lastNewTransactionDate && sessionData.lastNewTransactionDate.length > 0) {
       $("#txnDate").val(sessionData.lastNewTransactionDate);
     }
-    $("#input-group-txnReduce").removeClass("input-group-hidden");
   }
 
-  //enable the txnAdjust field when the txnPlaceholder field !== "(none)"
-  $("#txnReduce").on("change", function(e) {
-    if (($(this).val()).length > 0) {
-      $("#txnAdjust").removeAttr("disabled");
-      $("#txnAdjust").val($("#txnAmount").val());
-    } else {
-      $("#txnAdjust").attr("disabled", "disabled");
-      $("#txnAdjust").val("0.00");
-    }
-  })
 
   //generate calendar
   $("#txnDateCal").html(generateCalendarTable("txnDateCal", 42));
@@ -111,6 +100,7 @@ $(function() {
   //refresh date field when calendar changed
   $("#txnDateCal_txtDate").on("change", function(e) {
      $("#txnDate").val($(this).val());
+     $("#txnEndOnDate").val(incrementEndDate($(this).val()));
   })
 
 
@@ -326,4 +316,11 @@ function storeCurrentRecordToCookie() {
   if ($("#inputCategoryName")) {
     Cookies.set("cachedCategory", $("#inputCategoryName").val(), {expires: in30minutes})
   }
+}
+
+
+function incrementEndDate(startdate) {
+  let newEndOnDate = new Date(startdate);
+  newEndOnDate.setFullYear(newEndOnDate.getFullYear()+5);
+  return newEndOnDate.toISOString().substr(0,10);
 }

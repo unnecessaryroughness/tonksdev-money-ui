@@ -81,17 +81,12 @@ var routes = function(moneyUIVars) {
         .get(function(req, res, next) {
           if (typeof req.session.passport !== 'undefined') {    //only do anything if user is logged in
 
-            console.log("query>>", req.query);
-            console.log(moneyUIVars.apiaddress + '/transaction/payeerecent/' + req.query.accountId + '/' +
-                    req.query.payeeId + '/' + req.query.categoryId);
-
             //call API to get clear transaction
             callAPI(moneyUIVars.apiaddress + '/transaction/payeerecent/' + req.query.accountId + '/' +
                     req.query.payeeId + '/' + req.query.categoryId, 'GET',
                     null, {userid: req.session.passport.user}, function(err, response, data) {
 
                 if (err || response.statusCode === 200) {
-                  console.log(JSON.parse(data))
                   return res.status(200).json(data);
                 } else {
                   // return res.status(404).json({'transaction': "not found", "data": JSON.parse(data), "stack": err});
@@ -169,7 +164,6 @@ var routes = function(moneyUIVars) {
 
     ajaxRouter.route("/cashperday")
       .get(function(req, res, next) {
-          console.log(typeof cashPerDayController.cashPerDay)
           cashPerDayController.cashPerDay(req.query.payday, req.query.balance, null, function(err, rtnVal) {
             return res.status(200).json(rtnVal);
           });

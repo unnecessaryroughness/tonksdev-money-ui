@@ -53,7 +53,6 @@ const controller = function(moneyUIVars) {
 
             callAPI(envVars.apiaddress + '/transaction/placeholders/' + envQSParams.accid, 'GET', null, {userid: envSession.passport.user}, function(pherr, phresponse, phdata) {
               let phApiResponse = viewdataHelpers.sanitizeErrAndData(pherr, phdata, phresponse.statusCode);
-              console.log("phApiResponse", phApiResponse.data);
               let phList = JSON.stringify(phApiResponse.data) !== "{}" ? JSON.parse(phApiResponse.data) : {"transactionList": []};
               jsoResponse.placeholderList = phList.transactionList;
 

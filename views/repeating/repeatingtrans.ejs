@@ -131,19 +131,6 @@
           <input class="input-width-medium" name="txnAmount" id="txnAmount" value="<%=(pageData.transaction.amount) ? parseFloat(pageData.transaction.amount).toFixed(2) : 0.00 %>"></input>
         </div>
 
-        <div class="input-group input-group-hidden" id="input-group-txnReduce">
-          <label for="txnReduce">Reduce Placeholder</label>
-          <select class="input-width-medium" name="txnReduce" id="txnReduce">
-            <option value="">(none)</option>
-            <% pageData.placeholderList.forEach(function(val, idx) { %>
-                <% if (val.payee.name && val.payee.name.length > 0) { %>
-                  <%- "<option value='" + val.id + "'>" + val.payee.name + "</option>" %>
-                <% } %>
-            <% }); %>
-          </select>
-          <input class="input-width-medium" name="txnAdjust" id="txnAdjust" value="0.00" disabled></input>
-        </div>
-
         <div id="button-group" class="input-group" data-return-to-account="<%=pageData.transaction.account.id%>">
         <!-- <div id="button-group" class="btn-group" role="group"data-return-to-account="<%=pageData.transaction.account.id%>"> -->
           <button type="button" class="btn btn-primary" id="btnSaveTxn">Save</button>
