@@ -47,7 +47,6 @@ var routes = function(moneyUIVars) {
                   break;
 
                 case "update":
-                debug("in the update routine");
                   res.redirectBackTo = "/repeating";
                   controllerHelpers.routePost(reptController.updateRepeating, moneyUIVars, req, res);
                   break;

@@ -89,7 +89,6 @@ const controller = function(moneyUIVars) {
 
   const updateRepeating = function(envVars, envSession, envUser, envQSParams, envBody, done) {
     let postBody = {transaction: JSON.parse(envBody.inputtransaction)};
-
     callAPI(envVars.apiaddress + '/repeating/' + postBody.transaction.id, 'PUT', postBody, {userid: envSession.passport.user}, function(err, response, data) {
         let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
         done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));

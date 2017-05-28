@@ -171,9 +171,9 @@ $(function() {
   $("#btnSaveTxn").on("click", function(e) {
     updateSaveObj();
     if (window.location.href.substr(-2) === "/0") {
-      appendSubmitForm('create', [{fieldName: 'transaction', fieldVal: JSON.stringify(saveObj)}])
+      appendSubmitForm('create', [{fieldName: "transaction", fieldVal: JSON.stringify(saveObj)}])
     } else {
-      appendSubmitForm('update', [{fieldName: 'transaction', fieldVal: JSON.stringify(saveObj)}])
+      appendSubmitForm('update', [{fieldName: "transaction", fieldVal: JSON.stringify(saveObj)}])
     }
   })
 

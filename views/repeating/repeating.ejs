@@ -46,14 +46,12 @@
             <%
               var prefix, suffix, isTransfer = (val.payee.transferAccount && val.payee.transferAccount.code);
               if (isTransfer) {
-                anchor = "<a href='/account/" + val.payee.transferAccount.id + "/register/#hlink-"+ val.payee.transferAccount.transaction + "'>";
-                prefix = (val.amount >= 0) ? anchor + "FROM&gt;&gt; " : anchor + "TO&gt;&gt; ";
-                suffix = (val.amount >= 0) ? "</a>" : "";
+                prefix = (val.amount >= 0) ? "FROM&gt;&gt; " : "TO&gt;&gt; ";
               }
             %>
           <tr>
               <td><a class="anchor-overspan" href="/repeating/<%=val.id%>"><%=val.repeating.nextDate.substr(0,10)%></a></td>
-              <td><a class="anchor-overspan" href="/repeating/<%=val.id%>"><%-(isTransfer) ? prefix + val.payee.transferAccount.code + suffix : val.payee.name%></a></td>
+              <td><a class="anchor-overspan" href="/repeating/<%=val.id%>"><%-(isTransfer) ? prefix + val.payee.transferAccount.code : val.payee.name%></a></td>
               <td class="conditional-field-wide"><a class="anchor-overspan" href="/repeating/<%=val.id%>"><%=val.category.name%></a></td>
               <td class="field-format-currency conditional-field-wide"><a class="anchor-overspan field-format-dr" href="/repeating/<%=val.id%>"><%=(val.amount < 0 ? parseFloat(val.amount).toFixed(2) : "")%></a></td>
               <td class="field-format-currency conditional-field-wide"><a class="anchor-overspan field-format-cr" href="/repeating/<%=val.id%>"><%=(val.amount >= 0 ? parseFloat(val.amount).toFixed(2) : "")%></a></td>
