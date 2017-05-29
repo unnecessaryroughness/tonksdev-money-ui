@@ -184,14 +184,14 @@ $(function() {
                    data: {"transactionId": $("#txnReduce").val(), "adjustBy": parseFloat($("#txnAdjust").val()).toFixed(2)},
                    type: 'PUT',
                    success: function(data) {
-                     window.location.href = "/account/" + returnToAccount + "/register";
+                     window.location.href = "/account/" + returnToAccount + "/register/#hlink-" + data.response.transaction.id;
                    },
                    error: function(xhr, status, error) {
                      console.log("Error: " + JSON.stringify(error),  xhr.responseText );
                    }
                  });
           } else {
-            window.location.href = "/account/" + returnToAccount + "/register";
+            window.location.href = "/account/" + returnToAccount + "/register/#hlink-" + data.response.transaction.id;
           }
         } else {
           window.alert("save failed :-(");
