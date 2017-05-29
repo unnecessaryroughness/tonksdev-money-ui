@@ -9,12 +9,47 @@
 <body>
   <%- include('includes/navbar.ejs') %>
 
+
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
     <div class="container">
       <div class='money-logo'><em>the</em>Money</div>
-      <p>This is a placeholder front page for the tonksDEV Money application. The layout &amp; style is based on Bootstrap. This version is vanilla, but will be enhanced in the future.</p>
-      <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+      <p>
+        <% if (!header.loggedIn) { %>
+          <a class="btn btn-success btn-lg" href='auth/google'>Sign in with GOOGLE</a>
+          <% } %>
+      </p>
+      <p>
+        Take control. Stay out of debt. Save for that goal.
+      </p>
+      <p>
+        <a class="btn btn-primary btn-lg" href='#about'>Learn More >></a>
+      </p>
+    </div>
+  </div>
+
+  <div class="jumbotron">
+    <img src="">
+  </div>
+
+  <div class="jumbotron">
+    <a id="about"></a>
+    <div class="container">
+      <p>
+        tonksDEV Money is a personal accounts application created as a hobby project. It is not a commercial application and is not supported as such.
+      </p>
+      <p>
+        Any data entered into this application is done so at your own risk. Although every effort will be made to keep data secure, absolutely no
+        warranty or guarantee is offered including for service availability and performance. The service may be stopped, altered or removed at any time.
+      </p>
+    </div>
+  </div>
+
+  <div class="jumbotron">
+    <div class="container">
+      <p>
+        tonksDEV Money is constructed using nodeJS and MongoDB, hosted in a series of Docker containers running in AWS.
+      </p>
     </div>
   </div>
 
