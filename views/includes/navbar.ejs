@@ -63,4 +63,9 @@
 <script>
   var CURRENT_ACCOUNT_GROUP = "<%=header.selectedAccountGroup%>";
   var CURRENT_ACCOUNT_GROUP_ID = "<%=header.selectedAccountGroupId%>";
+  <% if (header.loggedIn) { %>
+    $(".nav > li").removeClass("navbar-option-hidden");
+  <% } else { %>
+    $(".nav > li").addClass("navbar-option-hidden");
+  <% } %>
 </script>

@@ -49,6 +49,10 @@ thead {
   color: #fff;
 }
 
+.nav > li.navbar-option-hidden {
+  display: none;
+}
+
 .navbar-inverse .money-logo {
   font-family: serif;
   font-size: 2em;

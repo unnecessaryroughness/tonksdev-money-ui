@@ -8,18 +8,21 @@ $(function() {
         CURRENT_ACCOUNT_GROUP = $(".accountgroup-option").first().attr("id");
       }
     }
-      
+
+    console.log(CURRENT_ACCOUNT_GROUP);
+    console.log(CURRENT_ACCOUNT_GROUP_ID);
+
     refreshAGMenu(CURRENT_ACCOUNT_GROUP);
+
+    if(!CURRENT_ACCOUNT_GROUP_ID || typeof CURRENT_ACCOUNT_GROUP_ID === "undefined" || CURRENT_ACCOUNT_GROUP_ID.length === 0) {
+      ajaxSwitchAG(CURRENT_ACCOUNT_GROUP);
+    }
 
     $(".accountgroup-option").on("click", function(e) {
         if ($(this).text() !== "none") {
           ajaxSwitchAG($(this).text());
         }
     })
-
-    if(!CURRENT_ACCOUNT_GROUP_ID || typeof CURRENT_ACCOUNT_GROUP_ID === "undefined" || CURRENT_ACCOUNT_GROUP_ID.length === 0) {
-      ajaxSwitchAG(CURRENT_ACCOUNT_GROUP);
-    }
 })
 
 
