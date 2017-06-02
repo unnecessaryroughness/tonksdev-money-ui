@@ -104,7 +104,7 @@
       <div class="col-sm-3" id="input-col-4">
         <div class="input-group">
             <label for="txnCleared">Reconciled</label>
-            <input type="checkbox" name="txnCleared" id="txnCleared" <%=(pageData.transaction.isCleared ? "checked" : "")%>></input>
+            <input type="checkbox" name="txnCleared" id="txnCleared" <%=(pageData.transaction.isCleared ? "checked" : "")%>  accesskey="r"></input>
         </div>
 
         <div class="input-group">
@@ -132,8 +132,8 @@
 
         <div id="button-group" class="input-group" data-return-to-account="<%=pageData.transaction.account.id%>">
         <!-- <div id="button-group" class="btn-group" role="group"data-return-to-account="<%=pageData.transaction.account.id%>"> -->
-          <button type="button" class="btn btn-primary" id="btnSaveTxn">Save</button>
-          <button type="button" class="btn btn-default" id="btnCloseTxn">Close</button>
+          <button type="button" class="btn btn-primary" id="btnSaveTxn" accesskey="s">Save</button>
+          <button type="button" class="btn btn-default" id="btnCloseTxn" accesskey="c">Close</button>
           <button type="button" class="btn btn-danger" id="btnDeleteTxn">Delete</button>
         </div>
 

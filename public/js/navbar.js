@@ -9,9 +9,6 @@ $(function() {
       }
     }
 
-    console.log(CURRENT_ACCOUNT_GROUP);
-    console.log(CURRENT_ACCOUNT_GROUP_ID);
-
     refreshAGMenu(CURRENT_ACCOUNT_GROUP);
 
     if(!CURRENT_ACCOUNT_GROUP_ID || typeof CURRENT_ACCOUNT_GROUP_ID === "undefined" || CURRENT_ACCOUNT_GROUP_ID.length === 0) {

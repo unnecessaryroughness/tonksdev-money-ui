@@ -39,7 +39,7 @@
                       <tr>
                         <td><a href="/account/<%=val.id%>/register"><%=val.accountCode%></a></td>
                         <td><%=val.accountName%></td>
-                        <td class="field-format-currency">£<%=val.balance%></td>
+                        <td class="field-format-currency"><a href="/account/<%=val.id%>/register">£<%=val.balance%></a></td>
                         <% totalCABalance += parseFloat(val.balance); %>
                       </tr>
                     <% } %>
@@ -70,7 +70,7 @@
                       <tr>
                         <td><a href="/account/<%=val.id%>/register"><%=val.accountCode%></a></td>
                         <td><%=val.accountName%></td>
-                        <td class="field-format-currency">£<%=val.balance%></td>
+                        <td class="field-format-currency"><a href="/account/<%=val.id%>/register">£<%=val.balance%></a></td>
                         <% totalSABalance += parseFloat(val.balance); %>
                       </tr>
                     <% } %>
@@ -101,7 +101,7 @@
                       <tr>
                         <td><a href="/account/<%=val.id%>/register"><%=val.accountCode%></a></td>
                         <td><%=val.accountName%></td>
-                        <td class="field-format-currency">£<%=val.balance%></td>
+                        <td class="field-format-currency"><a href="/account/<%=val.id%>/register">£<%=val.balance%></a></td>
                         <% totalCCBalance += parseFloat(val.balance); %>
                       </tr>
                     <% } %>

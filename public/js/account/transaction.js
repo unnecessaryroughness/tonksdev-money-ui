@@ -56,7 +56,7 @@ $(function() {
     $(this).select();
   })
 
-  $("#txnAmount").on("keypress", function(e) {
+  $("#txnAmount, #txnCleared").on("keypress", function(e) {
     if (e.which === 13) {
       $("#btnSaveTxn").click();
       return false;
@@ -179,12 +179,15 @@ $(function() {
           //if saved and there is a reducePlaceholder specified, make the adjustment now
           if ( ($("#txnReduce").val() && ($("#txnReduce").val()).length > 0) &&
                ($("#txnAdjust").val() && parseFloat($("#txnAdjust").val()) != 0.00)  ) {
+
+                 var rtnId = data.response.transaction.id;
+
                  $.ajax({
                    url: location.origin + '/ajax/adjusttxn',
                    data: {"transactionId": $("#txnReduce").val(), "adjustBy": parseFloat($("#txnAdjust").val()).toFixed(2)},
                    type: 'PUT',
                    success: function(data) {
-                     window.location.href = "/account/" + returnToAccount + "/register/#hlink-" + data.response.transaction.id;
+                     window.location.href = "/account/" + returnToAccount + "/register/#hlink-" + rtnId;
                    },
                    error: function(xhr, status, error) {
                      console.log("Error: " + JSON.stringify(error),  xhr.responseText );
