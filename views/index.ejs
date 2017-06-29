@@ -12,15 +12,15 @@
 
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
-    <div class="container">
+    <div class="container jumbo-align-center">
       <div class='money-logo'><em>the</em>Money</div>
+      <p>
+        Stay out of debt. Save for that goal. Spend Wisely. Take control.
+      </p>
       <p>
         <% if (!header.loggedIn) { %>
           <a class="btn btn-success btn-lg" href='auth/google'>Sign in with GOOGLE</a>
           <% } %>
-      </p>
-      <p>
-        Take control. Stay out of debt. Save for that goal.
       </p>
       <p>
         <a class="btn btn-primary btn-lg" href='#about'>Learn More >></a>
@@ -28,8 +28,8 @@
     </div>
   </div>
 
-  <div class="jumbotron">
-    <img src="">
+  <div class="jumbotron jumbo-image-coins">
+    <img src="/img/splash-coins.jpeg" class="jumbo-100w">
   </div>
 
   <div class="jumbotron">
@@ -49,6 +49,18 @@
     <div class="container">
       <p>
         tonksDEV Money is constructed using nodeJS and MongoDB, hosted in a series of Docker containers running in AWS.
+      </p>
+    </div>
+  </div>
+
+  <div class="jumbotron jumbo-image-coins">
+    <img src="/img/jumbo-money-tail.jpeg" class="jumbo-100w">
+  </div>
+
+  <div class="jumbotron">
+    <div class="container jumbo-align-center">
+      <p>
+        © 2017 tonksDEV.com
       </p>
     </div>
   </div>

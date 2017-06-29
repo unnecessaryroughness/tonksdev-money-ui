@@ -64,6 +64,10 @@ thead {
   color: #fff;
 }
 
+.jumbotron {
+  margin: 0;
+}
+
 .jumbotron .money-logo {
   font-family: serif;
   font-size: 6em;
@@ -74,6 +78,22 @@ thead {
   font-family: serif;
 }
 
+.jumbotron .jumbo-align-center {
+  text-align: center;
+}
+
+.jumbotron.jumbo-image-coins {
+  background: #DAC09F;
+  padding: 0;
+}
+
+.jumbotron img.jumbo-100w {
+  width: 100%;
+}
+
+.jumbotron img.jumbo-50w {
+  width: 50%;
+}
 
 .main-content-frame {
   margin: 70px 10px 10px 10px;
