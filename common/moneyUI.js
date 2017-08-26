@@ -39,9 +39,14 @@ var moneyUI = function() {
 
         //redirect to https if accessing via http
             self.app.use(function(req, res, next) {
-              if (self.variables.environment !== "development" && req.headers['x-forwarded-proto'] === "http") {
-                res.redirect(301, "https://" + req.headers["host"] + "/" + req.headers["url"]);
-                res.end();
+              if (self.variables.environment !== "development" &&
+                 typeof(req.headers['x-forwarded-proto']) !== "undefined" &&
+                 req.headers['x-forwarded-proto'] === "http") {
+
+                  res.redirect(301, "https://" + req.headers["host"] + "/" + req.headers["url"]);
+                  res.end();
+              } else {
+                  next();
               }
             });
 
