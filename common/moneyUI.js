@@ -43,7 +43,7 @@ var moneyUI = function() {
                  typeof(req.headers['x-forwarded-proto']) !== "undefined" &&
                  req.headers['x-forwarded-proto'] === "http") {
 
-                  res.redirect(301, "https://" + req.headers["host"] + "/" + req.headers["url"]);
+                  res.redirect(301, "https://" + req.headers.host + "/" + req.path);
                   res.end();
               } else {
                   next();
