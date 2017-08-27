@@ -39,17 +39,19 @@ var moneyUI = function() {
 
         //redirect to https if accessing via http
             self.app.use(function(req, res, next) {
-              if (self.variables.environment !== "development" &&
-                 typeof(req.headers['x-forwarded-proto']) !== "undefined" &&
-                 req.headers['x-forwarded-proto'] === "http") {
-
+              if (self.variables.environment !== "development") {
+                if (typeof(req.headers['x-forwarded-proto']) !== "undefined" && req.headers['x-forwarded-proto'] === "http") {
                   debug("http request received; redirecting to: " + "https://" + req.headers["host"] + (req["path"] || ""));
                   res.redirect(301, "https://" + req.headers["host"] + "/" + (req["path"] || ""));
                   res.end();
+                } else {
+                    debug("http request received; no x-forwarded-proto header: " + "http://" + req.headers["host"] + (req["path"] || ""));
+                    console.log(req.headers);
+                    next();
+                }
               } else {
-                  debug("http request received; in DEV mode so this is ok: " + "http://" + req.headers["host"] + (req["path"] || ""));
-                  next();
-              }
+                debug("http request received; in DEV mode so this is ok: " + "http://" + req.headers["host"] + (req["path"] || ""));
+                next();
             });
 
         //set up connection to mongodb
