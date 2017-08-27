@@ -52,6 +52,7 @@ var moneyUI = function() {
               } else {
                 debug("http request received; in DEV mode so this is ok: " + "http://" + req.headers["host"] + (req["path"] || ""));
                 next();
+              }
             });
 
         //set up connection to mongodb
