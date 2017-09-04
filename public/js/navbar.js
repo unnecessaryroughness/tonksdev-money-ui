@@ -1,10 +1,17 @@
 $(function() {
 
     let tdmag = Cookies.get("tdmag");
-    if (tdmag && typeof tdmag === "string" && tdmag.length > 0) {
+
+    //if the cookie exists, is a string, is not null, and is one of the options in the current account group menu, select it
+    if (tdmag && typeof tdmag === "string" && tdmag.length > 0 &&
+        ($('.accountgroup-option[id="' + tdmag + '"]').length > 0) ) {
+
       CURRENT_ACCOUNT_GROUP = tdmag;
     } else {
-      if (!CURRENT_ACCOUNT_GROUP || typeof CURRENT_ACCOUNT_GROUP === "undefined" || CURRENT_ACCOUNT_GROUP.length === 0) {
+      //otherwise, select the first item on the menu list
+      if (!CURRENT_ACCOUNT_GROUP || typeof CURRENT_ACCOUNT_GROUP === "undefined"
+          || CURRENT_ACCOUNT_GROUP.length === 0 || CURRENT_ACCOUNT_GROUP === "ALLUSERS") {
+
         CURRENT_ACCOUNT_GROUP = $(".accountgroup-option").first().attr("id");
       }
     }

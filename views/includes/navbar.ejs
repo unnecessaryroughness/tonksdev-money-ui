@@ -36,10 +36,10 @@
             <li><a href="/setup/categories">Category Setup</a></li>
             <li><a href="/setup/payees">Payee Setup</a></li>
             <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Switch Account Groups:</li>
+            <li class="dropdown-header" id="accountgroup-menu">Switch Account Groups:</li>
             <% header.loggedInUserGroups.forEach(function(groupname, groupidx, grouplist) { %>
               <%if (groupname !== "ALLUSERS") { %>
-                <li class="accountgroup-option"><a href="#"><%=groupname%></a></li>
+                <li class="accountgroup-option" id="<%=groupname%>"><a href="#"><%=groupname%></a></li>
               <% } %>
             <% }) %>
 
