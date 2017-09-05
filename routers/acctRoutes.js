@@ -32,8 +32,30 @@ var routes = function(moneyUIVars) {
               controllerHelpers.routeError(moneyUIVars, req, res, 403, 'forbidden');
             }
           })
+        .post(function(req, res, next) {
+          if (sessionHelpers.userIsLoggedIn(req)) {
+            switch(req.body.inputAction) {
+              case "create":
+                res.redirectBackTo = "/account/" + JSON.parse(req.body.inputtransaction).account.id + "/register";
+                controllerHelpers.routePost(transController.addNewTransaction, moneyUIVars, req, res);
+                break;
 
+              case "update":
+                res.redirectBackTo = "/account/" + JSON.parse(req.body.inputtransaction).account.id + "/register";
+                controllerHelpers.routePost(transController.updateTransaction, moneyUIVars, req, res);
+                break;
 
+              case "delete":
+                res.redirectBackTo = "/account/" + JSON.parse(req.body.inputtransaction).account.id + "/register";
+                controllerHelpers.routePost(transController.deleteTransaction, moneyUIVars, req, res);
+                break;
+
+              default:
+                  controllerHelpers.routeError(moneyUIVars, req, res, 404, 'action not found (' + req.body.inputAction + ')');
+                break;
+              }
+            }
+          });
 
     return acctRouter;
 };

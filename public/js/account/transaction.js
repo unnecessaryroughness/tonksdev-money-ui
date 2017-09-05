@@ -165,46 +165,12 @@ $(function() {
 
   //wire up save button
   $("#btnSaveTxn").on("click", function(e) {
-
     updateSaveObj();
-    let returnToAccount = $(this).parent().data("return-to-account");
-
-    //submit ajax request
-    $.ajax({
-      url: location.origin + '/ajax/updatetxn',
-      data: {"transaction": saveObj, "isNew": (window.location.href.substr(-2) === "/0") ? "true" : "false"},
-      type: 'PUT',
-      success: function(data) {
-        if (data.response.transaction &&  data.response.transaction.amount) {
-          //if saved and there is a reducePlaceholder specified, make the adjustment now
-          if ( ($("#txnReduce").val() && ($("#txnReduce").val()).length > 0) &&
-               ($("#txnAdjust").val() && parseFloat($("#txnAdjust").val()) != 0.00)  ) {
-
-                 var rtnId = data.response.transaction.id;
-
-                 $.ajax({
-                   url: location.origin + '/ajax/adjusttxn',
-                   data: {"transactionId": $("#txnReduce").val(), "adjustBy": parseFloat($("#txnAdjust").val()).toFixed(2)},
-                   type: 'PUT',
-                   success: function(data) {
-                     window.location.href = "/account/" + returnToAccount + "/register/#hlink-" + rtnId;
-                   },
-                   error: function(xhr, status, error) {
-                     console.log("Error: " + JSON.stringify(error),  xhr.responseText );
-                   }
-                 });
-          } else {
-            window.location.href = "/account/" + returnToAccount + "/register/#hlink-" + data.response.transaction.id;
-          }
-        } else {
-          window.alert("save failed :-(");
-        }
-      },
-      error: function(xhr, status, error) {
-        console.log("Error: " + JSON.stringify(error),  xhr.responseText );
-      }
-    });
-
+    if (window.location.href.substr(-2) === "/0") {
+      appendSubmitForm('create', [{fieldName: "transaction", fieldVal: JSON.stringify(saveObj)}])
+    } else {
+      appendSubmitForm('update', [{fieldName: "transaction", fieldVal: JSON.stringify(saveObj)}])
+    }
   })
 
   //wire up delete button
@@ -213,23 +179,8 @@ $(function() {
                       "Are you sure you want to permanently delete this transaction? " +
                       "This process cannot be reversed!",
                       function() {
-
-                        //submit ajax request
-                        $.ajax({
-                          url: location.origin + '/ajax/deletetxn',
-                          data: {"transaction": {id: saveObj.id}},
-                          type: 'DELETE',
-                          success: function(data) {
-                            if (data.response.saveStatus &&  data.response.saveStatus === "deleted") {
-                              window.location.href = "/account/" + $("#button-group").data("return-to-account") + "/register";
-                            } else {
-                              window.alert("delete failed :-( " + JSON.stringify(data));
-                            }
-                          },
-                          error: function(xhr, status, error) {
-                            console.log("Error: " + JSON.stringify(error),  xhr.responseText );
-                          }
-                        });
+                        updateSaveObj();
+                        appendSubmitForm('delete', [{fieldName: 'transaction', fieldVal: JSON.stringify(saveObj)}])
                       });
      });
 
@@ -278,6 +229,8 @@ function updateSaveObj() {
   saveObj.notes = $("#txnNotes").val();
   saveObj.isCleared = $("#txnCleared").is(":checked");
   saveObj.isPlaceholder = $("#txnPlaceholder").is(":checked");
+  saveObj.reducePlaceholder = ($("#txnReduce").val() && ($("#txnReduce").val()).length > 0) ? $("#txnReduce").val() : "";
+  saveObj.reduceAmount = ($("#txnAdjust").val() && parseFloat($("#txnAdjust").val()) != 0.00) ? parseFloat($("#txnAdjust").val()) : 0.00;
 
   if (!$("#txnTxfAccount").val()) {
     delete saveObj.payee.transferAccount;

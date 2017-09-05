@@ -67,8 +67,60 @@ const controller = function(moneyUIVars) {
     });
   };
 
+  const addNewTransaction = function(envVars, envSession, envUser, envQSParams, envBody, done) {
+    let postBody = {transaction: JSON.parse(envBody.inputtransaction)};
+
+    callAPI(envVars.apiaddress + '/transaction', 'POST', postBody, {userid: envSession.passport.user}, function(err, response, data) {
+
+        let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+
+        //if successfully saved, update the persistent `new transaction` date
+        if (!err && response.statusCode === 200) {
+          envSession.lastNewTransactionDate = postBody.transaction.transactionDate;
+        }
+
+        //if a placeholder is to be reduced, fire off that transaction now
+        if (response.statusCode === 200 &&
+            data.transaction && data.transaction.amount != 0 &&
+            postBody.transaction.reducePlaceholder && postBody.transaction.reduceAmount) {
+
+            let adjustBody = {"transactionId": postBody.transaction.reducePlaceholder,
+                              "adjustBy": parseFloat(postBody.transaction.reduceAmount).toFixed(2)};
+
+            //call API to get reduce placeholder transaction
+            callAPI(envVars.apiaddress + '/transaction/adjust/' + postBody.transaction.reducePlaceholder, 'PUT', adjustBody, {userid: envSession.passport.user}, function(ad_err, ad_response, ad_data) {
+              done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
+            });
+        } else {
+            //nothing to reduce, just return as normal
+            done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
+        }
+    });
+  }
+
+  const updateTransaction = function(envVars, envSession, envUser, envQSParams, envBody, done) {
+    let postBody = {transaction: JSON.parse(envBody.inputtransaction)};
+
+    callAPI(envVars.apiaddress + '/transaction/' + postBody.transaction.id, 'PUT', postBody, {userid: envSession.passport.user}, function(err, response, data) {
+        let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+        done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
+    });
+  }
+
+  const deleteTransaction = function(envVars, envSession, envUser, envQSParams, envBody, done) {
+    let postBody = {transaction: JSON.parse(envBody.inputtransaction)};
+
+    callAPI(envVars.apiaddress + '/transaction/' + postBody.transaction.id, 'DELETE', null, {userid: envSession.passport.user}, function(err, response, data) {
+        let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
+        done(apiResponse.err, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody, '', apiResponse.data));
+    });
+  }
+
   return {
-    getTransactionPageData: getTransactionPageData
+    getTransactionPageData: getTransactionPageData,
+    addNewTransaction: addNewTransaction,
+    updateTransaction: updateTransaction,
+    deleteTransaction: deleteTransaction
   }
 }
 
