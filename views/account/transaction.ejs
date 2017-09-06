@@ -34,7 +34,7 @@
 
         <div class="input-group">
           <label for="txnType">Transaction Type</label>
-          <select class="input-width-100pc" name="txnType" id="txnType">
+          <select class="input-width-100pc" name="txnType" id="txnType" accesskey="x">
             <option value="Payment">Payment</option>
             <option value="Deposit">Deposit</option>
             <option value="Transfer">Transfer</option>
@@ -46,7 +46,7 @@
       <div class="col-sm-3" id="input-col-2">
         <div class="input-group">
           <label for="txnDate">Date</label>
-          <input class="input-width-narrow" name="txnDate" id="txnDate" value="<%=pageData.transaction.transactionDate%>"></input>
+          <input class="input-width-narrow" name="txnDate" id="txnDate" value="<%=pageData.transaction.transactionDate%>" accesskey="t"></input>
           <div class="calendar" id="txnDateCal"></div>
         </div>
       </div>
@@ -110,12 +110,12 @@
 
         <div class="input-group">
             <label for="txnPlaceholder">Placeholder</label>
-            <input type="checkbox" name="txnPlaceholder" id="txnPlaceholder" <%=(pageData.transaction.isPlaceholder ? "checked" : "")%>></input>
+            <input type="checkbox" name="txnPlaceholder" id="txnPlaceholder" <%=(pageData.transaction.isPlaceholder ? "checked" : "")%> accesskey="p"></input>
         </div>
 
         <div class="input-group">
           <label for="txnAmount">Amount</label>
-          <input class="input-width-medium" name="txnAmount" id="txnAmount" value="<%=(pageData.transaction.amount) ? parseFloat(pageData.transaction.amount).toFixed(2) : 0.00 %>"></input>
+          <input class="input-width-medium" name="txnAmount" id="txnAmount" value="<%=(pageData.transaction.amount) ? parseFloat(pageData.transaction.amount).toFixed(2) : 0.00 %>" accesskey="a"></input>
         </div>
 
         <div class="input-group input-group-hidden" id="input-group-txnReduce">
