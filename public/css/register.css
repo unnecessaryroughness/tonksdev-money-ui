@@ -39,7 +39,7 @@ select {
   display: none;
 }
 
-#accountShortcut {
+#accountShortcut, #accountTxnLimit {
   height: 35px;
   border-radius: 4px;
 }

@@ -32,6 +32,10 @@ $(function() {
     window.location.href="/account/" + $(this).val() + "/register/";
   })
 
+  $("#accountTxnLimit").on("change", function(e){
+    window.location.href="/account/" + $("#accountShortcut").val() + "/register/" + $(this).val();
+  })
+
   window.scrollBy(0,-100);
 
 });

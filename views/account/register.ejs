@@ -21,6 +21,13 @@
               <%-(val.accountCode === pageData.account.accountCode ? "selected" : "")  + ">" + val.accountCode + "</option>" %>
           <% }); %>
         </select>
+        <select class="input-width-medium" id="accountTxnLimit">
+          <option value="10">10</option>
+          <option value="50">50</option>
+          <option value="100" selected>100</option>
+          <option value="200">200</option>
+          <option value="500">500</option>
+        </select>
         <button class="btn btn-success btn-register" id="btnAddNewTxn" data-accid="<%=pageData.account.id%>" accesskey="n">Add a new Transaction</button>
 
       </div>

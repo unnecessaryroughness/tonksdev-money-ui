@@ -8,8 +8,10 @@ const controller = function(moneyUIVars) {
   //customise this function to retrieve the right data to support the display of all account groups for the user
   const getRegisterPageData = function(envVars, envSession, envUser, envQSParams, envBody, done) {
 
+    let txnLimit = envQSParams.limit || 100;
+
     // API call for transaction register
-    callAPI(envVars.apiaddress + '/transaction/recent/100/' + envQSParams.accid, 'GET', null, {userid: envSession.passport.user}, function(err, response, data) {
+    callAPI(envVars.apiaddress + '/transaction/recent/' + txnLimit + '/' + envQSParams.accid, 'GET', null, {userid: envSession.passport.user}, function(err, response, data) {
       let apiResponse = viewdataHelpers.sanitizeErrAndData(err, data, response.statusCode);
       let jsoResponse = {};
 

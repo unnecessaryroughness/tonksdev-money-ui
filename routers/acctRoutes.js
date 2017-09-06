@@ -13,7 +13,7 @@ var routes = function(moneyUIVars) {
         transController = require('../controllers/transController')(moneyUIVars);
 
     //handle request for account register screen
-    acctRouter.route('/:accid/register')
+    acctRouter.route('/:accid/register/:limit?')
         .get(function(req, res, next) {
             if (sessionHelpers.userIsLoggedIn(req)) {    //only do anything if user is logged in
               controllerHelpers.routeGet(regController.getRegisterPageData, moneyUIVars, req, res, 'account/register');
