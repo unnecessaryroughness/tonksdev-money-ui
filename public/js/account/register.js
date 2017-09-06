@@ -29,7 +29,7 @@ $(function() {
 
 
   $("#accountShortcut").on("change", function(e){
-    window.location.href="/account/" + $(this).val() + "/register/";
+    window.location.href="/account/" + $(this).val() + "/register/" + $("#accountTxnLimit").val();
   })
 
   $("#accountTxnLimit").on("change", function(e){
@@ -37,5 +37,9 @@ $(function() {
   })
 
   window.scrollBy(0,-100);
+
+  if (!isNaN(window.location.href.substr(-3))) {
+    $('#accountTxnLimit option[value="' + window.location.href.substr(-3) + '"]').attr("selected", "selected");
+  }
 
 });
