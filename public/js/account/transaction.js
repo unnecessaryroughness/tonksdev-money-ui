@@ -63,6 +63,16 @@ $(function() {
     }
   })
 
+  //detect if the date shift forward/backward hot keys have been pressed
+  $("body").on("keypress", function(e) {
+    if (e.which === 12) {
+      fnRefreshCal(-1);
+    }
+    if (e.which === 14) {
+      fnRefreshCal(1);
+    }
+  })
+
   //refresh calendar when date field changed
   $("#txnDate").on("change", function(e) {
     var d = new Date($("#txnDate").val());
@@ -149,6 +159,7 @@ $(function() {
       }
     });
   })
+
 
 
 
@@ -273,4 +284,12 @@ function storeCurrentRecordToCookie() {
   if ($("#inputCategoryName")) {
     Cookies.set("cachedCategory", $("#inputCategoryName").val(), {expires: in30minutes})
   }
+}
+
+
+function fnRefreshCal(shiftDays) {
+  var d = new Date($("#txnDate").val());
+  d.setDate(d.getDate()+shiftDays);
+  $("#txnDate").val((d.getFullYear().toString() + "-" + ("00"+((d.getMonth()+1).toString())).slice(-2) + "-" + ("00"+(d.getDate().toString())).slice(-2)));
+  refreshCal("txnDateCal", ("00"+((d.getMonth()+1).toString())).slice(-2) + (d.getFullYear()).toString(), d.getDate().toString());
 }
