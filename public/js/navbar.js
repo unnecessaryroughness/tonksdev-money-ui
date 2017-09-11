@@ -38,7 +38,7 @@ function ajaxSwitchAG(groupCode) {
     success: function(data) {
       refreshAGMenu(data.accountGroupName);
       Cookies.set("tdmag", groupCode, {expires: 7});
-      location.reload();
+      location.href = "/balances";
     },
     error: function(xhr, status, error) {
       console.log("Error: " + error.message);

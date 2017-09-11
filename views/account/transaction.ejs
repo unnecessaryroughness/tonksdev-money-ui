@@ -146,8 +146,10 @@
     </div>
 
     <script>
-      <% pageData.transaction.account.group.id = header.selectedAccountGroupId;
-         pageData.transaction.account.group.code = header.selectedAccountGroup; %>
+      <%
+         //pageData.transaction.account.group.id = header.selectedAccountGroupId;
+         //pageData.transaction.account.group.code = header.selectedAccountGroup;
+         %>
       var saveObj = <%- JSON.stringify(pageData.transaction)%>;
     </script>
 </body>

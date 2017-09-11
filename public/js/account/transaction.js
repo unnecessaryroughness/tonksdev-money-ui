@@ -20,6 +20,11 @@ $(function() {
     // console.log("Fail!!! I got this: ", cachedTxn);
   }
 
+  //if the CURRENT_ACCOUNT_GROUP_ID variable does not match the account group of the transaction,
+  //fail back to the balances page
+  if (CURRENT_ACCOUNT_GROUP_ID !== saveObj.account.group.id) {
+    location.href = "/balances";
+  }
 
   //initial screen build activity
   if (JSON.stringify(saveObj.payee.transferAccount) !== "{}" &&

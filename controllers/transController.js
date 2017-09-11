@@ -19,11 +19,18 @@ const controller = function(moneyUIVars) {
     callAPI(envVars.apiaddress + '/transaction/' + envQSParams.txnid, 'GET', null, {userid: envSession.passport.user}, function(txnerr, txnresponse, txndata) {
 
       let txnApiResponse = viewdataHelpers.sanitizeErrAndData(txnerr, txndata, txnresponse.statusCode);
-      let jsoResponse = JSON.parse(txnApiResponse.data);
+
+      let jsoResponse = "";
+      if (typeof txnApiResponse.data !== "object") {
+        jsoResponse = JSON.parse(txnApiResponse.data);
+      } else {
+        jsoResponse = txnApiResponse.data;
+      }
 
       //bail out if no transaction was found
       if (txnApiResponse.err) {
         done(txnApiResponse.err, null);
+        return;
       }
 
       callAPI(envVars.apiaddress + '/account/group/' + envSession.accountGroupId + '/allaccounts', 'GET', null, {userid: envSession.passport.user}, function(accserr, accsresponse, accsdata) {
@@ -48,6 +55,7 @@ const controller = function(moneyUIVars) {
 
               //if there is no account id set this must be a new transaction.
               //the account id is stored in the querystring parameter. use it and look up the account code & name
+              //account group details are in session - use them too
               if (!jsoResponse.transaction.account.id) {
                 jsoResponse.transaction.account.id = envQSParams.accid;
                 jsoResponse.accountList.forEach(function(val, idx) {
@@ -56,6 +64,8 @@ const controller = function(moneyUIVars) {
                     jsoResponse.transaction.account.name = val.accountName;
                   }
                 })
+                jsoResponse.transaction.account.group.id = envSession.accountGroupId;
+                jsoResponse.transaction.account.group.code = envSession.accountGroupName;
               }
 
               done(null, viewdataHelpers.generateViewData(envVars, envSession, envUser, envQSParams, envBody,
