@@ -102,7 +102,7 @@
                 </div>
                 <div class="form-group">
                   <label for="inputEditCurrentPassword">Current Group Password</label>
-                  <input type="password" class="form-control mandatory" id="inputEditCurrentPassword" name="inputEditCurrentPassword" placeholder="current password">
+                  <input type="password" class="form-control mandatory mandatory-delete" id="inputEditCurrentPassword" name="inputEditCurrentPassword" placeholder="current password">
                 </div>
                 <div class="form-group">
                   <label for="inputEditNewPassword">New Group Password</label>
@@ -144,11 +144,14 @@
               <form id="frmGroupCode" action="" method="POST">
                 <div class="form-group">
                   <label for="inputJoinGroup">Group Code</label>
-                  <input type="text" class="form-control allcaps" id="inputJoinGroup" name="inputJoinGroup" placeholder="GROUPCODE">
+                  <input type="text" class="form-control allcaps mandatory" id="inputJoinGroup" name="inputJoinGroup" placeholder="GROUPCODE">
                 </div>
                 <div class="form-group">
                   <label for="inputPassword">Group Password</label>
-                  <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="password">
+                  <input type="password" class="form-control mandatory" id="inputPassword" name="inputPassword" placeholder="password">
+                </div>
+                <div id="warning-labels" class="form-group">
+                  <label id="lblMandatoryFields" class="form-inline-error-message">All fields are mandatory</label>
                 </div>
                 <input type="hidden" id="inputAction" name="inputAction">
               </form>

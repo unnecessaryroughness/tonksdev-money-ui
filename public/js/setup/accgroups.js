@@ -54,18 +54,28 @@ $(function() {
       } else {
         $("#frmEdit #lblNoMatch").show();
         $(".mandatory-password").addClass("form-inline-error-bgcolor");
-        $(".mandatory-Password").addClass("form-inline-error-bgcolor");
       }
 
     });
 
     $("#btnEditLeaveGroup").on("click", function() {
+      if (checkForMandatoryFields($("#frmEdit .mandatory-delete"))) {
+        $("#frmEdit #lblMandatoryFields").show();
+        $(".mandatory-delete").addClass("form-inline-error-bgcolor");
+        $(".mandatory-delete:visible:first").focus();
+      } else {
         $("#editModal").modal("hide");
         $("#frmEdit #inputAction").val("leave");
         $("#frmEdit").submit();
+      }
     });
 
     $("#btnEditDeleteGroup").on("click", function() {
+      if (checkForMandatoryFields($("#frmEdit .mandatory-delete"))) {
+        $("#frmEdit #lblMandatoryFields").show();
+        $(".mandatory-delete").addClass("form-inline-error-bgcolor");
+        $(".mandatory-delete:visible:first").focus();
+      } else {
         $("#editModal").modal("hide");
         showConfirmDialog("Delete Account Group -- Confirm?",
                           "Are you sure you want to permanently delete this account group " +
@@ -74,13 +84,20 @@ $(function() {
            $("#frmEdit #inputAction").val("delete");
            $("#frmEdit").submit();
          });
+     }
     });
 
     $("#btnSubmitGroupCode").on("click", function() {
+      if (checkForMandatoryFields($("#frmGroupCode .mandatory"))) {
+        $("#frmGroupCode #lblMandatoryFields").show();
+        $(".mandatory").addClass("form-inline-error-bgcolor");
+        $(".mandatory:visible:first").focus();
+      } else {
         $("#groupCodeModal").modal("hide");
         $("#frmGroupCode #inputJoinGroup").val($("#inputJoinGroup").val().toUpperCase());
         $("#frmGroupCode #inputAction").val("join");
         $("#frmGroupCode").submit();
+      }
     });
 
 
@@ -90,14 +107,19 @@ $(function() {
         $("#inputPassword").val("");
         $("#confirmPassword").val("");
         $(".mandatory").removeClass("form-inline-error-bgcolor");
-        $("#lblMandatoryFields").hide();
-        $("#lblNoMatch").hide();
+        $("#frmCreate #lblMandatoryFields").hide();
+        $("#frmCreate #lblNoMatch").hide();
     });
 
     $("#editModal").on("hidden.bs.modal", function() {
         $(".mandatory").removeClass("form-inline-error-bgcolor");
-        $("#lblMandatoryFields").hide();
-        $("#lblNoMatch").hide();
+        $("#frmEdit #lblMandatoryFields").hide();
+        $("#frmEdit #lblNoMatch").hide();
+    });
+
+    $("#groupCodeModal").on("hidden.bs.modal", function() {
+        $(".mandatory").removeClass("form-inline-error-bgcolor");
+        $("#frmGroupCode #lblMandatoryFields").hide();
     });
 
     $(".modal").on("shown.bs.modal", function() {
