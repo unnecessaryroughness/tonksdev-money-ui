@@ -20,14 +20,8 @@ $(function() {
       $("#warning-labels label").hide();
 
       if ($("#inputPassword").val() === $("#confirmPassword").val()) {
-        let emptyInput = false;
-        $(".mandatory").each(function(val, idx) {
-            if ($(this).val() === "") {
-              emptyInput = true;
-            }
-        });
-        if (emptyInput) {
-          $("#lblMandatoryFields").show();
+        if (checkForMandatoryFields($(".mandatory"))) {
+          $("#frmCreate #lblMandatoryFields").show();
           $("input").addClass("form-inline-error-bgcolor");
           $("input:visible:first").focus();
           return false;
@@ -38,7 +32,7 @@ $(function() {
           $("#frmCreate").submit();
         }
       } else {
-        $("#lblNoMatch").show();
+        $("#frmCreate #lblNoMatch").show();
         $("#inputPassword").addClass("form-inline-error-bgcolor");
         $("#confirmPassword").addClass("form-inline-error-bgcolor");
         return false;
@@ -46,9 +40,23 @@ $(function() {
     });
 
     $("#btnEditSaveGroup").on("click", function() {
-        $("#editModal").modal("hide");
-        $("#frmEdit #inputAction").val("update");
-        $("#frmEdit").submit();
+      if ($("#frmEdit #inputEditNewPassword").val() === $("#frmEdit #confirmEditNewPassword").val()) {
+        if (checkForMandatoryFields($("#frmEdit .mandatory"))) {
+          $("#frmEdit #lblMandatoryFields").show();
+          $(".mandatory").addClass("form-inline-error-bgcolor");
+          $(".mandatory:visible:first").focus();
+          return false;
+        } else {
+          $("#editModal").modal("hide");
+          $("#frmEdit #inputAction").val("update");
+          $("#frmEdit").submit();
+        }
+      } else {
+        $("#frmEdit #lblNoMatch").show();
+        $(".mandatory-password").addClass("form-inline-error-bgcolor");
+        $(".mandatory-Password").addClass("form-inline-error-bgcolor");
+      }
+
     });
 
     $("#btnEditLeaveGroup").on("click", function() {
@@ -83,6 +91,13 @@ $(function() {
         $("#confirmPassword").val("");
         $(".mandatory").removeClass("form-inline-error-bgcolor");
         $("#lblMandatoryFields").hide();
+        $("#lblNoMatch").hide();
+    });
+
+    $("#editModal").on("hidden.bs.modal", function() {
+        $(".mandatory").removeClass("form-inline-error-bgcolor");
+        $("#lblMandatoryFields").hide();
+        $("#lblNoMatch").hide();
     });
 
     $(".modal").on("shown.bs.modal", function() {
@@ -103,4 +118,15 @@ function appendSubmitForm(action, fieldList, context) {
     postForm = $(postFormText);
     $('body').append(postForm);
     postForm.submit();
+}
+
+
+function checkForMandatoryFields(fldList) {
+  let emptyInput = false;
+  fldList.each(function(val, idx) {
+      if ($(this).val() === "") {
+        emptyInput = true;
+      }
+  });
+  return emptyInput;
 }

@@ -94,23 +94,27 @@
               <form id="frmEdit" action="" method="POST">
                 <div class="form-group">
                   <label for="inputEditGroupCode">Group Code</label>
-                  <input type="text" class="form-control" id="inputEditGroupCode" name="inputEditGroupCode" placeholder="NEWGROUP" readonly>
+                  <input type="text" class="form-control mandatory" id="inputEditGroupCode" name="inputEditGroupCode" placeholder="NEWGROUP" readonly>
                 </div>
                 <div class="form-group">
                   <label for="inputEditDescription">Group Description</label>
-                  <input type="text" class="form-control" id="inputEditDescription" name="inputEditDescription" placeholder="new group description">
+                  <input type="text" class="form-control mandatory" id="inputEditDescription" name="inputEditDescription" placeholder="new group description">
                 </div>
                 <div class="form-group">
                   <label for="inputEditCurrentPassword">Current Group Password</label>
-                  <input type="password" class="form-control" id="inputEditCurrentPassword" name="inputEditCurrentPassword" placeholder="current password">
+                  <input type="password" class="form-control mandatory" id="inputEditCurrentPassword" name="inputEditCurrentPassword" placeholder="current password">
                 </div>
                 <div class="form-group">
                   <label for="inputEditNewPassword">New Group Password</label>
-                  <input type="password" class="form-control" id="inputEditNewPassword" name="inputEditNewPassword" placeholder="new password">
+                  <input type="password" class="form-control mandatory-password" id="inputEditNewPassword" name="inputEditNewPassword" placeholder="new password">
                 </div>
                 <div class="form-group">
                   <label for="confirmEditNewPassword">Confirm New Group Password</label>
-                  <input type="password" class="form-control" id="confirmEditNewPassword" placeholder="new password">
+                  <input type="password" class="form-control mandatory-password" id="confirmEditNewPassword" placeholder="new password">
+                </div>
+                <div id="warning-labels" class="form-group">
+                  <label id="lblNoMatch" class="form-inline-error-message">Passwords do not match</label>
+                  <label id="lblMandatoryFields" class="form-inline-error-message">All fields are mandatory</label>
                 </div>
                 <input type="hidden" id="inputEditId" name="inputEditId">
                 <input type="hidden" id="inputAction" name="inputAction">
