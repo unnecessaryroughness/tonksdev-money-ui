@@ -104,11 +104,11 @@
                 </div>
                 <div class="form-group">
                   <label for="inputEditDescription">Account Name</label>
-                  <input type="text" class="form-control" id="inputEditAcctName" name="inputEditAcctName" placeholder="New Account Name">
+                  <input type="text" class="form-control mandatory" id="inputEditAcctName" name="inputEditAcctName" placeholder="New Account Name">
                 </div>
                 <div class="form-group">
                   <label for="selEditAcctType">Account Type</label>
-                  <select class="form-control mandatory" id="selEditAcctType" name="selEditAcctType">
+                  <select class="form-control mandatory mandatory" id="selEditAcctType" name="selEditAcctType">
                     <option value="CA">Current Account</option>
                     <option value="SA">Savings Account</option>
                     <option value="CC">Credit Card</option>
@@ -117,11 +117,14 @@
                 </div>
                 <div class="form-group">
                   <label for="inputEditBankName">Bank Name</label>
-                  <input type="text" class="form-control mandatory" id="inputEditBankName" name="inputEditBankName" placeholder="Sample Bank plc" required>
+                  <input type="text" class="form-control" id="inputEditBankName" name="inputEditBankName" placeholder="Sample Bank plc" required>
                 </div>
                 <div class="form-group">
                   <label for="inputEditPassword">Account Group Password</label>
-                  <input type="password" class="form-control" id="inputEditPassword" name="inputEditPassword">
+                  <input type="password" class="form-control mandatory-delete" id="inputEditPassword" name="inputEditPassword">
+                </div>
+                <div id="warning-labels" class="form-group">
+                  <label id="lblMandatoryFields" class="form-inline-error-message">All fields are mandatory</label>
                 </div>
                 <input type="hidden" id="inputEditId" name="inputEditId">
                 <input type="hidden" id="inputAction" name="inputAction">
@@ -154,7 +157,7 @@
                 </div>
                 <div class="form-group">
                   <label for="inputPassword">Group Password</label>
-                  <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="password">
+                  <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="password" required>
                 </div>
                 <input type="hidden" id="inputAction" name="inputAction">
               </form>
