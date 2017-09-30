@@ -36,12 +36,16 @@ var routes = function(moneyUIVars) {
           if (sessionHelpers.userIsLoggedIn(req)) {
             switch(req.body.inputAction) {
               case "create":
-                res.redirectBackTo = "/account/" + JSON.parse(req.body.inputtransaction).account.id + "/register";
+                res.redirectBackTo = "/account/" + JSON.parse(req.body.inputtransaction).account.id + "/register#hlink-@s1@";
+                res.redirectBackToParams = [];
+                res.redirectBackToParams.push({name: "s1", value: "pageData.transaction.id"});
                 controllerHelpers.routePost(transController.addNewTransaction, moneyUIVars, req, res);
                 break;
 
               case "update":
-                res.redirectBackTo = "/account/" + JSON.parse(req.body.inputtransaction).account.id + "/register";
+                res.redirectBackTo = "/account/" + JSON.parse(req.body.inputtransaction).account.id + "/register#hlink-@s1@";
+                res.redirectBackToParams = [];
+                res.redirectBackToParams.push({name: "s1", value: "pageData.transaction.id"});
                 controllerHelpers.routePost(transController.updateTransaction, moneyUIVars, req, res);
                 break;
 
