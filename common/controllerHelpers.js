@@ -1,6 +1,7 @@
 var errorController = require('../controllers/errorController');
 
 const helper = function() {
+  'use strict';
 
   const routeGet = function(ctrlMethod, envVars, envReq, envRes, viewUrl) {
     ctrlMethod(envVars, envReq.session, envReq.user, envReq.params, envReq.body, function(err, pageData) {
