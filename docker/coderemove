@@ -1,0 +1,3 @@
+docker rm moneyui
+docker rm moneyapi
+docker ps -a

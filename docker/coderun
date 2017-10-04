@@ -1,0 +1,3 @@
+docker run -d --name moneydb -v /data/db:/data/db mongo mongod
+docker run -d --name moneysession -v /data/db/session:/data/db mongo mongod
+docker ps

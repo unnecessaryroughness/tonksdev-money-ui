@@ -14,14 +14,24 @@ const controller = function(moneyUIVars) {
 
   const cashPerDay = function(pPayday, pBalance, pToday, done) {
 
-     //if payday or balance parameters are missing or invalid, fail out
-     if ((!pPayday || parseInt(pPayday) <= 0) || (!pBalance || parseFloat(pBalance) <= 0)){
-         return res.status(404).send('payday and/or balance parameter was missing or invalid');
-     }
+      //get today's date
+      var today = new Date(),
+      paydate = new Date();
 
-     //get today's date
-     var today = new Date(),
-         paydate = new Date();
+     //if payday parameter is missing or invalid, fail out
+       if ((!pPayday || parseInt(pPayday) <= 0)) {
+           //build the return value
+           var rtnVal = {
+               'today': today.toISOString().substr(0,10),
+               'payDayOfMonth': '<invalid>',
+               'nextPayDate': '<invalid>',
+               'numberOfDaysToPayday': '<invalid>',
+               'balanceOfAccount': '<invalid>',
+               'cashPerDayRemaining': '<invalid>',
+               'cashPerWeekRemaining': '<invalid>'
+           };
+           return done({error: 'payday parameter was missing or invalid'}, rtnVal);
+       }
 
      //set the day of the month to payday
      paydate.setDate(pPayday);
@@ -49,6 +59,22 @@ const controller = function(moneyUIVars) {
 
      //now we have the right date for payday, how many days is it between today and payday?
      var difference = Math.round((paydate-today)/(1000*60*60*24));
+
+     //if balance parameter is missing or invalid, fail out
+     if ((!pBalance || parseFloat(pBalance) <= 0)){
+         //build the return value
+         var rtnVal = {
+             'today': today.toISOString().substr(0,10),
+             'payDayOfMonth': pPayday,
+             'nextPayDate': paydate.toISOString().substr(0,10),
+             'numberOfDaysToPayday': difference.toString(),
+             'balanceOfAccount': (pBalance || 0.00),
+             'cashPerDayRemaining': 0.00,
+             'cashPerWeekRemaining': 0.00
+         };
+         return done({error: 'balance parameter was missing or invalid'}, rtnVal);
+     }
+
 
      //how much cash do we have each day & week?
      var cashPerDay = (pBalance / difference).toFixed(2),
