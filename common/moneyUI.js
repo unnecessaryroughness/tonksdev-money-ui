@@ -18,6 +18,7 @@ var moneyUI = function() {
     //Initialize the server (express)
     self.initializeServer = function() {
 
+
         //setup the web server app
             self.app = express();
             self.app.use(bodyParser.urlencoded({extended:true}));
@@ -35,7 +36,11 @@ var moneyUI = function() {
                                       secure: (self.variables.environment === 'development') ? false : false }
                         }));
 
+            self.app.use(function(req, res, next) { debug(">>(dynamic)>> requested path is: " + req["path"]); next(); });
+
             require('../config/passport')(self);
+
+            self.app.use(function(req, res, next) { debug(">>(dynamic..)>> requested path is: " + req["path"]); next(); });
 
         //redirect to https if accessing via http
             // self.app.use(function(req, res, next) {
@@ -84,6 +89,7 @@ var moneyUI = function() {
             var acctRouter = require('../routers/acctRoutes')(self.variables);
             var reptRouter = require('../routers/reptRoutes')(self.variables);
             self.app.use('/', rootRouter);
+            self.app.use('//', rootRouter);
             self.app.use('/ajax', ajaxRouter);
             self.app.use('/auth', authRouter);
             self.app.use('/setup', setupRouter);
