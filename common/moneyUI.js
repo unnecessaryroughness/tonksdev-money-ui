@@ -38,24 +38,24 @@ var moneyUI = function() {
             require('../config/passport')(self);
 
         //redirect to https if accessing via http
-            self.app.use(function(req, res, next) {
-              if (self.variables.environment !== "development" && req.headers["user-agent"] !== "ELB-HealthChecker/2.0") {
-                if (typeof(req.headers['x-forwarded-proto']) !== "undefined") {
-                  debug("x-forwarded-proto exists = " + req.headers['x-forwarded-proto']);
-                  debug(">>>> host = " + req.headers["host"] + " -- path = " + req["path"].substr(1));
-                  debug(">>>> redirecting to: " + "https://" + req.headers["host"] + (req["path"].substr(1) || ""));
-                  res.redirect(301, "https://" + req.headers["host"] + "/" + (req["path"].substr(1) || ""));
-                  res.end();
-                } else {
-                    debug("x-forwarded-proto does not exist");
-                    debug(">>>> host = " + req.headers["host"] + " -- path = " + req["path"].substr(1));
-                    console.log(req.headers);
-                    next();
-                }
-              } else {
-                next();
-              }
-            });
+            // self.app.use(function(req, res, next) {
+            //   if (self.variables.environment !== "development" && req.headers["user-agent"] !== "ELB-HealthChecker/2.0") {
+            //     if (typeof(req.headers['x-forwarded-proto']) !== "undefined") {
+            //       debug("x-forwarded-proto exists = " + req.headers['x-forwarded-proto']);
+            //       debug(">>>> host = " + req.headers["host"] + " -- path = " + req["path"].substr(1));
+            //       debug(">>>> redirecting to: " + "https://" + req.headers["host"] + (req["path"].substr(1) || ""));
+            //       res.redirect(301, "https://" + req.headers["host"] + "/" + (req["path"].substr(1) || ""));
+            //       res.end();
+            //     } else {
+            //         debug("x-forwarded-proto does not exist");
+            //         debug(">>>> host = " + req.headers["host"] + " -- path = " + req["path"].substr(1));
+            //         console.log(req.headers);
+            //         next();
+            //     }
+            //   } else {
+            //     next();
+            //   }
+            // });
 
         //set up connection to mongodb
             self.mongoose = mongoose;
