@@ -23,13 +23,6 @@ var routes = function(moneyUIVars) {
           });
       })
 
-    rootRouter.route('//')
-      .get(function(req, res, next) {
-          debug(">>> redirecting to: " + req.headers["host"] + req.path);
-          res.redirect(301, "https://" + req.headers["host"] + req.path);
-      })
-
-
     rootRouter.route('/balances')
       .get(function(req, res, next) {
         if (sessionHelpers.userIsLoggedIn(req)) {    //only do anything if user is logged in

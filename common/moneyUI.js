@@ -36,31 +36,7 @@ var moneyUI = function() {
                                       secure: (self.variables.environment === 'development') ? false : false }
                         }));
 
-            self.app.use(function(req, res, next) { debug(">>(dynamic)>> requested path is: " + req["path"]); next(); });
-
             require('../config/passport')(self);
-
-            self.app.use(function(req, res, next) { debug(">>(dynamic..)>> requested path is: " + req["path"]); next(); });
-
-        //redirect to https if accessing via http
-            // self.app.use(function(req, res, next) {
-            //   if (self.variables.environment !== "development" && req.headers["user-agent"] !== "ELB-HealthChecker/2.0") {
-            //     if (typeof(req.headers['x-forwarded-proto']) !== "undefined") {
-            //       debug("x-forwarded-proto exists = " + req.headers['x-forwarded-proto']);
-            //       debug(">>>> host = " + req.headers["host"] + " -- path = " + req["path"].substr(1));
-            //       debug(">>>> redirecting to: " + "https://" + req.headers["host"] + (req["path"].substr(1) || ""));
-            //       res.redirect(301, "https://" + req.headers["host"] + "/" + (req["path"].substr(1) || ""));
-            //       res.end();
-            //     } else {
-            //         debug("x-forwarded-proto does not exist");
-            //         debug(">>>> host = " + req.headers["host"] + " -- path = " + req["path"].substr(1));
-            //         console.log(req.headers);
-            //         next();
-            //     }
-            //   } else {
-            //     next();
-            //   }
-            // });
 
         //set up connection to mongodb
             self.mongoose = mongoose;
@@ -89,7 +65,6 @@ var moneyUI = function() {
             var acctRouter = require('../routers/acctRoutes')(self.variables);
             var reptRouter = require('../routers/reptRoutes')(self.variables);
             self.app.use('/', rootRouter);
-            self.app.use('//', rootRouter);
             self.app.use('/ajax', ajaxRouter);
             self.app.use('/auth', authRouter);
             self.app.use('/setup', setupRouter);
