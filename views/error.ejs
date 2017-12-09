@@ -9,9 +9,10 @@
 
 <body>
     <%- include('includes/navbar.ejs') %>
-
     <div class="main-content-frame">
       <h3>An Error Occurred!</h3>
+
+      <% if (typeof pageError === "string") { pageError = JSON.parse(pageError); } %>
 
       <% if (typeof pageError.errDetails !== "undefined") { %>
         <p class="error-message-header">Code</p>
@@ -19,7 +20,7 @@
         <p class="error-message-header">Message</p>
         <p class="error-message"><%=pageError.errDetails.description%></p>
         <p class="error-message-header">Stack</p>
-        <p class="error-message"><%=pageError.errDetails.stack%></p>
+        <p class="error-message"><%=JSON.stringify(pageError.errDetails.stack)%></p>
         </p>
       <% } else { %>
         <% if (typeof pageError.error !== "undefined") { %>
