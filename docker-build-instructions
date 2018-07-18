@@ -1,0 +1,8 @@
+docker build -t unnecessaryroughness/tonksdev-money-ui-new .
+
+docker images
+
+docker push unnecessaryroughness/tonksdev-money-ui-new
+
+help: https://nodejs.org/en/docs/guides/nodejs-docker-webapp/
+https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html

@@ -1,5 +1,5 @@
 docker run -d --name moneydb -v /data/db:/data/db mongo:3.6.0 mongod --bind_ip_all
 docker run -d --name moneysession -v /data/db/session:/data/db mongo:3.6.0 mongod --bind_ip_all
-docker run -d --name moneyapi -p 8081:8081 --link moneydb --env-file ~/src/tonksdev/money/ui/docker/api_vars unnecessaryroughness/tonksdev-money-api
-docker run -d --name moneyui -p 80:8080 --link moneysession --link moneyapi --env-file ~/src/tonksdev/money/ui/docker/ui_vars unnecessaryroughness/tonksdev-money-ui
+docker run -d --name moneyapi -p 8081:8081 --link moneydb --env-file ~/src/tonksdev/money/ui/docker/api_vars unnecessaryroughness/tonksdev-money-api-new
+docker run -d --name moneyui -p 80:8080 --link moneysession --link moneyapi --env-file ~/src/tonksdev/money/ui/docker/ui_vars unnecessaryroughness/tonksdev-money-ui-new
 docker ps

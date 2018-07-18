@@ -1,0 +1,3 @@
+docker stop moneyui
+docker stop moneyapi
+docker ps
