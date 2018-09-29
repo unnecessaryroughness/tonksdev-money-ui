@@ -11,6 +11,20 @@ const controller = function(moneyUIVars) {
      return paydate;
   };
 
+  const getValidPaydate = function (checkdate, checkmonth = null) {
+    console.log("getting valid pay date using date: " + checkdate + " and month " + checkmonth)
+    if (checkdate == 31) {
+      let lastDateOfMonth = new Date()
+      let targetmonth = checkmonth || lastDateOfMonth.getMonth() + 1
+      lastDateOfMonth.setMonth(targetmonth)
+      lastDateOfMonth.setDate(0)
+      return lastDateOfMonth
+    } else {
+      let targetDate = new Date()
+      targetDate.setDate(checkdate)
+      return targetDate
+    }
+  }
 
   const cashPerDay = function(pPayday, pBalance, pToday, done) {
 
@@ -34,7 +48,10 @@ const controller = function(moneyUIVars) {
        }
 
      //set the day of the month to payday
-     paydate.setDate(pPayday);
+     // paydate.setDate(pPayday);
+     console.log("Payday in user config:", pPayday)
+     paydate = getValidPaydate(pPayday);
+     console.log("Calculated paydate as:", paydate.toISOString().split("T")[0])
 
      //if a "today" date was passed in, replace the content of today variable with that value
      if (pToday) {
@@ -52,9 +69,13 @@ const controller = function(moneyUIVars) {
      //if, after adjusting for working days, the paydate is now in the past,
      //restore the original payday, add another month, then adjust for working days again
      if (+paydate <= +today) {
-         paydate.setDate(pPayday);
-         paydate.setMonth(paydate.getMonth()+1);
+         console.log("paydate for current month is in the past... recalculating")
+         // paydate.setDate(pPayday);
+         // paydate.setMonth(paydate.getMonth()+1);
+         paydate = getValidPaydate(pPayday, today.getMonth()+2)
+         console.log("Calculated paydate as:", paydate.toISOString().split("T")[0])
          paydate = getLastWorkingDay(paydate);
+         console.log("Calculated last working day before paydate as:", paydate.toISOString().split("T")[0])
      }
 
      //now we have the right date for payday, how many days is it between today and payday?
